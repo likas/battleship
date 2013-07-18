@@ -1,0 +1,20 @@
+int SIZE = 10;
+enum _CELL_STATE
+{
+	NONE,
+	SHIP,
+	SHIP_FIRE,
+	MISS
+} CELL_STATE;
+
+enum KEY
+{
+	LEFT, 
+	RIGHT,
+	UP,
+	DOWN,
+	SPACE,
+	ENTER,
+	TAB,
+	ESC
+} key;
