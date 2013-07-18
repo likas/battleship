@@ -3,8 +3,14 @@
 #include <sys/time.h>
 #include <time.h>
 #include "../mboi.h"
-int ai_cells_left = 100; //Count unshoot cells
+
+int ai_cells_left = SIZE * SIZE; //Count unshoot cells
 int **ai_player_field, **ai_enemy_field, **player_field;
+COORDS ai_last_shot = {-1, -1};
+COORDS ai_last_shot_suc = {-1, -1};
+AI_DIRECTION ai_direction = {0, 0};
+int got_target = 0;
+int ships[COUNT_SHIP] = {4, 3, 2, 1};
 
 typedef struct _AI_DIRECTION
 {
