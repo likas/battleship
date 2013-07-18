@@ -55,4 +55,10 @@ enum _MSG_TSK
 	HM,//попадание
 	SG//начало игры
 } MSG_TSK;
+
+typedef struct _COORDS
+{
+	int x;
+	int y;
+} COORDS;
 #endif
