@@ -1,8 +1,8 @@
 #ifndef H_MBOI
 #define H_MBOI
 #include <stdlib.h>
-int SIZE = 10;
-
+int const SIZE = 10;
+int const COUNT_SHIP = 4
 #define MSG_LEN 128
 
 enum _CELL_STATE

@@ -3,6 +3,7 @@ COORDS ai_last_shot = {-1, -1};
 COORDS ai_last_shot_suc = {-1, -1};
 AI_DIRECTION ai_direction = {0, 0};
 int got_target = 0;
+int ships[COUNT_SHIP] = {4, 3, 2, 1};
 
 int ai_set_field(int **field)
 {
