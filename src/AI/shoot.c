@@ -32,17 +32,17 @@ int ai_shoot(COORDS *coords)
 
 int ai_hit(COORDS coords)
 {
-	if(ai_player_field[coords.x][coords.y] == SHIP)	
-		ai_player_field[coords.x][coords.y] = SHIP_FIRE;
+	if(ai_player_field[coords.x][coords.y] == CELL_SHIP)	
+		ai_player_field[coords.x][coords.y] = CELL_SHIP_FIRE;
 }
 
 void ai_get_respond(enum _CELL_STATE state)
 {
 	ai_enemy_field[ai_last_shot.x][ai_last_shot.y] = state;
 	
-	if( !got_target && state == SHIP_FIRE)
+	if( !got_target && state == CELL_SHIP_FIRE)
 		got_target = 1;
-	if( got_target && state != SHIP_DEAD)
+	if( got_target && state != CELL_SHIP_DEAD)
 	{
 		got_target = 0;
 		ai_ship_mark_dead();
@@ -53,7 +53,7 @@ void ai_get_respond(enum _CELL_STATE state)
 	if( got_target )
 		ai_choose_direction(state);
 	
-	if(state == SHIP_FIRE)
+	if(state == CELL_SHIP_FIRE)
 		ai_last_shot_suc = ai_last_shot;
 }
 
@@ -63,19 +63,19 @@ void ai_choose_direction(enum _CELL_STATE state)
 	{
 		int N_sides = 0;
 		int avalible_sides[4];
-		if(ai_last_shot.x > 0 && ai_enemy_field[ai_last_shot.x - 1][ai_last_shot.y] == NONE)
+		if(ai_last_shot.x > 0 && ai_enemy_field[ai_last_shot.x - 1][ai_last_shot.y] == CELL_NONE)
 			N_sides++, avalible_sides[0] = 1;
 		else
 			avalible_sides[0] = 0;
-		if( ai_last_shot.y > 0 && ai_enemy_field[ai_last_shot.x][ai_last_shot.y - 1] == NONE )
+		if( ai_last_shot.y > 0 && ai_enemy_field[ai_last_shot.x][ai_last_shot.y - 1] == CELL_NONE )
 			N_sides++, avalible_sides[1] = 1;
 		else
 			avalible_sides[1] = 0;
-		if( ai_last_shot.x < SIZE - 1 && ai_enemy_field[ai_last_shot.x + 1][ai_last_shot.y] == NONE )
+		if( ai_last_shot.x < SIZE - 1 && ai_enemy_field[ai_last_shot.x + 1][ai_last_shot.y] == CELL_NONE )
 			N_sides++, avalible_sides[2] = 1;
 		else
 			avalible_sides[2] = 0;
-		if( ai_last_shot.y < SIZE - 1 && ai_enemy_field[ai_last_shot.x][ai_last_shot.y + 1] == NONE )	
+		if( ai_last_shot.y < SIZE - 1 && ai_enemy_field[ai_last_shot.x][ai_last_shot.y + 1] == CELL_NONE )	
 			N_sides++, avalible_sides[3] = 1;
 		else
 			avalible_sides[3] = 0;
@@ -90,11 +90,11 @@ void ai_choose_direction(enum _CELL_STATE state)
 			case 3: ai_direction.dx = 0, ai_direction.dy = 1; break;
 		}
 	}
-	else if(state == MISS)
+	else if(state == CELL_MISS)
 	{
 		ai_direction.dx *= -1;
 		ai_direction.dy *= -1;
-		while(ai_enemy_field[ai_last_shot.x + ai_direction.dx][ai_last_shot.y + ai_direction.dy] != NONE)
+		while(ai_enemy_field[ai_last_shot.x + ai_direction.dx][ai_last_shot.y + ai_direction.dy] != CELL_NONE)
 			ai_last_shot.x += ai_direction.dx, ai_last_shot.y += ai_direction.dy;
 	}
 }

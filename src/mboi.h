@@ -7,37 +7,38 @@ int SIZE = 10;
 
 enum _CELL_STATE
 {
-	NONE,
-	SHIP,
-	SHIP_FIRE,
-	SHIP_DEAD,
-	MISS
+	CELL_NONE,
+	CELL_SHIP,
+	CELL_SHIP_FIRE,
+	CELL_SHIP_DEAD,
+	CELL_MISS
 } CELL_STATE;
 
 enum _KEY
 {
-	LEFT, 
-	RIGHT,
-	UP,
-	DOWN,
-	SPACE,
-	ENTER,
-	TAB,
-	ESC
+	KEY_LEFT, 
+	KEY_RIGHT,
+	KEY_UP,
+	KEY_DOWN,
+	KEY_SPACE,
+	KEY_ENTER,
+	KEY_TAB,
+	KEY_ESC
 } KEY;
 
 enum _REQUESTS
 {
-	ACCEPT,
-	DECLINE,
-	HIT,
-	DESTROYED,
-	YOUWIN,
-	YOULOSE,
-	DISCONNECT,
-	STARTLIST,
-	STORLIST,
-	GAMESTARTED
+	REQ_ACCEPT,
+	REQ_DECLINE,
+	REQ_HIT,
+	REQ_MISS,
+	REQ_DESTROYED,
+	REQ_YOUWIN,
+	REQ_YOULOSE,
+	REQ_DISCONNECT,
+	REQ_STARTLIST,
+	REQ_STORLIST,
+	REQ_GAMESTARTED
 } REQ;
 
 typedef struct{
@@ -47,12 +48,12 @@ typedef struct{
 
 enum _MSG_TSK
 {
-	NN,//ник
-	RQ,//ответ сервера
-	TT,//сообщение чата
-	AT,//атака
-	HM,//попадание
-	SG//начало игры
+	MSG_NN,//ник
+	MSG_RQ,//ответ сервера
+	MSG_TT,//сообщение чата
+	MSG_AT,//атака
+	MSG_HM,//попадание
+	MSG_SG//начало игры
 } MSG_TSK;
 
 typedef struct _COORDS
