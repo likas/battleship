@@ -1,5 +1,10 @@
+#ifndef H_MBOI
+#define H_MBOI
+
 int SIZE = 10;
+
 #define MSG_LEN 128
+
 enum _CELL_STATE
 {
 	NONE,
@@ -50,3 +55,10 @@ enum _MSG_TSK
 	HM,//попадание
 	SG//начало игры
 } MSG_TSK;
+
+typedef struct _COORDS
+{
+	int x;
+	int y;
+} COORDS;
+#endif
