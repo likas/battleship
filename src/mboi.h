@@ -4,6 +4,7 @@ enum CELL_STATE
 	NONE,
 	SHIP,
 	SHIP_FIRE,
+	SHIP_DEAD,
 	MISS
 } cell_state;
 
