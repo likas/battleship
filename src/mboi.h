@@ -1,12 +1,12 @@
 int SIZE = 10;
-enum CELL_STATE
+enum _CELL_STATE
 {
 	NONE,
 	SHIP,
 	SHIP_FIRE,
 	SHIP_DEAD,
 	MISS
-} cell_state;
+} CELL_STATE;
 
 enum KEY
 {
