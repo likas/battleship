@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "../mboi.h"
 /*----------------------*/
 typedef struct _shot
 {
@@ -15,3 +16,5 @@ typedef struct _shot
 }shot;
 /*----------------------*/
 #endif
+
+int ser_soc;
