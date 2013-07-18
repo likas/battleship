@@ -1,4 +1,4 @@
-#ifndeF CLIENT_H
+#ifndef CLIENT_H
 #define CLIENT_H
 /*----------------------*/
 /*----------------------*/
@@ -6,7 +6,10 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "../mboi.h"
 /*----------------------*/
 
 /*----------------------*/
 #endif
+
+int ser_soc;
