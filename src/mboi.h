@@ -4,10 +4,11 @@ enum _CELL_STATE
 	NONE,
 	SHIP,
 	SHIP_FIRE,
+	SHIP_DEAD,
 	MISS
 } CELL_STATE;
 
-enum KEY
+enum _KEY
 {
 	LEFT, 
 	RIGHT,
@@ -17,4 +18,4 @@ enum KEY
 	ENTER,
 	TAB,
 	ESC
-} key;
+} KEY;
