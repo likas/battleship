@@ -12,9 +12,11 @@ typedef struct _AI_DIRECTION
 	int dy;
 } AI_DIRECTION;
 
+void ai_init();
 int ai_set_field(int **);
 int ai_shoot(COORDS *coords);
 int ai_hit(COORDS);
+void ai_clear_variants();
 void ai_get_respond(enum _CELL_STATE);
 void ai_choose_direction();
 void ai_ship_mark_dead();
