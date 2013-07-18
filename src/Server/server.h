@@ -18,10 +18,6 @@
 #include"../mboi.h"
 int childWork(int sockClient);
 typedef struct {
-    int TYPE_COMMAND;
-    char command[128];
-}Command;
-typedef struct {
     int _id;
     char name[20];
 }Player;
