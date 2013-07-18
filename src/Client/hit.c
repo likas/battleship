@@ -17,7 +17,7 @@ int shoot(int *smap, shot a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 - E
     int x=a.x;
     int y=a.y;
     /*-------------------*/
-    if((x>size)||(y>size)||(x<0)||(y<0))
+    if((x>=size)||(y>=size)||(x<0)||(y<0))
 	return -1;
     /*-------------------*/
     int killed(int x,int y)/*Killed or not killed*/
