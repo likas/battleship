@@ -1,6 +1,6 @@
 #include "ai.h"
 
-void ai_rand_cell(int **matr, AI_COORDS *coord)
+void ai_rand_cell(int **matr, COORDS *coord)
 {
 	int rand_cell;
 	int count_free_cell = ai_cells_left;

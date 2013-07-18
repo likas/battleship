@@ -1,6 +1,6 @@
 #ifndef H_MBOI
 #define H_MBOI
-
+#include <stdlib.h>
 int SIZE = 10;
 
 #define MSG_LEN 128
@@ -31,7 +31,6 @@ enum _REQUESTS
 	ACCEPT,
 	DECLINE,
 	HIT,
-	MISS,
 	DESTROYED,
 	YOUWIN,
 	YOULOSE,
