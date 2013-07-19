@@ -16,7 +16,10 @@
 #include<netdb.h>
 #include<sys/poll.h>
 #include"../mboi.h"
+
 int childWork(int sockClient);
+void* Game(void*);
+
 typedef struct {
     int _id;
     char name[30];
@@ -25,4 +28,5 @@ typedef struct {
 int port;
 int thread_id[50];
 int game_sockd;
+
 #endif
