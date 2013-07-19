@@ -36,7 +36,7 @@ enum _KEY
 
 enum _REQUESTS
 {
-	REQ_ACCEPT,
+	REQ_ACCEPT = 20,
 	REQ_DECLINE,
 	REQ_HIT,
 	REQ_MISS,
@@ -63,18 +63,6 @@ enum _MSG_TSK
 	MSG_HM,//попадание
 	MSG_SG,//начало игры
 	MSG_SF,//Начало передачи поля
-	REQ_ACCEPT,
-	REQ_DECLINE,
-	REQ_HIT,
-	REQ_MISS,
-	REQ_DESTROYED,
-	REQ_YOUWIN,
-	REQ_YOULOSE,
-	REQ_DISCONNECT,
-	REQ_STARTLIST,
-	REQ_GAMESTARTED,
-	REQ_STORLIST
-
 } MSG_TSK;
 
 typedef struct _COORDS
