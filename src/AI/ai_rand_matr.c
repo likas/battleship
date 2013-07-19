@@ -163,7 +163,7 @@ void rand_loc_ship(int **matr, int const size_ship, int *count_free_cell)
 }
 
 
-int **ai_rand_matr(int **matr
+int **ai_rand_matr(int **matr)
 {
 	srand(time(NULL));
 	int count_free_cell = SIZE * SIZE;

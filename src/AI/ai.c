@@ -28,14 +28,12 @@ message ai(message msg)
 			return answer;
 			break;
 		case MSG_AT:
-			coords_itoa( msg.param, &coords );
-			answer.command = ai_hit( coords );
-			answer.params = "";
+			coords_itoa( msg.params, &coords );
+			answer.commands = ai_hit( coords );
 			return answer;
 			break;
 		default:
-			answer.commnad = REQ_DISCONNECT;
-			answer.params = "AI: Don't know how to respond, sorry.\n";
+			answer.commnads = REQ_DISCONNECT;
 			return answer;
 			break;
 	}
