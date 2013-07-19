@@ -39,19 +39,16 @@ int De_Init(int **my_mas, int **op_mas){
 			my_win[i][j]=newwin(cell_h, cell_w, my_stpoint[0]+i*cell_h, my_stpoint[1]+j*cell_w);
 			wbkgdset(my_win[i][j], COLOR_PAIR(my_mas[i][j]));
 			wclear(my_win[i][j]);
-			wrefresh(my_win[i][j]);
-			
+	//		wrefresh(my_win[i][j]);
+	wnoutrefresh(my_win[i][j]);		
 			
 			op_win[i][j]=newwin(cell_h, cell_w, op_stpoint[0]+i*cell_h,op_stpoint[1]+j*cell_w);
                         wbkgdset(op_win[i][j], COLOR_PAIR(op_mas[i][j]));
                         wclear(op_win[i][j]);
-                        wrefresh(op_win[i][j]);
-			
+         //               wrefresh(op_win[i][j]);
+	wnoutrefresh(op_win[i][j]);		
 		}
 	}
-//	wmove(my_win[0][0],0,0);
-//	wrefresh(my_win[0][0]);
-//	wgetch(my_win[i-1][j-1]);
-//	my_win[i-1][j-1];
+ doupdate();
 	return 0;
 }

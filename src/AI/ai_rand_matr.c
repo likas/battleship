@@ -163,22 +163,24 @@ void rand_loc_ship(int **matr, int const size_ship, int *count_free_cell)
 }
 
 
-int **ai_rand_matr(int **matr)
+int ai_rand_matr(int **matr)
 {
 	srand(time(NULL));
 	int count_free_cell = SIZE * SIZE;
 //nt **matr = (int**)malloc(SIZE * sizeof(int*));
 	if (matr == NULL) {
-		printf("error no memory for <**matr> in <%s>\n", __func__);
-		perror("");
-		exit(1);
+//		printf("error no memory for <**matr> in <%s>\n", __func__);
+//		perror("");
+//		(1);
+		return -1;
 	}
 	for (int i = 0; i < SIZE; ++i) {
 //matr[i] = (int*)calloc(SIZE, sizeof(int));
 		if (matr[i] == NULL) {
-			printf("error no memory for <matr[%d]> in <%s>\n", i, __func__);
-			perror("");
-			exit(1);
+//			printf("error no memory for <matr[%d]> in <%s>\n", i, __func__);
+//			perror("");
+//			exit(1);
+			return -2;
 		}
 	}
 
@@ -219,5 +221,5 @@ int **ai_rand_matr(int **matr)
 		}
 	}
 
-	return matr;
+	return 0;
 }
