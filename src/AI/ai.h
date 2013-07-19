@@ -20,15 +20,15 @@ int *ships;
 
 //****Использовать извне и получать выгоду***
 int ai(int x, int y);
+int ai_set_field(int **); //Set player field
 void ai_init();    //Initialization library
 void ai_uninit();  //Clean library from memory
 
 //**** Module function *****
-int ai_set_field(int **);
-int ai_shoot(COORDS *coords);
+int ai_shoot(COORDS *coords); 
 int ai_hit(COORDS);
-void ai_clear_variants();
-void ai_get_respond(enum _CELL_STATE);
+void ai_clear_variants();  
+void ai_get_respond(enum _REQUESTS); 
 void ai_choose_direction();
 void ai_rand_cell(int **, COORDS *);
 
