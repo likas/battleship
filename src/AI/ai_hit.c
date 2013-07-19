@@ -2,7 +2,6 @@
 
 int ai_hit( int** field, COORDS coords, int whos_been_hit )
 {
-<<<<<<< HEAD
 	int ret_status = -1;
 	
 	// If the ship is hit
@@ -163,9 +162,4 @@ int who_won( int who )
 	if ( who == AI ) {
 		return REQ_YOUWIN;
 	}
-=======
-	if(ai_player_field[coords.x][coords.y] == CELL_SHIP)	
-		ai_player_field[coords.x][coords.y] = CELL_SHIP_FIRE;
-	
->>>>>>> d33e347cd7f3a5c82ed882ac435cd0b0481ae7c6
 }
