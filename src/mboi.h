@@ -7,7 +7,7 @@ int const COUNT_SHIP = 4;
 
 enum _CELL_STATE
 {
-	CELL_NONE,
+	CELL_NONE = 0,
 	CELL_SHIP,
 	CELL_SHIP_FIRE,
 	CELL_MISS
@@ -15,7 +15,7 @@ enum _CELL_STATE
 
 enum _KEY
 {
-	KEY_LEFT, 
+	KEY_LEFT = 10, 
 	KEY_RIGHT,
 	KEY_UP,
 	KEY_DOWN,
@@ -27,7 +27,7 @@ enum _KEY
 
 enum _REQUESTS
 {
-	REQ_ACCEPT,
+	REQ_ACCEPT = 20,
 	REQ_DECLINE,
 	REQ_HIT,
 	REQ_MISS,
@@ -47,7 +47,7 @@ typedef struct{
 
 enum _MSG_TSK
 {
-	MSG_NN,//ник
+	MSG_NN = 40,//ник
 	MSG_RQ,//ответ сервера
 	MSG_TT,//сообщение чата
 	MSG_AT,//атака
