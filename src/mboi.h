@@ -65,7 +65,7 @@ enum _MSG_TSK
 	MSG_SF,//Начало передачи поля
 } MSG_TSK;
 
-typedef struct _COORDS
+typedef struct 
 {
 	int x;
 	int y;
