@@ -20,8 +20,8 @@ struct pair De_Move(int **op_mas)
 		key=wgetch(op_win[i][j]);
 		wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j]));
 		wclear(op_win[i][j]);
-		wrefresh(op_win[i][j]);
-	
+	//	wrefresh(op_win[i][j]);
+	        wnoutrefresh(op_win[i][j]);
 		switch(key){
 			case 'w':
 				if(i!=0)
@@ -63,7 +63,9 @@ struct pair De_Move(int **op_mas)
 	        wborder(op_win[i][j],' ', ' ', ' ', ' ', '*', '*', '*', '*');
 		wmove(op_win[i][j],op_win[i][j]->_maxy/2,op_win[i][j]->_maxx/2-1);
 		wprintw(op_win[i][j],"%c:%d",'a'+i,j);
-	        wrefresh(op_win[i][j]);
+	       //wrefresh(op_win[i][j]);
+		wnoutrefresh(op_win[i][j]);
+		doupdate();
 	}
 	rt.x=i;
 	rt.y=j;
