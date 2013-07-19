@@ -23,7 +23,7 @@ int gameover(int *smap)/*If game is over function (return 1) , if not (return 0)
     return 1;
 }
 //---------------------------/*Example: int a[n][n]; typedef struct{int x; int y}shot; shot b;  shoot((int*)a,b);*/
-int shoot(int *smap, shot a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 - ERROR*/
+int shoot(int *smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 - ERROR*/
 {
     short int vis[size][size]={0};
     int x=a.x;
@@ -84,7 +84,7 @@ int shoot(int *smap, shot a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 - E
 
 
 void * Game(void *arg){
-	int field[2][10][10],ret,i,ready=0,shooter,receiver,x,y,tmp,id;
+	int field[2][10][10],ret,i,j,ready=0,shooter,receiver,x,y,tmp,id;
 	struct pollfd fds[2];
 	struct sockaddr_in servaddr;
 	message mesg;
@@ -128,7 +128,7 @@ void * Game(void *arg){
 			continue;
 		for(i=0;i<2;i++){
 			if(fds[i].revents & POLLIN){
-				if( (ret=recv(fds[i].fd,(void *)&mesg,sizeof(message))) < 0){
+				if( (ret=recv(fds[i].fd,(void *)&mesg,sizeof(message),0)) < 0){
 					perror("Error recv");
 					exit(1);
 				}
@@ -137,7 +137,7 @@ void * Game(void *arg){
 					mesg.command=REQ_DISCONNECT;
 					for(j=0;j<2;j++)
 							if(j!=i)
-								if(send(fds[j].fd,(void *)&mesg,sizeof(message))<0){
+								if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
 									perror("Error send");
 									exit(1);
 								}
@@ -148,7 +148,7 @@ void * Game(void *arg){
 				switch(mesg.command){
 			/*Receive player's game fields*/
 					case MSG_SF:
-						if( (ret=recv(fds[i].fd,(void *)&field[i],sizeof(int)*100)) < 0){
+						if( (ret=recv(fds[i].fd,(void *)&field[i],(sizeof(int)*100),0)) < 0){
 							perror("Error recv");
 							exit(1);
 						}
@@ -158,26 +158,26 @@ void * Game(void *arg){
 							if( (rand()%2)==0){
 								shooter=0;
 								receiver=1;
-								strcpy(params,"f");
-								if(send(fds[0].fd,(void *)&mesg,sizeof(message))<0){
+								strcpy(mesg.params,"f");
+								if(send(fds[0].fd,(void *)&mesg,sizeof(message),0)<0){
 									perror("Error send");
 									exit(1);
 								}
-								strcpy(params,"s");
-								if(send(fds[1].fd,(void *)&mesg,sizeof(message))<0){
+								strcpy(mesg.params,"s");
+								if(send(fds[1].fd,(void *)&mesg,sizeof(message),0)<0){
 									perror("Error send");
 									exit(1);
 								}
 							}else{
 								shooter=1;
 								receiver=0;
-								strcpy(params,"s");
-								if(send(fds[0].fd,(void *)&mesg,sizeof(message))<0){
+								strcpy(mesg.params,"s");
+								if(send(fds[0].fd,(void *)&mesg,sizeof(message),0)<0){
 									perror("Error send");
 									exit(1);
 								}
-								strcpy(params,"f");
-								if(send(fds[1].fd,(void *)&mesg,sizeof(message))<0){
+								strcpy(mesg.params,"f");
+								if(send(fds[1].fd,(void *)&mesg,sizeof(message),0)<0){
 									perror("Error send");
 									exit(1);
 								}
@@ -188,7 +188,7 @@ void * Game(void *arg){
 					case MSG_TT:
 						for(j=0;j<2;j++)
 							if(j!=i){
-								if(send(fds[j].fd,(void *)&mesg,sizeof(message))<0){
+								if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
 									perror("Error send");
 									exit(1);
 								}
@@ -201,7 +201,7 @@ void * Game(void *arg){
 						y=parse(mesg.params,1);
 						XY.x=x;
 						XY.y=y;
-						mesg.command=shoot((int *)field[receiver]);
+						mesg.command=shoot((int *)field[receiver],XY);
 						if(mesg.command==-1) break;
 						
 						if(mesg.command==REQ_MISS){ 
@@ -210,19 +210,19 @@ void * Game(void *arg){
 							receiver=tmp;
 						}
 						for(j=0;j<2;j++)
-							if(send(fds[j].fd,(void *)&mesg,sizeof(message))<0){
+							if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
 								perror("Error send");
 								exit(1);
 							}
 						if((tmp=gameover((int *)field[receiver]))==1){
 							memset(mesg.params,0,128);
 							mesg.command=REQ_YOUWIN;
-							if(send(fds[shooter].fd,(void *)&mesg,sizeof(message))<0){
+							if(send(fds[shooter].fd,(void *)&mesg,sizeof(message),0)<0){
 								perror("Error send");
 								exit(1);
 							}
 							mesg.command=REQ_YOULOSE;
-							if(send(fds[receiver].fd,(void *)&mesg,sizeof(message))<0){
+							if(send(fds[receiver].fd,(void *)&mesg,sizeof(message),0)<0){
 								perror("Error send");
 								exit(1);
 							}
@@ -238,9 +238,4 @@ void * Game(void *arg){
 	}
 }
 
-
-
-int main(){
-return 0;
-}
 
