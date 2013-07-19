@@ -1,7 +1,7 @@
 #include "gui.h"
 
 struct pair De_Move(int **op_mas)
-{
+{        
 	struct pair rt;
 	int key=0;
 	char *str=malloc(255*sizeof(char));
@@ -43,12 +43,20 @@ struct pair De_Move(int **op_mas)
 				keypad(chat,TRUE); 
 				echo();
 				wmove(chat,GUICHATLEN+1,1);
+	/*			wclrtoeol(chat);
+				FINref(chat,2,1);*/
 				while(1){
 					c=wgetch(chat);
 					if(c!=10) 
 						str[strcount++]=c; 
 					else {
 						str[strcount]='\0';
+						wmove(chat,GUICHATLEN+1,1);
+		                                wclrtoeol(chat);
+		                                FINref(chat,2,1);
+						if(GUICHATLEN+1==chat->_maxy-1) {// wmove(chat,chat->_maxy,1);
+										  wclrtoeol (chat);
+										   FINref(chat,2,1); }
 						break;	
 					}
 				}
