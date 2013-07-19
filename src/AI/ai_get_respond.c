@@ -1,8 +1,9 @@
 #include "ai.h"
+
 void ai_mark_miss(int x, int y)
 {
 	if(ai_enemy_field[x][y] == CELL_NONE)
-		ai_enemy_field[x][y] = CELL_MISS;
+		ai_enemy_field[x][y] = CELL_MISS, ai_cells_left--;
 }
 
 void ai_ship_mark_dead()
