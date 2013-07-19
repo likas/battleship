@@ -2,6 +2,7 @@
 
 void ai_init()
 {
+	ai_ship_count = 10;
 	ai_cells_left = SIZE * SIZE;
 	ai_last_shot.x = -1;
 	ai_last_shot.y = -1;

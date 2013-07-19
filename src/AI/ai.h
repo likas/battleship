@@ -11,6 +11,7 @@ typedef struct _AI_DIRECTION
 	int dy;
 } AI_DIRECTION;
 
+int ai_ship_count = 10; 
 int ai_cells_left; //Count unshoot cells
 int **ai_player_field, **ai_enemy_field, **player_field;
 COORDS ai_last_shot;
