@@ -2,7 +2,7 @@
 #define GUI_H
 #define _GNU_SOURCE
 
-#include "mboi.h"
+#include "../mboi.h"
 
 #include <stdio.h>
 #include <stdlib.h>
