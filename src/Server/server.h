@@ -22,7 +22,7 @@ typedef struct {
     char name[20];
 }Player;
 
-extern int port;
-extern int thread_id[50];
-extern int game_sockd;
+int port;
+int thread_id[50];
+int game_sockd;
 #endif
