@@ -6,8 +6,7 @@ message ai(message msg)
 	message answer;
 	COORDS coords;
 
-	switch( msg.command )
-	{
+	switch( msg.command ) {
 		case MSG_SG:
 			ai_init();
 			if((double)rand()/RAND_MAX > 0.5)
@@ -34,5 +33,11 @@ message ai(message msg)
 			answer.command = ai_hit( coords );
 			answer.params = "";
 			return answer;
+			break;
+		default:
+			answer.commnad = REQ_DISCONNECT;
+			answer.params = "AI: Don't know how to respond, sorry.\n";
+			return answer;
+			break;
 	}
 }
