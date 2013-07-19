@@ -53,5 +53,4 @@ char* ant_login(int);
 int ant_player_list(message* , int);
 //листинг списка игроков
 
-
 #endif
