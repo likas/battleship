@@ -12,8 +12,8 @@ void ai_rand_cell(int **matr, COORDS *coord)
 		for (int j = 0; j < SIZE; ++j) {
 			if (matr[i][j] == CELL_NONE) {
 				if (count_cell++ == rand_cell) {
-					coord->x = i;
-					coord->y = j;
+					coord->x = j;
+					coord->y = i;
 
 //DEBUG_PRINT(printf("return_coord.x: %d\n", return_coord.x);printf("return_coord.y: %d\n", return_coord.y);)
 

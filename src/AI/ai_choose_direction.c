@@ -1,6 +1,6 @@
 #include "ai.h"
 
-void ai_choose_direction(enum _CELL_STATE state)
+void ai_choose_direction(enum _REQUESTS state)
 {
 	if( ai_last_shot_suc.x == -1 && ai_last_shot_suc.y == -1)
 	{
@@ -33,7 +33,7 @@ void ai_choose_direction(enum _CELL_STATE state)
 			case 3: ai_direction.dx = 0, ai_direction.dy = 1; break;
 		}
 	}
-	else if(state == CELL_MISS)
+	else if(state == REQ_MISS)
 	{
 		ai_direction.dx *= -1;
 		ai_direction.dy *= -1;

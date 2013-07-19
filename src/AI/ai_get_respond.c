@@ -8,9 +8,9 @@ void ai_mark_miss(int x, int y)
 
 void ai_ship_mark_dead()
 {
-	COORDS coord = ai_last_shop;
-    ai_direction.x *= -1;
-	ai_direction.y *= -1;	
+	COORDS coord = ai_last_shot;
+    ai_direction.dx *= -1;
+	ai_direction.dy *= -1;	
 	do
 	{
 		ai_mark_miss(coord.x - 1, coord.y - 1);
@@ -21,19 +21,33 @@ void ai_ship_mark_dead()
 		ai_mark_miss(coord.x    , coord.y + 1);
 		ai_mark_miss(coord.x - 1, coord.y + 1);
 		ai_mark_miss(coord.x - 1, coord.y + 1);
-		coord.x += ai_direction.x;
-		coord.y += ai_direction.y;
+		coord.x += ai_direction.dx;
+		coord.y += ai_direction.dy;
 	}
 	while(ai_enemy_field[coord.x][coord.y] == CELL_SHIP_FIRE);			
 }
 
 void ai_get_respond(enum _REQUESTS req)
 {
-     ai_enemy_field[ai_last_shot.x][ai_last_shot.y] = state;
- 
-     if( !got_target && state == REQ_HIT)
+	 enum _CELL_STATE state;
+	 switch(req)
+	 {
+		case REQ_HIT:
+			state = CELL_SHIP_FIRE;
+			break;
+		case REQ_MISS:
+			state = CELL_MISS;
+			break;
+		case REQ_DESTROYED:
+			state = CELL_SHIP_FIRE;
+			break;
+	 }
+	 
+ 	 ai_enemy_field[ai_last_shot.x][ai_last_shot.y] = state;
+
+     if( !got_target && req  == REQ_HIT)
          got_target = 1;
-     if( got_target && state == REQ_DESTROYED)
+     if( got_target && req == REQ_DESTROYED)
      {
          got_target = 0;
          ai_ship_mark_dead();
@@ -42,8 +56,8 @@ void ai_get_respond(enum _REQUESTS req)
      }
  
      if( got_target )
-         ai_choose_direction(state);
+         ai_choose_direction(req);
  
-     if(state == REQ_HIT)
+     if(req == REQ_HIT)
          ai_last_shot_suc = ai_last_shot;
 }
