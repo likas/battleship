@@ -1,21 +1,30 @@
 #ifndef H_MBOI
 #define H_MBOI
-#include <stdlib.h>
-int const SIZE = 10;
-int const COUNT_SHIP = 4;
+
+#ifndef SIZE
+#define SIZE 10
+#endif
+
+#ifndef COUNT_SHIP
+#define COUNT_SHIP 4
+#endif
+
+#ifndef MSG_LEN
 #define MSG_LEN 128
+#endif 
 
 enum _CELL_STATE
 {
-	CELL_NONE = 0,
+	CELL_NONE,
 	CELL_SHIP,
 	CELL_SHIP_FIRE,
+	CELL_SHIP_DEAD,
 	CELL_MISS
 } CELL_STATE;
 
 enum _KEY
 {
-	KEY_LEFT = 10, 
+	KEY_LEFT, 
 	KEY_RIGHT,
 	KEY_UP,
 	KEY_DOWN,
@@ -27,11 +36,11 @@ enum _KEY
 
 enum _REQUESTS
 {
-	REQ_ACCEPT = 20,
+	REQ_ACCEPT,
 	REQ_DECLINE,
-	REQ_HIT,///попал
-	REQ_MISS,//мимо
-	REQ_DESTROYED,//уничтожил
+	REQ_HIT,
+	REQ_MISS,
+	REQ_DESTROYED,
 	REQ_YOUWIN,
 	REQ_YOULOSE,
 	REQ_DISCONNECT,
@@ -47,14 +56,12 @@ typedef struct{
 
 enum _MSG_TSK
 {
-	MSG_NN = 40,//ник
+	MSG_NN,//ник
 	MSG_RQ,//ответ сервера
 	MSG_TT,//сообщение чата
 	MSG_AT,//атака
 	MSG_HM,//попадание
-	MSG_SG,//начало игры
-	MSG_SF//Начинаем пересылку поля
-	
+	MSG_SG//начало игры
 } MSG_TSK;
 
 typedef struct _COORDS

@@ -19,14 +19,14 @@ int got_target;
 int *ships;
 
 //****Использовать извне и получать выгоду***
-int ai(int x, int y);
+enum _REQUESTS ai(COORDS);
+enum _REQUESTS ai_hit(COORDS);
 int ai_set_field(int **); //Set player field
 void ai_init();    //Initialization library
 void ai_uninit();  //Clean library from memory
 
 //**** Module function *****
 int ai_shoot(COORDS *coords); 
-int ai_hit(COORDS);
 void ai_get_respond(enum _REQUESTS); 
 void ai_clear_variants(int **);			// marks places where no more ships can be located 
 void ai_choose_direction();
