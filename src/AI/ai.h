@@ -32,5 +32,6 @@ void ai_get_respond(enum _REQUESTS);
 void ai_clear_variants(int **);			// marks places where no more ships can be located 
 void ai_choose_direction(enum _REQUESTS);
 void ai_rand_cell(int **, COORDS *);
+int **ai_rand_matr(int **);
 void ai_draw(int **, int**);
 #endif 
