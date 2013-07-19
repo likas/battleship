@@ -1,17 +1,28 @@
 #include "ai.h"
-#include "gui.h"
-int is_first = 0;
-int first_start = 1;
+
+void draw_cell(enum _CELL_STATE state)
+{
+	switch(state)
+	{
+		case CELL_NONE: printf("O"); break;
+		case CELL_SHIP: printf("S"); break;
+		case CELL_SHIP_FIRE: printf("F"); break;
+		case CELL_MISS: printf("*"); break;
+	}
+}
+
 void ai_draw(int **field_first, int **field_second)
 {
-	if(first_start)
-		gui(), 
-		De_Init(field_first, field_second), 
-		first_start = 0;
-	else
-		render(field_first, field_second, is_first++),
-		is_first%=2;
-	getch();
+	for(int i = 0; i < SIZE; i++)
+    {
+		for(int j = 0; j < SIZE; j++)
+			draw_cell(field_first[i][j]);	
+		printf("\t");	
+		for(int j = 0; j < SIZE; j++)
+			draw_cell(field_second[i][j]);	
+		printf("\n");
+	}	
+	getchar();
 }
 
 int main()

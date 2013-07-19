@@ -23,6 +23,6 @@ message ai(message msg)
 				answer.params[0] = 's';
 				return answer;
 			}
-		case MSG_AT:
+		case MSG_AT: break;
 	}
 }

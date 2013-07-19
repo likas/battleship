@@ -2,5 +2,5 @@
 
 void ai_uninit()
 {
-	free(sheeps);
+	free(ships);
 }
