@@ -22,7 +22,6 @@ void ai_draw(int **field_first, int **field_second)
 			draw_cell(field_second[i][j]);	
 		printf("\n");
 	}	
-	getchar();
 }
 
 int main()
@@ -44,10 +43,10 @@ int main()
 	{
 		fire_range[i] = (int *)malloc( sizeof(int) * SIZE);
 		test_area[i] = (int *)malloc( sizeof(int) * SIZE);
-		for(int j = 0; j < SIZE; j++)
-			fire_range[i][j] = test_area[i][j] = test_area1[i][j];
+//		for(int j = 0; j < SIZE; j++)
+//			fire_range[i][j] = test_area[i][j] = test_area1[i][j];
 	}
-
+	ai_rand_matr( test_area );
 	COORDS coords;
 
 	ai_init();
@@ -61,11 +60,13 @@ int main()
 	}
 	
 	ai_draw( test_area, fire_range );
-
-	ai_rand_cell( test_area, &coords );
-	ai_shoot( &coords );
-	ai_clear_variants( test_area );
-	ai_draw( test_area, fire_range );
+	do
+	{
+		ai_rand_cell( test_area, &coords );
+		ai_shoot( &coords );
+		ai_clear_variants( test_area );
+		ai_draw( test_area, fire_range );
+	}while(getchar() != 'q');
 
 	ai_uninit();
 
