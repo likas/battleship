@@ -23,17 +23,17 @@ message ai(message msg)
 			}
 		case MSG_HM:
 			ai_shoot( &coords );
-			//answer.command = check_hit(); <- take from server
+			answer.command = ai_hit( player_field, coords, PLAYER );
 			coords_atoi( answer.params, coords );
 			return answer;
 			break;
 		case MSG_AT:
 			coords_itoa( msg.params, &coords );
-			answer.commands = ai_hit( coords );
+			answer.command = ai_hit( ai_player_field, coords, AI );
 			return answer;
 			break;
 		default:
-			answer.commnads = REQ_DISCONNECT;
+			answer.commnad = REQ_DISCONNECT;
 			return answer;
 			break;
 	}

@@ -22,7 +22,7 @@ int *ships;
 
 //****Использовать извне и получать выгоду***
 message ai(message);
-enum _REQUESTS ai_hit(COORDS);
+enum _REQUESTS ai_hit(int**, COORDS, int);
 int ai_set_field(int **); //Set player field
 void ai_init();    //Initialization library
 void ai_uninit();  //Clean library from memory
