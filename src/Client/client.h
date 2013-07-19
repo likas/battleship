@@ -9,11 +9,6 @@
 #include <sys/socket.h>
 #include "../mboi.h"
 /*----------------------*/
-typedef struct _shot
-{
-    int x;
-    int y;
-}shot;
 /*----------------------*/
 #endif
 
