@@ -1,5 +1,11 @@
 #include "ai.h"
 
+int is_ship_dead( int**, COORDS, int );
+void choose_direction( int**, COORDS, AI_DIRECTION* );
+void kill_the_ship( int, int );
+int is_game_ended( int );
+int who_won( int );
+
 int ai_hit( int** field, COORDS coords, int whos_been_hit )
 {
 	int ret_status = -1;
@@ -21,7 +27,7 @@ int ai_hit( int** field, COORDS coords, int whos_been_hit )
 	
 	// If missed
 	if ( field[ coords.x ][ coords.y ] == CELL_NONE ) {
-		first[ coords.x ][ coords.y ] = CELL_MISS;
+		field[ coords.x ][ coords.y ] = CELL_MISS;
 		ret_status = REQ_MISS;
 		return ret_status;
 	}
@@ -81,32 +87,32 @@ void choose_direction( int** field, COORDS coords, AI_DIRECTION* direction )
 	direction->dx = 1;
 	direction->dy = 0;
 
-	if ( field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_NONE  ||
-		 field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_MISS ) {
+	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
 		direction->dx = -1;
 		direction->dy = 0;
 	} else {
 		return;
 	}
 
-	if ( field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_NONE  ||
-		 field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_MISS ) {
+	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
 		direction->dx = 0;
 		direction->dy = 1;
 	} else {
 		return;
 	}
 
-	if ( field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_NONE  ||
-		 field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_MISS ) {
+	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
 		direction->dx = 0;
 		direction->dy = -1;
 	} else {
 		return;
 	}
 	
-	if ( field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_NONE  ||
-		 field[ coords.x + direction.dx ][ coords.y + direction.dy ] == CELL_MISS ) {
+	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
 		direction->dx = 0;
 		direction->dy = 0;
 	} else {
