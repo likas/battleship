@@ -1,28 +1,38 @@
 //This module emulation server and apponent clisent
 #include "ai.h"
 
-int bot_step; //1 if step Ai 
 message ai(message msg)
 {
 	message answer;
+	COORDS coords;
+
 	switch( msg.command )
 	{
 		case MSG_SG:
 			ai_init();
 			if((double)rand()/RAND_MAX > 0.5)
 			{
-				bot_step = 0;
 				answer.command = MSG_SG;
 				answer.params[0] = 'f';
 				return answer;
 			}
 			else
 			{
-				bot_step = 1;
 				answer.command = MSG_SG;
 				answer.params[0] = 's';
 				return answer;
 			}
+			break;
+		case MSG_HM:
+			ai_shoot( &coords );
+			//answer.command = check_hit(); <- take from server
+			coords_atoi( answer.params, coords );
+			return answer;
+			break;
 		case MSG_AT:
+			coords_itoa( msg.param, &coords );
+			answer.command = ai_hit( coords );
+			answer.params = "";
+			return answer;
 	}
 }
