@@ -61,7 +61,7 @@ int vert_ship_can_fit( int** ai_enemy_field, int start_pos_x, int start_pos_y, i
 		blanks++;
 	}
 	
-	for ( pos_y = start_pos_y, blanks = 0; pos_y >= 0; pos_y-- ) {
+	for ( pos_y = start_pos_y - 1; pos_y >= 0; pos_y-- ) {
 		if ( ai_enemy_field[ start_pos_x ][ pos_y ] != CELL_NONE ) {
 			if ( blanks < ship_min_length ) {
 				return 0;
