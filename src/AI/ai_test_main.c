@@ -26,7 +26,7 @@ void ai_draw(int **field_first, int **field_second)
 
 int main()
 {
-	int test_area1[ SIZE ][ SIZE ] = { {1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
+/*	int test_area1[ SIZE ][ SIZE ] = { {1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
 									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 									  {1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
@@ -37,6 +37,7 @@ int main()
 									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 									  {0, 0, 0, 0, 0, 1, 1, 1, 0, 0}
 									};
+*/
 	int **fire_range = (int **) malloc( sizeof(int*) * SIZE); 
 	int **test_area = (int **) malloc (sizeof(int*) * SIZE);
 	for(int i = 0; i < SIZE; i++)

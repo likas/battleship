@@ -41,6 +41,9 @@ void ai_get_respond(enum _REQUESTS req)
 		case REQ_DESTROYED:
 			state = CELL_SHIP_FIRE;
 			break;
+		default: 
+			return; 
+			break;
 	 }
 	 
  	 ai_enemy_field[ai_last_shot.x][ai_last_shot.y] = state;
