@@ -237,3 +237,10 @@ void * Game(void *arg){
 		}
 	}
 }
+
+
+
+int main(){
+return 0;
+}
+
