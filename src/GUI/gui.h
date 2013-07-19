@@ -42,7 +42,7 @@ int De_Init(int **, int **);
 void render(int**,int**,int);
 //Рисовка полей, подаются 2 массива представляющих из себя поля.
 
-struct pair De_Move(int**);
+COORDS  De_Move(int**);
  //Наш ход, подается массив поля противника
 
 void ant_hello(char* , char*);

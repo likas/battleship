@@ -1,8 +1,8 @@
 #include "gui.h"
 
-struct pair De_Move(int **op_mas)
+COORDS De_Move(int **op_mas)
 {        
-	struct pair rt;
+	COORDS  rt;
 	int key=0;
 	char *str=malloc(255*sizeof(char));
 	char c;

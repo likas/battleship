@@ -1,7 +1,7 @@
 #include "gui.h"
 
 int main()
-{  struct pair coord;
+{  COORDS coord;
    int i,j;
     message *st=malloc(28 * sizeof(message));
   
@@ -53,7 +53,7 @@ De_Init(a,b);
 //////////////////////////////////////////////////
 coord=De_Move(b);
 FINchcell(coord.x,coord.y,4,1);
-render(a,b,1);
+//render(a,b,1);
 
 endgui(1);
 return 0;
