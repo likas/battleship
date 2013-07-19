@@ -2,7 +2,7 @@
 
 #define size 10
 
-int game_sockd=-1;
+//int game_sockd=-1;
 
 int parse(char *str,int position){
 	char x[2];
