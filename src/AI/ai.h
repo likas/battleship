@@ -27,8 +27,8 @@ void ai_uninit();  //Clean library from memory
 //**** Module function *****
 int ai_shoot(COORDS *coords); 
 int ai_hit(COORDS);
-void ai_clear_variants();  
 void ai_get_respond(enum _REQUESTS); 
+void ai_clear_variants(int **);			// marks places where no more ships can be located 
 void ai_choose_direction();
 void ai_rand_cell(int **, COORDS *);
 
