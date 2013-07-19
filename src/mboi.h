@@ -26,20 +26,6 @@ enum _KEY
 	KEY_ESC
 } KEY;
 
-enum _REQUESTS
-{
-	REQ_ACCEPT,
-	REQ_DECLINE,
-	REQ_HIT,
-	REQ_MISS,
-	REQ_DESTROYED,
-	REQ_YOUWIN,
-	REQ_YOULOSE,
-	REQ_DISCONNECT,
-	REQ_STARTLIST,
-	REQ_STORLIST,
-	REQ_GAMESTARTED
-} REQ;
 
 typedef struct{
 	int command;
@@ -53,7 +39,20 @@ enum _MSG_TSK
 	MSG_TT,//сообщение чата
 	MSG_AT,//атака
 	MSG_HM,//попадание
-	MSG_SG//начало игры
+	MSG_SG,//начало игры
+	MSG_SF//Начало передачи поля
+	REQ_ACCEPT,
+	REQ_DECLINE,
+	REQ_HIT,
+	REQ_MISS,
+	REQ_DESTROYED,
+	REQ_YOUWIN,
+	REQ_YOULOSE,
+	REQ_DISCONNECT,
+	REQ_STARTLIST,
+	REQ_GAMESTARTED,
+	REQ_STORLIST
+
 } MSG_TSK;
 
 typedef struct _COORDS
