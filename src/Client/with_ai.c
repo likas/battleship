@@ -9,7 +9,7 @@ int with_ai()
 	ch_ai.command = MSG_SG;
 	/*creating field*/
 	De_Init(&SMAP,&EMAP);
-	ch_ai=ai(MSG_SG);
+	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == "f")
 	{
 		turn=1;
@@ -37,7 +37,7 @@ int with_ai()
 				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 				break;
 			}
-			case REQ_YOUWIN
+			case REQ_YOUWIN:
 			{
 				g_o=1;
 				break;
@@ -64,7 +64,7 @@ int with_ai()
 				SMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 				break;
 			}
-			case REQ_YOULOSE
+			case REQ_YOULOSE:
 			{
 				g_o=2;
 				break;
