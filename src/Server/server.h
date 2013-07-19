@@ -19,7 +19,7 @@
 int childWork(int sockClient);
 typedef struct {
     int _id;
-    char name[20];
+    char name[30];
 }Player;
 
 int port;
