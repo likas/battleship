@@ -8,8 +8,12 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "../mboi.h"
+#include "../AI/ai.h"
+#include "../GUI/gui.h"
 /*----------------------*/
 /*----------------------*/
 #endif
 
 int ser_soc;
+int SMAP[10][10];
+int EMAP[10][10];
