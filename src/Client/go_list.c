@@ -15,6 +15,10 @@ int go_list()
 		{
 			break;
 		}
+		if(lists[i].command == -1){
+			i--;
+			continue;
+		}
 		i++;
 	}
 	return lists[ant_player_list(lists,i)].command;
