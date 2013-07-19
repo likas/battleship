@@ -1,9 +1,18 @@
 #ifndef H_MBOI
 #define H_MBOI
-#include <stdlib.h>
-int const SIZE = 10;
-int const COUNT_SHIP = 4;
+
+#ifndef SIZE
+#define SIZE 10
+#endif
+
+#ifndef COUNT_SHIP
+#define COUNT_SHIP 4
+#endif
+
+#ifndef MSG_LEN
 #define MSG_LEN 128
+#endif 
+#include <stdlib.h>
 
 enum _CELL_STATE
 {
@@ -25,6 +34,20 @@ enum _KEY
 	KEY_ESC
 } KEY;
 
+enum _REQUESTS
+{
+	REQ_ACCEPT,
+	REQ_DECLINE,
+	REQ_HIT,
+	REQ_MISS,
+	REQ_DESTROYED,
+	REQ_YOUWIN,
+	REQ_YOULOSE,
+	REQ_DISCONNECT,
+	REQ_STARTLIST,
+	REQ_STORLIST,
+	REQ_GAMESTARTED
+} REQ;
 
 typedef struct{
 	int command;
@@ -39,7 +62,7 @@ enum _MSG_TSK
 	MSG_AT,//атака
 	MSG_HM,//попадание
 	MSG_SG,//начало игры
-	MSG_SF//Начало передачи поля
+	MSG_SF,//Начало передачи поля
 	REQ_ACCEPT,
 	REQ_DECLINE,
 	REQ_HIT,

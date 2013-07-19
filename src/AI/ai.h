@@ -2,7 +2,6 @@
 #define AI_H
 #include <sys/time.h>
 #include <time.h>
-#include "../GUI/gui.h"
 #include "../mboi.h"
 
 typedef struct _AI_DIRECTION
