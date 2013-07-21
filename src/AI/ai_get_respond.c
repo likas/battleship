@@ -54,18 +54,21 @@ void ai_get_respond(enum _REQUESTS req)
  	 
 	 ai_enemy_field[ai_last_shot.x][ai_last_shot.y] = state;
 
-     if( !got_target && req  == REQ_HIT)
-         got_target = 1;
-     if( req == REQ_DESTROYED)
+     if( !got_target)
+	 {
+	 	if(req  == REQ_HIT) 
+        	got_target = 1, ai_choose_direction(req);
+ 	 } 
+	 else if(req == REQ_MISS)
+	 	ai_choose_direction(req);
+
+	 if( req == REQ_DESTROYED)
      {
          got_target = 0;
          ai_ship_mark_dead();
          ai_last_shot_suc.x = -1;
          ai_last_shot_suc.y = -1;
      }
- 
-     if( got_target )
-         ai_choose_direction(req);
  
      if(req == REQ_HIT)
          ai_last_shot_suc = ai_last_shot;
