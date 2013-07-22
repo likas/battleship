@@ -186,7 +186,7 @@ int ai_rand_matr(int **matr)
 	
 	// CELL_NONE in all matr
 	for (int i = 0; i < SIZE; ++i) {
-		for (j = 0; j < SIZE; ++j) {
+		for (int j = 0; j < SIZE; ++j) {
 			matr[i][j] = CELL_NONE;
 		}
 	}

@@ -12,7 +12,7 @@ int ai_rand_cell(int **matr, COORDS *coord, DIRECTION_WAY const change)
 			for (int x = 0; x < SIZE; ++x) {
 				if (matr[y][x] == CELL_NONE) {
 					if (count_cell++ == rand_cell) {
-						printf("matr1; %d\n", matr[y][x]);
+//						printf("matr1; %d\n", matr[y][x]);
 						coord->x = x;
 						coord->y = y;
 //	printf("count_free_cell: %d\n", count_free_cell);
@@ -28,7 +28,7 @@ int ai_rand_cell(int **matr, COORDS *coord, DIRECTION_WAY const change)
 			for (int x = 0; x < SIZE; ++x) {
 				if (matr[x][y] == CELL_NONE) {
 					if (count_cell++ == rand_cell) {
-						printf("matr2; %d\n", matr[x][y]);
+//						printf("matr2; %d\n", matr[x][y]);
 						coord->x = x;
 //	printf("count_free_cell: %d\n", count_free_cell);
 //	printf("rand_cell: %d\n", rand_cell);
