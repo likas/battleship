@@ -30,6 +30,7 @@ void ai_draw(int **field_first, int **field_second)
 int main()
 {
 	srand(time(NULL));
+//	srand(234);	
 
 	ai_init();
 	ai_rand_matr( ai_player_field );
