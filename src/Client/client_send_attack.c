@@ -1,5 +1,5 @@
-/* #include "../mboi.h" */
-#include "client.h"
+#include "../mboi.h"
+/* #include "client.h"*/
 extern int TUNNEL;
 int client_send_attack(COORDS xy){
 	message msg;

@@ -1,5 +1,6 @@
-#include "client.h"
-
+/* #include "client.h" */
+#include "../mboi.h"
+extern int TUNNEL;
 int client_send_text(int action, char* text){
 	message	msg; /* struct message{ int command, char* params[128] }
 	/* @ FIELD_START FIELD_END @ */

@@ -1,4 +1,4 @@
-#include "client.h"
+/* #include "client.h" */
 #include <netinet/in.h>
 int socket_init(){
 	int sock;
