@@ -11,8 +11,15 @@ int ai_shoot( COORDS *coords )
 	if( !got_target )
 	{
 		printf("RANDOOOM!\n");
-		ai_rand_cell(ai_enemy_field, coords);	
-		printf("Random shot %d %d\n", coords->x, coords->y);
+		for (int i = 0; i < SIZE; ++i) {
+			for (int j = 0; j < SIZE; ++j) {
+				printf("%d", ai_enemy_field[i][j]);
+			}
+			printf("\n");
+		}
+		printf("\n");
+		ai_rand_cell(ai_enemy_field, coords, 1);	
+		printf("Random shot %d %d\n", coords->y, coords->x);
 		ai_cells_left--;
 		ai_last_shot = *coords;
 		return 1;
