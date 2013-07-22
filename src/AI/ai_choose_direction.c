@@ -12,7 +12,7 @@ void ai_choose_direction( enum _REQUESTS state )
 		int avalible_sides[ 4 ] = { 0 };
 		if( ai_last_shot.x > 0 && ai_enemy_field[ ai_last_shot.x - 1 ][ ai_last_shot.y ] == CELL_NONE ) {
 			N_sides++, avalible_sides[ 0 ] = 1;
-		} 
+		}
 		
 		if( ai_last_shot.y > 0 && ai_enemy_field[ ai_last_shot.x ][ ai_last_shot.y - 1 ] == CELL_NONE ) {
 			N_sides++, avalible_sides[ 1 ] = 1;

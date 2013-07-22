@@ -10,7 +10,6 @@ int ai_shoot( COORDS *coords )
 	
 	if( !got_target )
 	{
-		ai_rand_cell( ai_enemy_field, coords );	
 		printf("RANDOOOM!\n");
 		ai_rand_cell(ai_enemy_field, coords);	
 		printf("Random shot %d %d\n", coords->x, coords->y);

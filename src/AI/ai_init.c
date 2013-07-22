@@ -14,7 +14,17 @@ void ai_init()
 	ai_direction.dy = 0;
 	got_target = 0;
 	ships = (int *)malloc( sizeof( int ) * COUNT_SHIP );
-	for( int i = 0; i < COUNT_SHIP; i++ ) {
-		ships[ i ] = COUNT_SHIP - i - 1;
+	for ( int i = 0; i < COUNT_SHIP; i++ ) {
+		ships[ i ] = COUNT_SHIP - i;
 	}
+	
+	ai_player_field = calloc( SIZE, sizeof( int* ) );
+	for ( int index = 0; index < SIZE; index++ ) {
+		ai_player_field[ index ] = calloc( SIZE, sizeof( int ) );
+	}	
+	
+	ai_enemy_field = calloc( SIZE, sizeof( int* ) );
+	for ( int index = 0; index < SIZE; index++ ) {
+		ai_enemy_field[ index ] = calloc( SIZE, sizeof( int ) );
+	}	
 }
