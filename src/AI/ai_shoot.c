@@ -18,7 +18,7 @@ int ai_shoot( COORDS *coords )
 	}
 	
 	coords->x = ai_last_shot_suc.x + ai_direction.dx;
-	coords->y = ai_last_shot_suc.y + ai_direction.dy;	
+	coords->y = ai_last_shot_suc.y + ai_direction.dy;
 	ai_last_shot.x = coords->x;
 	ai_last_shot.y = coords->y;
 	ai_cells_left--;
