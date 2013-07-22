@@ -42,6 +42,10 @@ int with_ai()
 				g_o=1;
 				break;
 			}
+			case REQ_DESTROYED:
+			{
+				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+			}			
 			
 		}
 	}
@@ -68,6 +72,10 @@ int with_ai()
 			{
 				g_o=2;
 				break;
+			}
+			case REQ_DESTROYED:
+			{
+				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 			}
 			
 		}
