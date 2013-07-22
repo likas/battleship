@@ -24,6 +24,7 @@ int main(int argc, char* argv[]){
 		/* message */
 	}else{
 	char player_id=-1;
+	message received;
 	COORDS xy; xy.x=-1; xy.y=-1;
 	TUNNEL=socket_init(); /* TUNNEL is lying somewhere in the header, ask
 						   * someone else, what do you want from me, for
@@ -33,7 +34,6 @@ int main(int argc, char* argv[]){
 	/*there we send a NN located in nickname global which is defined in gui.h
 	* to the server with TUNNEL established earlier */
 	/*here server shall send us a list of existing games, and we get it like: */
-	message received;
 	while(1){
 			if(recv(TUNNEL, &received, sizeof(message), 0) > 0){
 				break;
