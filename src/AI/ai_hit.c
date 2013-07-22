@@ -168,4 +168,6 @@ int who_won( int who )
 	if ( who == AI ) {
 		return REQ_YOUWIN;
 	}
+
+	return REQ_DISCONNECT;
 }

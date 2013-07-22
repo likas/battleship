@@ -34,7 +34,7 @@ message ai( message msg )
 			return answer;
 			break;
 		default:
-			answer.commnad = REQ_DISCONNECT;
+			answer.command = REQ_DISCONNECT;
 			return answer;
 			break;
 	}

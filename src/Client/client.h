@@ -17,3 +17,6 @@
 int ser_soc;
 int SMAP[10][10];
 int EMAP[10][10];
+
+int coords_atoi(char *, COORDS);
+int coords_itoa(char *, COORDS*);
