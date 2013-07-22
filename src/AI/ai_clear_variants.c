@@ -49,6 +49,7 @@ void fill_gaps( int** ai_enemy_field, int row, int coll, int blank_cells_cnt, in
 	do {
 		if( !vert_ship_can_fit( ai_enemy_field, pos_x, pos_y, ship_min_length ) ) {
 			ai_enemy_field[ pos_x ][ pos_y ] = CELL_MISS;
+			ai_cells_left--;
 		}
 		pos_x--;
 	} while (blanks != 0);
