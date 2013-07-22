@@ -59,9 +59,13 @@ void ai_get_respond(enum _REQUESTS req)
 	 	if(req  == REQ_HIT) 
         	got_target = 1, ai_choose_direction(req);
  	 } 
-	 else if(req == REQ_MISS)
-	 	ai_choose_direction(req);
-
+	 else 
+	 {
+		if(req == REQ_HIT)
+			got_target = 2; 
+		if(req == REQ_MISS)
+	 		ai_choose_direction(req);
+	 }
 	 if( req == REQ_DESTROYED)
      {
          got_target = 0;

@@ -2,27 +2,20 @@
 
 void ai_choose_direction(enum _REQUESTS state)
 {
-	if( ai_last_shot_suc.x == -1 && ai_last_shot_suc.y == -1)
+	COORDS coords = (ai_last_shot_suc.x == -1 && ai_last_shot_suc.y == -1) ? ai_last_shot : ai_last_shot_suc;
+	if(got_target != 2)
 	{
 		int N_sides = 0;
-		int avalible_sides[4];
-		if(ai_last_shot.x > 0 && ai_enemy_field[ai_last_shot.x - 1][ai_last_shot.y] == CELL_NONE)
+		int avalible_sides[4] = { 0 };
+		if( coords.x > 0 && ai_enemy_field[coords.x - 1][coords.y] == CELL_NONE )
 			N_sides++, avalible_sides[0] = 1;
-		else
-			avalible_sides[0] = 0;
-		if( ai_last_shot.y > 0 && ai_enemy_field[ai_last_shot.x][ai_last_shot.y - 1] == CELL_NONE )
+		if( coords.y > 0 && ai_enemy_field[coords.x][coords.y - 1] == CELL_NONE )
 			N_sides++, avalible_sides[1] = 1;
-		else
-			avalible_sides[1] = 0;
-		if( ai_last_shot.x < SIZE - 1 && ai_enemy_field[ai_last_shot.x + 1][ai_last_shot.y] == CELL_NONE )
+		if( coords.x < SIZE - 1 && ai_enemy_field[coords.x + 1][coords.y] == CELL_NONE )
 			N_sides++, avalible_sides[2] = 1;
-		else
-			avalible_sides[2] = 0;
-		if( ai_last_shot.y < SIZE - 1 && ai_enemy_field[ai_last_shot.x][ai_last_shot.y + 1] == CELL_NONE )	
+		if( coords.y < SIZE - 1 && ai_enemy_field[coords.x][coords.y + 1] == CELL_NONE )	
 			N_sides++, avalible_sides[3] = 1;
-		else
-			avalible_sides[3] = 0;
-		int direction = (rand() / RAND_MAX) * N_sides;
+		int direction = (((double)rand() / RAND_MAX) * N_sides);
 		while(avalible_sides[direction % 4] != 1)
 			direction++;
 		switch(direction)
@@ -32,6 +25,7 @@ void ai_choose_direction(enum _REQUESTS state)
 			case 2: ai_direction.dx = 1, ai_direction.dy = 0; break;
 			case 3: ai_direction.dx = 0, ai_direction.dy = 1; break;
 		}
+		printf("Dir: %d %d N: %d\n", ai_direction.dx, ai_direction.dy, N_sides);
 	}
 	else if(state == REQ_MISS)
 	{

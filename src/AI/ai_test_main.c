@@ -58,8 +58,8 @@ int main()
 		ai_clear_variants( ai_enemy_field );
 		
 		ai_draw( ai_enemy_field, player_field );
-	}while(getchar() != 'q');
-
+//	}while(getchar() != 'q');
+	}while(1);
 	ai_uninit();
 
 	return 0;
