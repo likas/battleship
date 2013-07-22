@@ -29,11 +29,11 @@ void ras(int *smap)
 	    case 's':
 		if(!dir)
 		{
-		    if(y<size-1)
+		    if(y<SIZE-1)
 			y++;
 		}
 		else
-		    if(y<size-len)
+		    if(y<SIZE-len)
 			y++;
 		break;
 	    case 'a':
@@ -43,11 +43,11 @@ void ras(int *smap)
 	    case 'd':
 		if(dir)
 		{
-		    if(x<size-1)
+		    if(x<SIZE-1)
 			x++;
 		}
 		else
-		    if(x<size-len)
+		    if(x<SIZE-len)
 		        x++;
 		break;
 	    case 10:
@@ -55,12 +55,12 @@ void ras(int *smap)
 		{
 		    f=0;
 		    for(i=0;i<len;i++)
-			if(*(smap+size*y+x+i))
+			if(*(smap+SIZE*y+x+i))
 			    f=1;
 		    if(!f)
 		    {
 		        for(i=0;i<len;i++)
-			    *(smap+size*y+x+i)=1;
+			    *(smap+SIZE*y+x+i)=1;
 			kor[len-1]--;
 			if(!kor[len-1])
 			    len--;
@@ -76,12 +76,12 @@ void ras(int *smap)
 		{
 		    f=0;
 		    for(i=0;i<len;i++)
-			if(*(smap+size*(y+i)+x))
+			if(*(smap+SIZE*(y+i)+x))
 			    f=1;
 		    if(!f)
 		    {
 		        for(i=0;i<len;i++)
-			    *(smap+size*(y+i)+x)=1;
+			    *(smap+SIZE*(y+i)+x)=1;
 			kor[len-1]--;
 			if(!kor[len-1])
 			    len--;
@@ -98,14 +98,14 @@ void ras(int *smap)
 		if(dir)
 		{
 		    dir=0;
-		    if(x+len>=size)
-			x=size-len;
+		    if(x+len>=SIZE)
+			x=SIZE-len;
 		}
 		else
 		{
 		    dir=1;
-		    if(y+len>=size)
-			y=size-len;
+		    if(y+len>=SIZE)
+			y=SIZE-len;
 		}
 		break;
 	}
