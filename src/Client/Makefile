@@ -4,7 +4,7 @@ MAIN=client.c
 HEADER=client.h
 KEYS=-Wall -pedantic -g
 all: $(MAIN) libClient.a
-	gcc $(KEYS) $(MAIN) -o cl -L. -lClient -L ../GUI/ -L ../AI/ -lgui -lncurse -lai
+	gcc $(KEYS) $(MAIN) -o cl -L. -lClient -L../GUI/ -lgui -L../AI/ -lai -lncurse
 libClient.a: $(OBJ)
 	ar cr libClient.a $(OBJ) 
 %.o:%.c
