@@ -8,6 +8,7 @@ void draw_cell(enum _CELL_STATE state)
 		case CELL_SHIP: printf("S"); break;
 		case CELL_SHIP_FIRE: printf("@"); break;
 		case CELL_MISS: printf("*"); break;
+		default: break;
 	}
 }
 
@@ -40,8 +41,8 @@ int main()
 									  {0, 0, 0, 0, 0, 1, 1, 1, 0, 0}
 									};
 */
-	srand(time(NULL));
-//	srand(234);	
+//	srand(time(NULL));
+	srand(2345);	
 
 	ai_init();
 	ai_rand_matr( ai_player_field );
