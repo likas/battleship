@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "client.h"
 #include "../mboi.h"
+#include "../GUI/gui.h"
 /*----------------------------*/
 void ras(int *smap)
 {
@@ -11,9 +12,14 @@ void ras(int *smap)
     int f=0;
     int kor[4]={4,3,2,1};
     //---------------------
+    attron(A_REVERSE);
+    FINchcell(x,y,2,0);
+    attroff(A_REVERSE);
     while(1)
     {
 	key=getch();
+	
+	FINchcell(x,y,2,0);
 	switch(key)
 	{
 	    case KEY_UP:
@@ -60,7 +66,10 @@ void ras(int *smap)
 			    len--;
 			if(!len)
 			    return;
-			
+			render(&smap,0,0);
+			attron(A_REVERSE);
+			FINchcell(x,y,2,0);
+			attroff(A_REVERSE);
 		    }
 		}
 		else
@@ -78,6 +87,10 @@ void ras(int *smap)
 			    len--;
 			if(!len)
 			    return;
+			render(&smap,0,0);
+			attron(A_REVERSE);
+			FINchcell(x,y,2,0);
+			attroff(A_REVERSE);
 		    }
 		}
 		break;
@@ -96,6 +109,9 @@ void ras(int *smap)
 		}
 		break;
 	}
+    attron(A_REVERSE);
+    FINchcell(x,y,2,0);
+    attroff(A_REVERSE);
     }
 }
 /*----------------------------*/
