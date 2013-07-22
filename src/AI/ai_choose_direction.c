@@ -54,7 +54,8 @@ void ai_choose_direction( enum _REQUESTS state )
 		
 		ai_direction.dx *= -1;
 		ai_direction.dy *= -1;
-		while( ai_enemy_field[ ai_last_shot.x + ai_direction.dx ][ ai_last_shot.y + ai_direction.dy ] != CELL_NONE )
-			ai_last_shot.x += ai_direction.dx, ai_last_shot.y += ai_direction.dy;
+		do {
+			ai_last_shot_suc.x += ai_direction.dx, ai_last_shot_suc.y += ai_direction.dy;
+		} while( ai_enemy_field[ ai_last_shot_suc.x + ai_direction.dx ][ ai_last_shot_suc.y + ai_direction.dy ] != CELL_NONE );
 	}
 }
