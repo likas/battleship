@@ -29,7 +29,7 @@ int **ai_player_field, **ai_enemy_field, **player_field;
 COORDS ai_last_shot;
 COORDS ai_last_shot_suc;
 AI_DIRECTION ai_direction;
-int got_target;
+int got_target; // 0 - random_shot; 1 - surround shot; 2 - direct revert
 int *ships;
 
 //****Использовать извне и получать выгоду***
