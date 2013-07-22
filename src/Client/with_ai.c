@@ -9,6 +9,7 @@ int with_ai()
 	ch_ai.command = MSG_SG;
 	/*creating field*/
 	De_Init(&SMAP,&EMAP);
+	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == "f")
 	{
@@ -42,6 +43,10 @@ int with_ai()
 				g_o=1;
 				break;
 			}
+			case REQ_DESTROYED:
+			{
+				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+			}			
 			
 		}
 	}
@@ -68,6 +73,10 @@ int with_ai()
 			{
 				g_o=2;
 				break;
+			}
+			case REQ_DESTROYED:
+			{
+				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 			}
 			
 		}
