@@ -18,7 +18,7 @@ int ai_shoot( COORDS *coords )
 			printf("\n");
 		}
 		printf("\n");
-		ai_rand_cell(ai_enemy_field, coords, 1);	
+		ai_rand_cell(ai_enemy_field, coords, X_Y);	
 		printf("Random shot %d %d\n", coords->y, coords->x);
 		ai_cells_left--;
 		ai_last_shot.x = coords->x;

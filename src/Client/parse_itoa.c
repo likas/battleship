@@ -1,5 +1,5 @@
 #include "client.h"
-char* parser_itoa(int number){
+int parser_itoa(int number, char* buf){
 	int i,b,r;
 	b=number;r=0;
 	while(b>0)
@@ -15,5 +15,5 @@ char* parser_itoa(int number){
 		buf[i]=b%10;
 		b/=10;
 	}
-	return buf;
+	return 0;
 }

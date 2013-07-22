@@ -1,7 +1,7 @@
+#ifndef CLIENT_H
 #include "/home/2013/likas/battleships/src/Client/client.h"
-#include "/home/2013/likas/battleships/src/mboi.h"
+#endif
 /* GLOBALS */
-int TUNNEL=-1, GAME_TUNNEL=-1, YOURMOVE=-1, ONLINE=-1;
 pthread_t chat_thread;
 /* struct sockaddr_in  */
 
@@ -19,7 +19,8 @@ int main(int argc, char* argv[]){
 	}
 	if(!ONLINE){
 		/* possibly init*/
-		WOL=with_ai();
+		/* WOL=with_ai(); */
+		printf("Sorry, no AI functions yet\n");
 		/* message */
 	}else{
 	char player_id=-1;
@@ -85,10 +86,10 @@ int main(int argc, char* argv[]){
 	}*/
 	while(received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
 		if(YOURMOVE){
-			xy=De_Move(b);
+			xy=De_Move(&EMAP);
 			client_send_attack(xy);
 		}else{
-			while(){
+			while(1){
 				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
 				break;
 				}
@@ -108,29 +109,29 @@ int main(int argc, char* argv[]){
 					break;
 				case MSG_AT:
 					/*COORDS*/coords_itoa(received.params, &xy);
-					while(){
+					while(1){
 						if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
 							break;
 						}
 					}
 					if(received.command==REQ_MISS){ YOURMOVE=1; }
 					/* перерисовываем свою! ячейку */
-					SMAP[xy.x, xy.y]=received.command; /* записываем локально */
+					SMAP[xy.x][xy.y]=received.command; /* записываем локально */
 					FINchcell(xy.x, xy.y, received.command, 0); /* рисуем в GUI */
 					break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
-					EMAP[xy.x, xy.y]=received.command; /* записываем локально */
+					EMAP[xy.x][xy.y]=received.command; /* записываем локально */
 					FINchcell(xy.x, xy.y, received.command, 1); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
 					/* перерисовать карту противника на промах */
-					EMAP[xy.x, xy.y]=received.command; /* записываем локально */
+					EMAP[xy.x][xy.y]=received.command; /* записываем локально */
 					FINchcell(xy.x, xy.y, received.command, 1); /* рисуем в GUI */
 					break;
 				case REQ_DESTROYED:
 					/* перерисовать карту противника на хит */
-					EMAP[xy.x, xy.y]=REQ_HIT; /* записываем локально */
+					EMAP[xy.x][xy.y]=REQ_HIT; /* записываем локально */
 					FINchcell(xy.x, xy.y, REQ_HIT, 1); /* рисуем в GUI */
 
 					/* вывести в чат уничтожение */
@@ -141,8 +142,6 @@ int main(int argc, char* argv[]){
 			}
 			}
 		} /* for game cycle */
-	return 0;
-	}
 
 
 
@@ -150,6 +149,7 @@ int main(int argc, char* argv[]){
 
 
 	}/* this is for }else{ of ONLINE */
+	return 0;
 }
 
 

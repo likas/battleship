@@ -4,7 +4,7 @@ void ai_rand_cell_wrap(int **matr, COORDS *coord, int const count_free_cell)
 {
 	int ai_cells_left_temp = ai_cells_left;
 	ai_cells_left = count_free_cell;
-	ai_rand_cell(matr, coord, 0);
+	ai_rand_cell(matr, coord, Y_X);
 	ai_cells_left = ai_cells_left_temp;
 }
 

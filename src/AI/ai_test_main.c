@@ -62,8 +62,7 @@ rand();
 		ai_clear_variants( ai_enemy_field );
 		
 		ai_draw( ai_enemy_field, player_field );
-//	}while(getchar() != 'q');
-	}while(1);
+	}while(getchar() != 'q');
 	ai_uninit();
 
 	return 0;

@@ -1,4 +1,5 @@
-#include "client.h"
+#include "../mboi.h"
+/* #include "client.h" */
 
 int coords_atoi(char* array, COORDS xy){
 	array[0]=xy.x;
