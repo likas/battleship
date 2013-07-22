@@ -16,8 +16,9 @@ void ai_ship_mark_dead()
 {
 	COORDS coord = ai_last_shot;
     ai_direction.dx *= -1;
-	ai_direction.dy *= -1;	
-	do
+	ai_direction.dy *= -1;
+	
+	do	
 	{
 		ai_mark_miss(coord.x - 1, coord.y - 1);
 		ai_mark_miss(coord.x    , coord.y - 1);
@@ -26,7 +27,7 @@ void ai_ship_mark_dead()
 		ai_mark_miss(coord.x + 1, coord.y + 1);
 		ai_mark_miss(coord.x    , coord.y + 1);
 		ai_mark_miss(coord.x - 1, coord.y + 1);
-		ai_mark_miss(coord.x - 1, coord.y + 1);
+		ai_mark_miss(coord.x - 1, coord.y    );
 		coord.x += ai_direction.dx;
 		coord.y += ai_direction.dy;
 	}
