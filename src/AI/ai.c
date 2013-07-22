@@ -1,7 +1,8 @@
-//This module emulation server and apponent clisent
+// This module emulates clients interaction with other client through server
+
 #include "ai.h"
 
-message ai(message msg)
+message ai( message msg )
 {
 	message answer;
 	COORDS coords;
@@ -9,16 +10,16 @@ message ai(message msg)
 	switch( msg.command ) {
 		case MSG_SG:
 			ai_init();
-			if((double)rand()/RAND_MAX > 0.5)
+			if( ( ( double )rand() / RAND_MAX ) > 0.5)
 			{
 				answer.command = MSG_SG;
-				answer.params[0] = 'f';
+				answer.params[ 0 ] = 'f';
 				return answer;
 			}
 			else
 			{
 				answer.command = MSG_SG;
-				answer.params[0] = 's';
+				answer.params[ 0 ] = 's';
 				return answer;
 			}
 		case MSG_HM:
