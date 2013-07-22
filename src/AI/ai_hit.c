@@ -13,6 +13,10 @@ int ai_hit( int** field, COORDS coords, int whos_been_hit )
 	// If the ship is hit
 	if ( field[ coords.x ][ coords.y ] == CELL_SHIP ) {	
 		field[ coords.x ][ coords.y ] = CELL_SHIP_FIRE;
+		if ( whos_been_hit == PLAYER ) {
+			ai_cells_left--;
+		}
+
 		if ( is_ship_dead( field, coords, whos_been_hit ) ) {
 			if ( is_game_ended( whos_been_hit ) ) {
 				ret_status = who_won( whos_been_hit );
@@ -28,6 +32,10 @@ int ai_hit( int** field, COORDS coords, int whos_been_hit )
 	// If missed
 	if ( field[ coords.x ][ coords.y ] == CELL_NONE ) {
 		field[ coords.x ][ coords.y ] = CELL_MISS;
+		if ( whos_been_hit == PLAYER ) {
+			ai_cells_left--;
+		}
+
 		ret_status = REQ_MISS;
 		return ret_status;
 	}
