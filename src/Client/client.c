@@ -55,12 +55,14 @@ int main(int argc, char* argv[]){
 			break;
 	}
 	/* sending a player id; getting socket for new game instead */
-	client_send_text(MSG_SG, &player_id);
+	if(player_id>0){ /* if player's list isnt empty */
+		client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
+	}
 	while(1){
 			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
 				break;
 			}}
-	/* getting socket from server */
+	/* and waiting socket from server, no matter are we first or second */
 	TUNNEL=GAME_TUNNEL;
 	GAME_TUNNEL=received.command;
 	/* TODO FIX */
