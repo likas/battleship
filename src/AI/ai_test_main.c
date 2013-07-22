@@ -29,38 +29,29 @@ void ai_draw(int **field_first, int **field_second)
 
 int main()
 {
-/*	int test_area1[ SIZE ][ SIZE ] = { {1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
-									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-									  {1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
-									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-									  {0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-									  {0, 0, 1, 1, 1, 0, 0, 1, 0, 0},
-									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-									  {0, 0, 0, 0, 0, 1, 1, 1, 0, 0}
-									};
-*/
-//	srand(time(NULL));
-	srand(2345);	
+	srand(time(NULL));
 
 	ai_init();
 	ai_rand_matr( ai_player_field );
-	COORDS coords;
 	long step = 0;
 	do
 	{
-		ai_shoot( &coords );
+		COORDS coords = {-1, -1};
+		if(!ai_shoot( &coords ))
+		{
+			printf("Err: \n");
+			break;
+		}
 		int ans = ai_hit(ai_player_field, coords, AI);
-		if(ans == REQ_MISS)
-			step++;
+		if(ans < 0) return -1;
+		if(ans == REQ_MISS) step++;
 		if(ans == REQ_YOULOSE || ans == REQ_YOUWIN)
 		{		
 			printf("%s", ans == REQ_YOUWIN ? "You win\n": "You lose\n"); 
 			break;
 		}
 		ai_get_respond(ans);
-		ai_clear_variants( ai_enemy_field );
+//		ai_clear_variants( ai_enemy_field );
 		ai_draw( ai_enemy_field, ai_player_field );
 //	}while(getchar() != 'q');
 	}while(1);
