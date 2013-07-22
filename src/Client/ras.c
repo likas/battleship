@@ -55,7 +55,12 @@ void ras(int *smap)
 		if(!dir)
 		{
 		    //------------------------
-		    f=0; if(x>0) b=-1;	if(x<SIZE-1) e=1;
+		    f=0;
+		    b=0;
+		    e=0; 
+		    if(x>0) b=-1;
+		    if(x<SIZE-1) e=1;
+		    
 		    for(i=b;i<len+e;i++)
 		    {
 			if(*(smap+SIZE*y+x+i))
@@ -85,7 +90,12 @@ void ras(int *smap)
 		}
 		else//вертикально
 		{
-		    f=0; if(y>0) b=-1; if(y<SIZE-1) e=1;
+		    f=0;
+		    b=0;
+		    e=0; 
+		    if(y>0) b=-1; 
+		    if(y<SIZE-1) e=1;
+		    
 		    for(i=b;i<len+e;i++)//проверка на 
 		    {
 			if(*(smap+SIZE*(y+i)+x))
