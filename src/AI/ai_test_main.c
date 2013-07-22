@@ -26,9 +26,6 @@ void ai_draw(int **field_first, int **field_second)
 
 int main()
 {
-rand();
-rand();
-rand();
 /*	int test_area1[ SIZE ][ SIZE ] = { {1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
 									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 									  {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -61,8 +58,7 @@ rand();
 		ai_clear_variants( ai_enemy_field );
 		
 		ai_draw( ai_enemy_field, player_field );
-//	}while(getchar() != 'q');
-	}while(1);
+	}while(getchar() != 'q');
 	ai_uninit();
 
 	return 0;
