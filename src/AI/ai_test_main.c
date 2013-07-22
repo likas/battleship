@@ -4,9 +4,9 @@ void draw_cell(enum _CELL_STATE state)
 {
 	switch(state)
 	{
-		case CELL_NONE: printf("O"); break;
+		case CELL_NONE: printf("_"); break;
 		case CELL_SHIP: printf("S"); break;
-		case CELL_SHIP_FIRE: printf("F"); break;
+		case CELL_SHIP_FIRE: printf("@"); break;
 		case CELL_MISS: printf("*"); break;
 	}
 }
@@ -38,35 +38,26 @@ int main()
 									  {0, 0, 0, 0, 0, 1, 1, 1, 0, 0}
 									};
 */
-	int **fire_range = (int **) malloc( sizeof(int*) * SIZE); 
-	int **test_area = (int **) malloc (sizeof(int*) * SIZE);
+	player_field = (int **) malloc( sizeof(int*) * SIZE); 
+    ai_enemy_field  = (int **) malloc (sizeof(int*) * SIZE);
 	for(int i = 0; i < SIZE; i++)
 	{
-		fire_range[i] = (int *)malloc( sizeof(int) * SIZE);
-		test_area[i] = (int *)malloc( sizeof(int) * SIZE);
-//		for(int j = 0; j < SIZE; j++)
-//			fire_range[i][j] = test_area[i][j] = test_area1[i][j];
+		player_field[i] = (int *)calloc( SIZE, sizeof(int) );
+		ai_enemy_field[i]  = (int *)calloc( SIZE, sizeof(int) );
 	}
-	ai_rand_matr( test_area );
-	COORDS coords;
 
 	ai_init();
 	// init_field
-	ai_set_field( test_area );
-
-	for ( int i = 0; i < SIZE; i++ ) {
-		for ( int j = 0; j < SIZE; j++ ) {
-			fire_range[ i ][ j ] = test_area[ i ][ j ];
-		}
-	}
-	
-	ai_draw( test_area, fire_range );
+	ai_rand_matr( player_field );
+	//ai_set_field( player_field );
+	COORDS coords;
 	do
 	{
-		ai_rand_cell( test_area, &coords );
 		ai_shoot( &coords );
-		ai_clear_variants( test_area );
-		ai_draw( test_area, fire_range );
+		ai_get_respond(ai_hit(player_field, coords, AI));
+		ai_clear_variants( ai_enemy_field );
+		
+		ai_draw( ai_enemy_field, player_field );
 	}while(getchar() != 'q');
 
 	ai_uninit();
