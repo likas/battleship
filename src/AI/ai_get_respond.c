@@ -2,7 +2,9 @@
 
 void ai_mark_miss( int x, int y )
 {
-	if( ai_enemy_field[ x ][ y ] == CELL_NONE ) {
+	if( x > -1 && y > -1 &&
+		x < SIZE && y < SIZE &&
+		ai_enemy_field[ x ][ y ] == CELL_NONE ) {
 		ai_enemy_field[ x ][ y ] = CELL_MISS;
 		ai_cells_left--;
 	}
