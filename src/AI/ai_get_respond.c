@@ -2,8 +2,8 @@
 
 void ai_mark_miss( int x, int y )
 {
-	if( x > -1 && y > -1 &&
-		x < SIZE && y < SIZE &&
+	if( !(x < 0 ||  x >= SIZE ||
+		 y < 0 || y >= SIZE ) &&
 		ai_enemy_field[ x ][ y ] == CELL_NONE ) {
 		ai_enemy_field[ x ][ y ] = CELL_MISS;
 		ai_cells_left--;
@@ -32,7 +32,8 @@ void ai_ship_mark_dead()
 		coord.y += ai_direction.dy;
 		
 		if(coord.x < 0 || coord.y > 0 ||
-		   coord.x >= SIZE || coord.y >= SIZE)
+		   coord.x >= SIZE || coord.y >= SIZE ||
+		   (ai_direction.dx == 0 && ai_direction.dy == 0) )
 			break;
 	}
 	while( ai_enemy_field[ coord.x ][ coord.y ] == CELL_SHIP_FIRE );			
@@ -85,8 +86,8 @@ void ai_get_respond( enum _REQUESTS req )
 		if((ai_direction.dx != 0 && ai_direction.dy != 0) &&
 		   (ai_last_shot.x + ai_direction.dx < 0 || 
 		    ai_last_shot.y + ai_direction.dy < 0 ||
-		    ai_last_shot.x + ai_direction.dx > SIZE || 
-		    ai_last_shot.y + ai_direction.dy > SIZE))
+		    ai_last_shot.x + ai_direction.dx >= SIZE || 
+		    ai_last_shot.y + ai_direction.dy >= SIZE))
 		{
 			ai_direction.dx *= -1;
 			ai_direction.dy *= -1;
