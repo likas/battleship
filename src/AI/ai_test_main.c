@@ -24,6 +24,7 @@ void ai_draw(int **field_first, int **field_second)
 	}	
 }
 
+
 int main()
 {
 rand();
