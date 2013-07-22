@@ -44,7 +44,6 @@ void ai_choose_direction( enum _REQUESTS state )
 			default:
 				break;
 		}
-		printf("Dir: %d %d N: %d\n", ai_direction.dx, ai_direction.dy, N_sides);
 	}
 	// If last shot was successful then AI keeps firing in 
 	// that direction while we miss and ship would not be dead yet
