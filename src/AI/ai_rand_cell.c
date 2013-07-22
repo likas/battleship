@@ -1,5 +1,6 @@
 #include "ai.h"
 
+// Returns coordinates of a random free spot on the field
 void ai_rand_cell(int **matr, COORDS *coord)
 {
 	int rand_cell;

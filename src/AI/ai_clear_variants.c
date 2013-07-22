@@ -3,11 +3,11 @@
 void fill_gaps( int **, int, int, int, int );
 int vert_ship_can_fit( int**, int, int, int );
 
-/* pocedure which analyzes the field and marks places 
- * where no more ships can be located at this state of the game
- * 
- * NOTE: this thing is completely experimental 
- * but may make our AI much smarter */
+// pocedure which analyzes the field and marks places 
+// where no more ships can be located at this state of the game
+// 
+// NOTE: this thing is completely experimental 
+// but may make our AI much smarter 
 void ai_clear_variants( int **ai_emeny_field )
 {
 	int blank_cells_cnt = 0;
@@ -15,7 +15,7 @@ void ai_clear_variants( int **ai_emeny_field )
 	int row;
 	int coll;
 	
-	/* seeking for the smallest size amoung ships which are still in game */
+	// seeking for the smallest size amoung ships which are still in game 
 	while ( ship_min_length < COUNT_SHIP ) {
 		if ( ships[ ship_min_length ] == 0 )
 			ship_min_length++;
@@ -40,7 +40,7 @@ void ai_clear_variants( int **ai_emeny_field )
 	}
 }
 
-/* this one does the marking part */
+// this one does the marking part 
 void fill_gaps( int** ai_enemy_field, int row, int coll, int blank_cells_cnt, int ship_min_length )
 {
 	int pos_x = coll;
@@ -54,7 +54,7 @@ void fill_gaps( int** ai_enemy_field, int row, int coll, int blank_cells_cnt, in
 	} while (blanks != 0);
 }	
 
-/* this function helps AI decide if a ship could occur in the current cell */
+// this function helps AI decide if a ship could occur in the current cell 
 int vert_ship_can_fit( int** ai_enemy_field, int start_pos_x, int start_pos_y, int ship_min_length )
 {
 	int blanks;

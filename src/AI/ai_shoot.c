@@ -1,13 +1,16 @@
 #include "ai.h"
 
-int ai_shoot(COORDS *coords)
+// makes AI shoot in chosen direction if he has a target to shoot 
+// otherwise he makes a random shot in a free spot on the field
+int ai_shoot( COORDS *coords )
 {
-	if(!coords)
+	if( coords == NULL ) {
 		return 0;
+	}
 	
 	if( !got_target )
 	{
-		ai_rand_cell(ai_enemy_field, coords);	
+		ai_rand_cell( ai_enemy_field, coords );	
 		ai_cells_left--;
 		ai_last_shot = *coords;
 		return 1;

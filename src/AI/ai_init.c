@@ -1,5 +1,7 @@
 #include "ai.h"
 
+// Before AI starts playing with client 
+// he must get ready for it
 void ai_init()
 {
 	ai_ship_count = 10;
@@ -11,7 +13,8 @@ void ai_init()
 	ai_direction.dx = 0;
 	ai_direction.dy = 0;
 	got_target = 0;
-	ships = (int *)malloc(sizeof(int) * COUNT_SHIP);
-	for(int i = 0; i < COUNT_SHIP; i++)
-		ships[i] = COUNT_SHIP - i - 1;
+	ships = (int *)malloc( sizeof( int ) * COUNT_SHIP );
+	for( int i = 0; i < COUNT_SHIP; i++ ) {
+		ships[ i ] = COUNT_SHIP - i - 1;
+	}
 }
