@@ -37,25 +37,17 @@ int main()
 	do
 	{
 		COORDS coords = {-1, -1};
-		if(!ai_shoot( &coords ))
-		{
-			printf("Err: \n");
-			break;
-		}
+		ai_shoot( &coords );
 		int ans = ai_hit(ai_player_field, coords, AI);
-		if(ans < 0) return -1;
 		if(ans == REQ_MISS) step++;
 		if(ans == REQ_YOULOSE || ans == REQ_YOUWIN)
-		{		
-			printf("%s", ans == REQ_YOUWIN ? "You win\n": "You lose\n"); 
 			break;
-		}
 		ai_get_respond(ans);
-//		ai_clear_variants( ai_enemy_field );
-		ai_draw( ai_enemy_field, ai_player_field );
+     	ai_clear_variants( ai_enemy_field );
+//		ai_draw( ai_enemy_field, ai_player_field );
 //	}while(getchar() != 'q');
 	}while(1);
-	printf("Steps: %ld\n", step);
+	printf("%ld\n", step);
 	ai_uninit();
 
 	return 0;

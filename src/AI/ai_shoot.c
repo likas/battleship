@@ -9,7 +9,6 @@ int ai_shoot( COORDS *coords )
 	
 	if( !got_target )
 	{
-		printf("Rand\n");
 		ai_rand_cell(ai_enemy_field, coords, X_Y);	
 		if(coords->x == -1 && coords->y == -1)
 			return 0;
@@ -47,9 +46,6 @@ int ai_shoot( COORDS *coords )
 		ai_last_shot_suc.x = coords->x - ai_direction.dx;
 		ai_last_shot_suc.y = coords->y - ai_direction.dy;
 	}
-	printf("Strat\n");
-	printf("Coord %d %d\n", coords->x, coords->y);
-	printf("Dir   %d %d\n", ai_direction.dx, ai_direction.dy);
 	ai_last_shot.x = coords->x;
 	ai_last_shot.y = coords->y;
 	return 1;
