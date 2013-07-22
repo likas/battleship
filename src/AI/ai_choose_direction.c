@@ -1,7 +1,12 @@
+// AI chooses direction to look further
+// He uses it when looks for a spot to fire
 #include "ai.h"
 
-void ai_choose_direction(enum _REQUESTS state)
+void ai_choose_direction( enum _REQUESTS state )
 {
+	// If there was no successul shots until now 
+	// AI looks aound this spot where the shot 
+	// landed for possible variants to fire further ( maximum possible - four directions ) 
 	COORDS coords = (ai_last_shot_suc.x == -1 && ai_last_shot_suc.y == -1) ? ai_last_shot : ai_last_shot_suc;
 	if(got_target != 2)
 	{
@@ -15,23 +20,41 @@ void ai_choose_direction(enum _REQUESTS state)
 			N_sides++, avalible_sides[2] = 1;
 		if( coords.y < SIZE - 1 && ai_enemy_field[coords.x][coords.y + 1] == CELL_NONE )	
 			N_sides++, avalible_sides[3] = 1;
-		int direction = (((double)rand() / RAND_MAX) * N_sides);
-		while(avalible_sides[direction % 4] != 1)
+		// and chooses direction among those he had found randomly
+		int direction = ( rand() / RAND_MAX ) * N_sides;
+		while( avalible_sides[ direction % 4 ] != 1 ) 
 			direction++;
-		switch(direction)
- 		{
-			case 0: ai_direction.dx = -1, ai_direction.dy = 0; break;
-			case 1: ai_direction.dx = 0, ai_direction.dy = -1; break;
-			case 2: ai_direction.dx = 1, ai_direction.dy = 0; break;
-			case 3: ai_direction.dx = 0, ai_direction.dy = 1; break;
+		switch( direction ) {
+			case 0: 
+				ai_direction.dx = -1; 
+				ai_direction.dy = 0; 
+				break;
+			case 1: 
+				ai_direction.dx = 0; 
+				ai_direction.dy = -1; 
+				break;
+			case 2: 
+				ai_direction.dx = 1; 
+				ai_direction.dy = 0; 
+				break;
+			case 3: 
+				ai_direction.dx = 0; 
+				ai_direction.dy = 1; 
+				break;
+			default:
+				break;
 		}
 		printf("Dir: %d %d N: %d\n", ai_direction.dx, ai_direction.dy, N_sides);
 	}
+	// If last shot was successful then AI keeps firing in 
+	// that direction while we miss and ship would not be dead yet
+	// in that case AI reverts direction
 	else if(state == REQ_MISS)
 	{
+		
 		ai_direction.dx *= -1;
 		ai_direction.dy *= -1;
-		while(ai_enemy_field[ai_last_shot.x + ai_direction.dx][ai_last_shot.y + ai_direction.dy] != CELL_NONE)
+		while( ai_enemy_field[ ai_last_shot.x + ai_direction.dx ][ ai_last_shot.y + ai_direction.dy ] != CELL_NONE )
 			ai_last_shot.x += ai_direction.dx, ai_last_shot.y += ai_direction.dy;
 	}
 }

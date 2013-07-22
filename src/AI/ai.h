@@ -5,6 +5,12 @@
 #include <time.h>
 #include "../mboi.h"
 #include "../Client/client.h"
+
+typedef enum _DIRECTION_WAY{
+	Y_X, // (слева-направо и сверху вниз)
+	X_Y  // (сверху-вниз и слева-направо)
+}DIRECTION_WAY; 
+
 typedef struct _AI_DIRECTION
 {
 	int dx; 
@@ -38,7 +44,7 @@ int ai_shoot(COORDS *coords);
 void ai_get_respond(enum _REQUESTS); 
 void ai_clear_variants(int **);			// marks places where no more ships can be located 
 void ai_choose_direction(enum _REQUESTS);
-void ai_rand_cell(int **, COORDS *);
+int ai_rand_cell(int **, COORDS *, DIRECTION_WAY const);
 int ai_rand_matr(int **);
 void ai_draw(int **, int**);
 #endif 
