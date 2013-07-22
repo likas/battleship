@@ -22,11 +22,11 @@ void ras(int *smap)
 	FINchcell(x,y,2,0);
 	switch(key)
 	{
-	    case KEY_UP:
+	    case 'w':
 		if(y>0)
 		    y--;
 		break;
-	    case KEY_DOWN:
+	    case 's':
 		if(!dir)
 		{
 		    if(y<size-1)
@@ -36,11 +36,11 @@ void ras(int *smap)
 		    if(y<size-len)
 			y++;
 		break;
-	    case KEY_LEFT:
+	    case 'a':
 		if(x>0)
 		    x--;
 		break;
-	    case KEY_RIGHT:
+	    case 'd':
 		if(dir)
 		{
 		    if(x<size-1)
