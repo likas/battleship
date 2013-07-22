@@ -15,8 +15,8 @@ int ai_rand_cell(int **matr, COORDS *coord, DIRECTION_WAY const change)
 						printf("matr1; %d\n", matr[y][x]);
 						coord->x = x;
 						coord->y = y;
-	printf("count_free_cell: %d\n", count_free_cell);
-	printf("rand_cell: %d\n", rand_cell);
+//	printf("count_free_cell: %d\n", count_free_cell);
+//	printf("rand_cell: %d\n", rand_cell);
 //DEBUG_PRINT(printf("return_coord.x: %d\n", return_coord.x);printf("return_coord.y: %d\n", return_coord.y);)
 						return 1;
 					}
@@ -30,8 +30,8 @@ int ai_rand_cell(int **matr, COORDS *coord, DIRECTION_WAY const change)
 					if (count_cell++ == rand_cell) {
 						printf("matr2; %d\n", matr[x][y]);
 						coord->x = x;
-	printf("count_free_cell: %d\n", count_free_cell);
-	printf("rand_cell: %d\n", rand_cell);
+//	printf("count_free_cell: %d\n", count_free_cell);
+//	printf("rand_cell: %d\n", rand_cell);
 						coord->y = y;
 //DEBUG_PRINT(printf("return_coord.x: %d\n", return_coord.x);printf("return_coord.y: %d\n", return_coord.y);)
 						return 1;
@@ -40,8 +40,8 @@ int ai_rand_cell(int **matr, COORDS *coord, DIRECTION_WAY const change)
 			}
 		}
 	}
-	printf("count_free_cell: %d\n", count_free_cell);
-	printf("rand_cell: %d\n", rand_cell);
+//	printf("count_free_cell: %d\n", count_free_cell);
+//	printf("rand_cell: %d\n", rand_cell);
 //	printf("exit 1\n");
 	return - 1;
 }

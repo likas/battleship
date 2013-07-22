@@ -165,7 +165,7 @@ void rand_loc_ship(int **matr, int const size_ship, int *count_free_cell)
 
 int ai_rand_matr(int **matr)
 {
-//	srand(time(NULL));
+	srand(time(NULL));
 	int count_free_cell = SIZE * SIZE;
 //nt **matr = (int**)malloc(SIZE * sizeof(int*));
 	if (matr == NULL) {
@@ -181,6 +181,13 @@ int ai_rand_matr(int **matr)
 //			perror("");
 //			exit(1);
 			return -2;
+		}
+	}
+	
+	// CELL_NONE in all matr
+	for (int i = 0; i < SIZE; ++i) {
+		for (j = 0; j < SIZE; ++j) {
+			matr[i][j] = CELL_NONE;
 		}
 	}
 
