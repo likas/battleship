@@ -16,7 +16,7 @@ void ai_rand_cell(int **matr, COORDS *coord)
 					coord->y = i;
 
 //DEBUG_PRINT(printf("return_coord.x: %d\n", return_coord.x);printf("return_coord.y: %d\n", return_coord.y);)
-
+printf("%d\n", matr[i][j]);
 					return;
 				}
 			}
