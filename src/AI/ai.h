@@ -6,45 +6,60 @@
 #include "../mboi.h"
 #include "../Client/client.h"
 
+// AI Data structures
+
+// Used in ai_rand_matr() to define 
+// coordinates relation (x,y) or (y,x)
 typedef enum _DIRECTION_WAY{
-	Y_X, // (слева-направо и сверху вниз)
-	X_Y  // (сверху-вниз и слева-направо)
+	Y_X,						  
+	X_Y							
 }DIRECTION_WAY; 
 
+// Defines direction in which Ai would look and fire
+// (-1, 0) - Left (1, 0) - Right
+// (0, -1) - Up   (0, 1) - Down
 typedef struct _AI_DIRECTION
 {
 	int dx; 
 	int dy;
 } AI_DIRECTION;
 
+// Used to define whos being hit in ai_hit function
 enum _GAMERS 
 {
   AI = 100,
   PLAYER
 } GAMERS;
 
-int ai_ship_count; 
-int ai_cells_left; //Count unshoot cells
-int **ai_player_field, **ai_enemy_field, **player_field;
-COORDS ai_last_shot;
-COORDS ai_last_shot_suc;
-AI_DIRECTION ai_direction;
-int got_target; // 0 - random_shot; 1 - surround shot; 2 - direct revert
-int *ships;
 
-//****Использовать извне и получать выгоду***
-message ai(message);
-int ai_hit(int**, COORDS, int);
-int ai_set_field(int **); //Set player field
-void ai_init();    //Initialization library
-void ai_uninit();  //Clean library from memory
 
-//**** Module function *****
-int ai_shoot(COORDS *coords); 
-void ai_get_respond(enum _REQUESTS); 
-void ai_clear_variants(int **);			// marks places where no more ships can be located 
-void ai_choose_direction(enum _REQUESTS);
-int ai_rand_cell(int **, COORDS *, DIRECTION_WAY const);
-int ai_rand_matr(int **);
-void ai_draw(int **, int**);
+// AI resources
+int ai_ship_count;						// Number of ship AI still has alive
+int ai_cells_left;						// Number of cells on the map that hasn't been hit yet
+int **ai_player_field;					// It is the field of AI where his ships are placed
+int **ai_enemy_field;					// It is the field on whitch AI would mark his whots and enemy dead/hit ships
+int **player_field;						// It is the client's field where his ships are placed, used to calculate hits and misses
+COORDS ai_last_shot; 
+COORDS ai_last_shot_suc;				// Coordinates of the last successful shot
+AI_DIRECTION ai_direction; 
+int got_target;							// Flag defining AI behavior: 0 - AI makes random shot; 1 - makes surround shot; 2 -  makes direct/revert shot
+int *ships;								// Structure helping AI to watch over enemy ships and their condition
+
+
+
+// Main functions that client 
+// needs to invoke directly
+message ai(message);											// Main function emulating conversation with another player
+int ai_set_field(int **);										// AI needs to know about players ships so client must offer him a pointer to it through whis function
+
+// Internal AI functions
+void ai_init();													// Initialises all AI resources
+void ai_uninit();												// Frees all allocated resources after the game is over
+int ai_hit(int**, COORDS, int);									// Defines if the ship was hit and if it is dead now, also signals if the game is over and if client won or not
+int ai_shoot(COORDS *coords);  
+void ai_get_respond(enum _REQUESTS);							// defines AI reaction on events
+void ai_clear_variants(int **);									// marks places where no more ships can be located
+void ai_choose_direction(enum _REQUESTS); 
+int ai_rand_cell(int **, COORDS *, DIRECTION_WAY const);		// Generates coordinates of random free cell on the field
+int ai_rand_matr(int **);										// With it's help AI places his own ships
 #endif 

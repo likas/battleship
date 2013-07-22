@@ -5,6 +5,7 @@ void choose_direction( int**, COORDS, AI_DIRECTION* );
 void kill_the_ship( int, int );
 int is_game_ended( int );
 int who_won( int );
+int is_next_cell_valid( int**, COORDS, AI_DIRECTION* );
 
 int ai_hit( int** field, COORDS coords, int whos_been_hit )
 {
@@ -61,8 +62,14 @@ int is_ship_dead( int** field, COORDS coords, int who )
 	// Forward check
 	do {
 		++ship_size;
+		
 		coords.x += direction.dx;
 		coords.y += direction.dy;
+		if ( coords.x >= SIZE || coords.x < 0 ||
+			 coords.y >= SIZE || coords.y < 0 ) {
+			break;
+		}
+		
 		if ( field[ coords.x ][ coords.y ] == CELL_SHIP ) {
 			return 0;
 		}
@@ -76,8 +83,14 @@ int is_ship_dead( int** field, COORDS coords, int who )
 	coords.y = start_position.y;
 	do {
 		++ship_size;
+		
 		coords.x += direction.dx;
 		coords.y += direction.dy;
+		if ( coords.x >= SIZE || coords.x < 0 ||
+			 coords.y >= SIZE || coords.y < 0 ) {
+			break;
+		}
+		
 		if ( field[ coords.x ][ coords.y ] == CELL_SHIP ) {
 			return 0;
 		}
@@ -95,38 +108,46 @@ void choose_direction( int** field, COORDS coords, AI_DIRECTION* direction )
 	direction->dx = 1;
 	direction->dy = 0;
 
-	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
-		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
+	if ( is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = -1;
 		direction->dy = 0;
 	} else {
 		return;
 	}
 
-	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
-		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
+	if ( is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = 0;
 		direction->dy = 1;
 	} else {
 		return;
 	}
 
-	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
-		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
+	if ( is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = 0;
 		direction->dy = -1;
 	} else {
 		return;
 	}
 	
-	if ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
-		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) {
+	if ( is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = 0;
 		direction->dy = 0;
 	} else {
 		return;
 	}
 }
+
+
+int is_next_cell_valid( int** field, COORDS coords, AI_DIRECTION* direction )
+{
+	if ( ( ( coords.x + direction->dx ) < SIZE && ( coords.x + direction->dx ) > -1 ) &&
+		 ( ( coords.y + direction->dy ) < SIZE && ( coords.y + direction->dy ) > -1 ) &&
+		 ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) ) {
+		return 1;
+	}
+	return 0;
+}	
 
 
 

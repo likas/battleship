@@ -1,22 +1,23 @@
 #ifndef CLIENT_H
 #include "client.h"
 #endif
+#include <stdio.h>
 /* GLOBALS */
 pthread_t chat_thread;
 /* struct sockaddr_in  */
 
 int main(int argc, char* argv[]){
 	int WOL=-1;
-	/*here lies gui_init(). it gives control to us when user input his name 
-	* when the name is placed, we shall send it to server?
-	* with no idea how... */
-	gui();
 	if(argc==1){
 		printf("Input 1 as a parameter to play with AI, 2 for another user\n");
 		exit(1);
 	}else{
 		ONLINE=(*argv[1]=='1')?0:1;
 	}
+	/*here lies gui_init(). it gives control to us when user input his name 
+	* when the name is placed, we shall send it to server?
+	* with no idea how... */
+	gui();
 	if(!ONLINE){
 		/* possibly init*/
 		WOL=with_ai(); 
@@ -26,16 +27,15 @@ int main(int argc, char* argv[]){
 	char player_id=-1;
 	message received;
 	COORDS xy; xy.x=-1; xy.y=-1;
-	TUNNEL=socket_init(); /* TUNNEL is lying somewhere in the header, ask
+	GAME_TUNNEL=socket_init(); /* TUNNEL is lying somewhere in the header, ask
 						   * someone else, what do you want from me, for
 						   * Christ sake?! */
 	/*here is something like: */
-	client_send_text(MSG_NN, username);
 	/*there we send a NN located in nickname global which is defined in gui.h
 	* to the server with TUNNEL established earlier */
 	/*here server shall send us a list of existing games, and we get it like: */
 	while(1){
-			if(recv(TUNNEL, &received, sizeof(message), 0) > 0){
+			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
 				break;
 			}}
 	switch(received.command){
@@ -54,12 +54,15 @@ int main(int argc, char* argv[]){
 			break;
 	}
 	/* sending a player id; getting socket for new game instead */
-	client_send_text(MSG_SG, &player_id);
+	if(player_id>0){ /* if player's list isnt empty */
+		client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
+	}
 	while(1){
-			if(recv(TUNNEL, &received, sizeof(message), 0) > 0){
+			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
 				break;
 			}}
-	/* getting socket from server */
+	/* and waiting socket from server, no matter are we first or second */
+	TUNNEL=GAME_TUNNEL;
 	GAME_TUNNEL=received.command;
 	/* TODO FIX */
 	/* sending a gamefield */
@@ -142,7 +145,7 @@ int main(int argc, char* argv[]){
 			}
 			}
 		} /* for game cycle */
-
+	GAME_TUNNEL=TUNNEL;
 
 
 
