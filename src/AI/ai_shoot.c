@@ -32,5 +32,6 @@ int ai_shoot( COORDS *coords )
  	printf("Got target: %d\n", got_target);	
 	ai_last_shot.x = coords->x;
 	ai_last_shot.y = coords->y;
+	ai_cells_left--;
 	return 1;
 }

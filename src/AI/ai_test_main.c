@@ -24,6 +24,7 @@ void ai_draw(int **field_first, int **field_second)
 	}	
 }
 
+
 int main()
 {
 /*	int test_area1[ SIZE ][ SIZE ] = { {1, 0, 1, 0, 1, 0, 1, 0, 0, 0},
