@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "../mboi.h"
-/* #include "../AI/ai.h" */
+#include "../AI/ai.h" 
 #include "../GUI/gui.h"
 /*----------------------*/
 
@@ -31,7 +31,7 @@ int killed(int x, int y);
 int socket_init();
 int go_list();
 int parser_itoa(int number, char* buf);
-/* extern int with_ai(); */
+int with_ai(); 
 
 /*----------------------*/
 #endif

@@ -23,9 +23,9 @@ int with_ai()
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(&buf,hit_place);
-		ch_ai.params = buf;
+		scanf(ch_ai.params,"%s", buf);
 		ch_ai=ai(ch_ai);
-		switch (ch_ai)
+		switch (ch_ai.command) 
 		{
 			case REQ_MISS:
 			{
@@ -56,7 +56,7 @@ int with_ai()
 		ch_ai.command = MSG_HM;
 		ch_ai=ai(ch_ai);		
 		/*getting coordinates from params*/
-		switch (ch_ai)
+		switch (ch_ai.command)
 		{
 			case REQ_MISS:
 			{
@@ -81,7 +81,7 @@ int with_ai()
 			
 		}
 	}
-	render(&SMAP,&EMAP);
+	render(&SMAP,&EMAP,1);
 	}	
 	return g_o;
 }

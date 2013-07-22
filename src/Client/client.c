@@ -1,5 +1,5 @@
 #ifndef CLIENT_H
-#include "/home/2013/likas/battleships/src/Client/client.h"
+#include "client.h"
 #endif
 /* GLOBALS */
 pthread_t chat_thread;
@@ -19,8 +19,8 @@ int main(int argc, char* argv[]){
 	}
 	if(!ONLINE){
 		/* possibly init*/
-		/* WOL=with_ai(); */
-		printf("Sorry, no AI functions yet\n");
+		WOL=with_ai(); 
+		/*printf("Sorry, no AI functions yet\n");*/
 		/* message */
 	}else{
 	char player_id=-1;
