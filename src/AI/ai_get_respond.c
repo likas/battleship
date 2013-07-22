@@ -31,7 +31,7 @@ void ai_ship_mark_dead()
 		coord.x += ai_direction.dx;
 		coord.y += ai_direction.dy;
 		
-		if(coord.x < 0 || coord.y > 0 ||
+		if(coord.x < 0 || coord.y < 0 ||
 		   coord.x >= SIZE || coord.y >= SIZE ||
 		   (ai_direction.dx == 0 && ai_direction.dy == 0) )
 			break;

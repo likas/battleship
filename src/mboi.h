@@ -19,7 +19,8 @@ enum _CELL_STATE
 	CELL_NONE = 0,
 	CELL_SHIP,
 	CELL_SHIP_FIRE,
-	CELL_MISS
+	CELL_MISS, 
+	CELL_SHIP_DEAD
 } CELL_STATE;
 
 enum _KEY
@@ -56,13 +57,13 @@ typedef struct{
 
 enum _MSG_TSK
 {
-	MSG_NN = 40,//ник
-	MSG_RQ,//ответ сервера
-	MSG_TT,//сообщение чата
-	MSG_AT,//атака
-	MSG_HM,//попадание
-	MSG_SG,//начало игры
-	MSG_SF,//Начало передачи поля
+	MSG_NN = 40, /* ник */
+	MSG_RQ,		 /* ответ сервера */
+	MSG_TT,		 /* сообщение чата */
+	MSG_AT,		 /* атака */
+	MSG_HM,		 /* попадание */
+	MSG_SG,		 /* начало игры */
+	MSG_SF		 /* Начало передачи поля */
 } MSG_TSK;
 
 typedef struct 

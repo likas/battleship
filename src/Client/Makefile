@@ -11,4 +11,4 @@ libClient.a: $(OBJ)
 	gcc -c $*.c -o $*.o
 
 clear:
-	rm *.o *.a
+	rm *.o *.a cl
