@@ -49,13 +49,19 @@ int with_ai()
 		hit_place = De_Move(EMAP);
 //		printf("Enter coord:\n");
 //		scanf("%d %d", &(hit_place.x), &(hit_place.y));
+		if ((hit_place.x==-1)&&(hit_place.y==-1))
+		{
+			ch_ai.command = REQ_DISCONNECT;
+			ai(ch_ai);
+			return REQ_YOULOSE;
+		}
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
 		//sscanf(ch_ai.params,"%s", buf);
 		ch_ai.params[0]=buf[0];  
-        ch_ai.params[1]=buf[1];
-
+	        ch_ai.params[1]=buf[1];
+		
 		ch_ai=ai(ch_ai);
 		switch (ch_ai.command) 
 		{
@@ -72,12 +78,13 @@ int with_ai()
 			}
 			case REQ_YOUWIN:
 			{
-				g_o=1;
+				g_o=REQ_YOUWIN;
 				break;
 			}
 			case REQ_DESTROYED:
 			{
 				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				break;
 			}			
 			
 		}
@@ -104,12 +111,13 @@ int with_ai()
 			}
 			case REQ_YOULOSE:
 			{
-				g_o=2;
+				g_o=REQ_YOULOSE;
 				break;
 			}
 			case REQ_DESTROYED:
 			{
 				SMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				break;
 			}
 			
 		}
