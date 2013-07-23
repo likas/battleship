@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
-//	gui();
+	gui();
 	map_init();
 	
 	if(!ONLINE){
