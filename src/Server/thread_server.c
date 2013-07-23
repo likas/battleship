@@ -1,6 +1,4 @@
-#include "../socket/mboi/src/mboi.h"
-#include "../socket/h.h"
-#include "../socket/mboi/src/Server/server.h"
+#include "server.h"
 
 #define MAX_PL 16
 int thr_cnt = 0;
@@ -16,7 +14,7 @@ void* game(void* counter);
 void thread();
 //void nn_sg(message* msg, Player* pl, _game** gm, int sock);
 
-int main() { 
+int thread_server() { 
 	int sock, sockfd, i = 0;
 	struct sockaddr_in addr;
 	/*Create structs STARTLIST and STOPLIST*/
@@ -50,7 +48,8 @@ int main() {
 	}
 
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(PORT);
+//	addr.sin_port = htons(PORT);
+	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = INADDR_ANY;
 
 	if(bind(sockfd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
