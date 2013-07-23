@@ -1,7 +1,6 @@
-#ifndef CLIENT_H
-#include "/home/2013/likas/battleships/src/Client/client.h"
-#endif
+#include "client.h"
 #include <stdio.h>
+
 /* GLOBALS */
 pthread_t chat_thread;
 /* struct sockaddr_in  */

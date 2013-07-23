@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 AM_CFLAGS = -std=c99
-AM_LDFLAGS = -i../include -lGUI -pthread
+AM_LDFLAGS = -L../include -lGUI -lAI -pthread
 
 bin_PROGRAMS = Client
 Client_SOURCES =		\

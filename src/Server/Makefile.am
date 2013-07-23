@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = foreign
 
-AM_CFLAGS = -std=c99
+AM_CFLAGS = -std=c99 -L../include -lGUI
 
 bin_PROGRAMS = Server
 Server_SOURCES =		\
