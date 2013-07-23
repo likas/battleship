@@ -49,12 +49,12 @@ int **b=calloc(10,sizeof(int*));
 gui();
 ant_player_list(st,leng);
 De_Init(a,b);
-
+guiturn(0);
 //////////////////////////////////////////////////
 coord=De_Move(b);
 FINchcell(coord.x,coord.y,4,1);
 //render(a,b,1);
-
+guiturn(1);
 endgui(1);
 return 0;
 }

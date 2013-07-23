@@ -1,4 +1,4 @@
-sources:=gui.c ref.c chat.c render.c De_Init.c hello.c chcell.c endgui.c De_Move.c login.c scroll.c listing.c
+sources:=gui.c ref.c chat.c render.c De_Init.c hello.c chcell.c endgui.c De_Move.c login.c scroll.c listing.c panel.c
 obj:=$(sources:.c=.o)
 main=main.c
 headers=gui.h
@@ -7,7 +7,7 @@ path=~/20l
 all:  $(obj) $(headers)
 	ar cr libgui.a $(obj)
 	ranlib libgui.a
-	gcc $(main) -L. -lgui -lncurses -g -o gui 
+	gcc $(main) -L. -lgui -lncurses -o gui 
 %.o:%.c
 	gcc -c $*.c -o $*.o	
 backup:
@@ -23,3 +23,4 @@ backup:
 
 clean:
 	rm -f *.o
+	
