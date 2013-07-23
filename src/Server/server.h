@@ -17,8 +17,7 @@
 #include <sys/poll.h>
 #include "../mboi.h"
 
-int childWork(int sockClient);
-void* Game(void*);
+
 
 typedef struct {
     int _id;
@@ -26,7 +25,7 @@ typedef struct {
 }Player;
 
 int port;
-int thread_id[50];
+int thread_id[16];
 int game_sockd;
 
 #endif
