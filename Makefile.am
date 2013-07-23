@@ -1,5 +1,5 @@
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = AI GUI Client Server
+SUBDIRS = src/AI src/GUI src/Client src/Server
 
 #AM_CFLAGS = -g
 #AM_LDFLAGS = -l./include -lGUI -lAI
