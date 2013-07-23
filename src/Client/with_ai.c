@@ -8,9 +8,7 @@ int with_ai()
 	message ch_ai;
 	ch_ai.command = MSG_SG;
 	/*creating field*/
-	SMAP[0][0]=-1;
-	write("%i",**SMAP,sizeof(int));
-	De_Init(&SMAP,&EMAP);
+	De_Init(SMAP,EMAP);
 	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == "f")
