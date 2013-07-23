@@ -1,5 +1,5 @@
 #include"server.h"
-#include"mboi.h"
+
 
 int count=0;
 struct pollfd fds[16];//fds-массив структур для poll();
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 						perror("Error accept!");
 						exit(1);
 					}
-					player[count-1].id=count-1;
+					player[count-1]._id=count-1;
 					strcpy(player[count-1].name,"");
 					count++;
 				}else{
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
 						perror("Error recv!");
 						exit(1);
 					}
-					nn_sg(msg,player,&fds[i].fd);
+					nn_sg(&msg,player,fds[i].fd);
 				}
 			}
 		}
