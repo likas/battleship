@@ -24,7 +24,7 @@ int with_ai()
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
-		scanf(ch_ai.params,"%s", buf);
+		sscanf(ch_ai.params,"%s", buf);
 		ch_ai=ai(ch_ai);
 		switch (ch_ai.command) 
 		{
