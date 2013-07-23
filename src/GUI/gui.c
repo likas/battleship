@@ -18,7 +18,7 @@ initscr();
 cbreak();
 noecho();
 clear();
-getch();
+//getch();
 
 
 term_height=stdscr->_maxy;

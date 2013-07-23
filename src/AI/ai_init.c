@@ -18,12 +18,11 @@ void ai_init()
 	}
 	
 	ai_player_field = calloc( SIZE, sizeof( int* ) );
-	for ( int index = 0; index < SIZE; index++ ) {
-		ai_player_field[ index ] = calloc( SIZE, sizeof( int ) );
-	}	
-	
 	ai_enemy_field = calloc( SIZE, sizeof( int* ) );
 	for ( int index = 0; index < SIZE; index++ ) {
+		ai_player_field[ index ] = calloc( SIZE, sizeof( int ) );
 		ai_enemy_field[ index ] = calloc( SIZE, sizeof( int ) );
+		for( int j = 0; j < SIZE; j++ )
+			ai_player_field[index][j] = ai_enemy_field[index][j] = CELL_NONE; 
 	}	
 }

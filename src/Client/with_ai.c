@@ -7,6 +7,7 @@ int with_ai()
 	COORDS hit_place;
 	message ch_ai;
 	ch_ai.command = MSG_SG;
+	ai_rand_matr(SMAP);
 	/*creating field*/
 	De_Init(SMAP,EMAP);
 	ai_set_field(SMAP);
@@ -23,7 +24,7 @@ int with_ai()
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
-		scanf(ch_ai.params,"%s", buf);
+		sscanf(ch_ai.params,"%s", buf);
 		ch_ai=ai(ch_ai);
 		switch (ch_ai.command) 
 		{
@@ -56,6 +57,7 @@ int with_ai()
 		ch_ai.command = MSG_HM;
 		ch_ai=ai(ch_ai);		
 		/*getting coordinates from params*/
+		coords_itoa(ch_ai.params,&hit_place);
 		switch (ch_ai.command)
 		{
 			case REQ_MISS:
