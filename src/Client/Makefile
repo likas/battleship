@@ -48,10 +48,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_Client_OBJECTS = client.$(OBJEXT) client_send_attack.$(OBJEXT) \
-	client_send.$(OBJEXT) client_send_text.$(OBJEXT) \
-	coords_atoi.$(OBJEXT) coords_itoa.$(OBJEXT) go_list.$(OBJEXT) \
-	hit.$(OBJEXT) parse_itoa.$(OBJEXT) ras.$(OBJEXT) \
-	socket_init.$(OBJEXT) with_ai.$(OBJEXT)
+	client_send_text.$(OBJEXT) coords_atoi.$(OBJEXT) \
+	coords_itoa.$(OBJEXT) go_list.$(OBJEXT) hit.$(OBJEXT) \
+	parse_itoa.$(OBJEXT) ras.$(OBJEXT) socket_init.$(OBJEXT) \
+	with_ai.$(OBJEXT)
 Client_OBJECTS = $(am_Client_OBJECTS)
 Client_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -191,7 +191,6 @@ AM_LDFLAGS = -i../include -lGUI -pthread
 Client_SOURCES = \
 client.c				\
 client_send_attack.c	\
-client_send.c			\
 client_send_text.c		\
 coords_atoi.c			\
 coords_itoa.c			\
@@ -290,7 +289,6 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/client.Po
-include ./$(DEPDIR)/client_send.Po
 include ./$(DEPDIR)/client_send_attack.Po
 include ./$(DEPDIR)/client_send_text.Po
 include ./$(DEPDIR)/coords_atoi.Po
