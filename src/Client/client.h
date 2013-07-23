@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <pthread.h>
 #include "../mboi.h"
 #include "../AI/ai.h" 
 #include "../GUI/gui.h"

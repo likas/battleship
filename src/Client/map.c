@@ -11,7 +11,7 @@ void map_init()
 	}
 }
 
-void map_deinit();
+void map_deinit()
 {
 	for (int i=0;i<SIZE;i++)
 	{
