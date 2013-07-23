@@ -56,6 +56,7 @@ int with_ai()
 		ch_ai.command = MSG_HM;
 		ch_ai=ai(ch_ai);		
 		/*getting coordinates from params*/
+		coords_itoa(ch_ai.params,&hit_place);
 		switch (ch_ai.command)
 		{
 			case REQ_MISS:
