@@ -28,10 +28,12 @@ term_width=stdscr->_maxx;
 start_color();
 init_pair(0,COLOR_BLACK,COLOR_WHITE);
 init_pair(1,COLOR_WHITE,COLOR_BLACK);
-init_pair(2,COLOR_GREEN,COLOR_BLUE);
-init_pair(3,COLOR_BLACK,COLOR_WHITE);
-init_pair(4,COLOR_CYAN,COLOR_RED);
-init_pair(5,COLOR_YELLOW,COLOR_MAGENTA);
+init_pair(2,COLOR_GREEN,COLOR_BLUE); //water
+init_pair(3,COLOR_BLACK,COLOR_WHITE);//ship
+init_pair(4,COLOR_CYAN,COLOR_RED);//hit
+init_pair(5,COLOR_YELLOW,COLOR_MAGENTA);//miss
+init_pair(6,COLOR_BLACK,COLOR_CYAN);
+
 keypad(stdscr,TRUE);
 chat=newwin(term_height/4-2,term_width-2,term_height-term_height/4,1);
 
