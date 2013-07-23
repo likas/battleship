@@ -48,10 +48,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_Client_OBJECTS = client.$(OBJEXT) client_send_attack.$(OBJEXT) \
-	client_send.$(OBJEXT) client_send_text.$(OBJEXT) \
-	coords_atoi.$(OBJEXT) coords_itoa.$(OBJEXT) go_list.$(OBJEXT) \
-	hit.$(OBJEXT) parse_itoa.$(OBJEXT) ras.$(OBJEXT) \
-	socket_init.$(OBJEXT) with_ai.$(OBJEXT)
+	client_send_text.$(OBJEXT) coords_atoi.$(OBJEXT) \
+	coords_itoa.$(OBJEXT) go_list.$(OBJEXT) hit.$(OBJEXT) \
+	ras.$(OBJEXT) socket_init.$(OBJEXT) with_ai.$(OBJEXT) \
+	map.$(OBJEXT)
 Client_OBJECTS = $(am_Client_OBJECTS)
 Client_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -187,20 +187,19 @@ top_builddir = ..
 top_srcdir = ..
 AUTOMAKE_OPTIONS = foreign
 AM_CFLAGS = -std=c99
-AM_LDFLAGS = -i../include -lGUI -pthread
+AM_LDFLAGS = -L../include -lGUI -lAI -pthread
 Client_SOURCES = \
 client.c				\
 client_send_attack.c	\
-client_send.c			\
 client_send_text.c		\
 coords_atoi.c			\
 coords_itoa.c			\
 go_list.c				\
 hit.c					\
-parse_itoa.c			\
 ras.c					\
 socket_init.c			\
-with_ai.c
+with_ai.c				\
+map.c
 
 all: all-am
 
@@ -290,14 +289,13 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/client.Po
-include ./$(DEPDIR)/client_send.Po
 include ./$(DEPDIR)/client_send_attack.Po
 include ./$(DEPDIR)/client_send_text.Po
 include ./$(DEPDIR)/coords_atoi.Po
 include ./$(DEPDIR)/coords_itoa.Po
 include ./$(DEPDIR)/go_list.Po
 include ./$(DEPDIR)/hit.Po
-include ./$(DEPDIR)/parse_itoa.Po
+include ./$(DEPDIR)/map.Po
 include ./$(DEPDIR)/ras.Po
 include ./$(DEPDIR)/socket_init.Po
 include ./$(DEPDIR)/with_ai.Po

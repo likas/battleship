@@ -1,7 +1,7 @@
-#ifndef CLIENT_H
+#include "../mboi.h"
 #include "client.h"
-#endif
 #include <stdio.h>
+
 /* GLOBALS */
 pthread_t chat_thread;
 /* struct sockaddr_in  */
