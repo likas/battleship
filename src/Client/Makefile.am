@@ -12,7 +12,6 @@ coords_atoi.c			\
 coords_itoa.c			\
 go_list.c				\
 hit.c					\
-parse_itoa.c			\
 ras.c					\
 socket_init.c			\
 with_ai.c
