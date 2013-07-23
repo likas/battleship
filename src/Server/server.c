@@ -6,8 +6,10 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <strings.h>
-#include "Server/server.h"
+#include "server.h"
+#include "for_fork.h"
 #include "config.h"
+
 #define MAX_PLAYERS 10
 
 int main(int argc,char *argv[])

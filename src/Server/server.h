@@ -1,5 +1,5 @@
-#ifndef INCLUDE_FOR_FORK
-#define INCLUDE_FOR_FORK
+#ifndef SERVER_H
+#define SERVER_H
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
@@ -16,6 +16,8 @@
 #include <netdb.h>
 #include <sys/poll.h>
 #include "../mboi.h"
+#include "for_fork.h"
+#include <unistd.h>
 
 int childWork(int sockClient);
 void* Game(void*);
