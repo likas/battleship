@@ -8,12 +8,10 @@ int with_ai()
 	message ch_ai;
 	ch_ai.command = MSG_SG;
 	/*creating field*/
-	SMAP[0][0]=-1;
-	write("%i",**SMAP,sizeof(int));
-	De_Init(&SMAP,&EMAP);
+	De_Init(SMAP,EMAP);
 	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
-	if(ch_ai.params[0] == "f")
+	if(ch_ai.params[0] == 'f')
 	{
 		turn=1;
 	}
@@ -21,10 +19,10 @@ int with_ai()
 	{
 	if (turn==1)
 	{
-		hit_place = De_Move(&EMAP);
+		hit_place = De_Move(EMAP);
 		ch_ai.command = MSG_AT;
 		char buf[128];
-		coords_atoi(&buf,hit_place);
+		coords_atoi(buf,hit_place);
 		scanf(ch_ai.params,"%s", buf);
 		ch_ai=ai(ch_ai);
 		switch (ch_ai.command) 
@@ -83,7 +81,7 @@ int with_ai()
 			
 		}
 	}
-	render(&SMAP,&EMAP,1);
+	render(SMAP, EMAP,1);
 	}	
 	return g_o;
 }
