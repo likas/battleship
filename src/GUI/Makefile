@@ -7,7 +7,7 @@ path=~/20l
 all:  $(obj) $(headers)
 	ar cr libgui.a $(obj)
 	ranlib libgui.a
-	gcc $(main) -L. -lgui -lncurses -o gui 
+	gcc $(main) -L. -lgui -lncurses -g -o gui 
 %.o:%.c
 	gcc -c $*.c -o $*.o	
 backup:

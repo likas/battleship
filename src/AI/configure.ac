@@ -13,9 +13,9 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS(ai.h)
 
 # Checks for libraries.
-AM_DISABLE_SHARED
-AM_PROG_LIBTOOL
-
+#AM_DISABLE_SHARED
+#AM_PROG_LIBTOOL
+AC_PROG_RANLIB
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_MODE_T
 AC_TYPE_OFF_T
