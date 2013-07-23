@@ -23,19 +23,25 @@ COORDS De_Move(int **op_mas)
 	//	wrefresh(op_win[i][j]);
 	        wnoutrefresh(op_win[i][j]);
 		switch(key){
-			case 'w':
+			//exit program
+			case KEY_ESC:
+				rt.x == -1;
+				rt.y == -1;
+				return rt;
+				break;
+			case 'w': case KEY_UP:
 				if(i!=0)
 					i--;
 				break;
-			case 'a':
+			case 'a': case KEY_LEFT:
 				if(j!=0)
 					j--;
 				break;
-			case 'd':
+			case 'd': case KEY_RIGHT:
 				if(j!=9)
 					j++;
 				break;
-			case 's':
+			case 's': case KEY_DOWN:
 				if(i!=9)
 					i++;
 				break;
