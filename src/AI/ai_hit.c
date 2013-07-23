@@ -136,8 +136,8 @@ int is_next_cell_valid( int** field, COORDS coords, AI_DIRECTION* direction )
 {
 	if ( ( ( coords.x + direction->dx ) < SIZE && ( coords.x + direction->dx ) > -1 ) &&
 		 ( ( coords.y + direction->dy ) < SIZE && ( coords.y + direction->dy ) > -1 ) &&
-		 ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
-		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) ) {
+		 ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_SHIP  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_SHIP_FIRE ) ) {
 		return 1;
 	}
 	return 0;

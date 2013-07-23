@@ -35,7 +35,7 @@ int with_ai()
 	ch_ai.command = MSG_SG;
 	ai_rand_matr(SMAP);
 	/*creating field*/
-	De_Init(SMAP,EMAP);
+//	De_Init(SMAP,EMAP);
 	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == 'f')
@@ -46,9 +46,9 @@ int with_ai()
 	{
 	if (turn==1)
 	{
-		hit_place = De_Move(EMAP);
-//		printf("Enter coord:\n");
-//		scanf("%d %d", &(hit_place.x), &(hit_place.y));
+//		hit_place = De_Move(EMAP);
+		printf("Enter coord:\n");
+		scanf("%d %d", &(hit_place.x), &(hit_place.y));
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
@@ -114,8 +114,8 @@ int with_ai()
 			
 		}
 	}
-	render(SMAP, EMAP,1);
-//	ai_draw(SMAP, EMAP);
+//	render(SMAP, EMAP,1);
+	ai_draw(SMAP, EMAP);
 	}	
 	return g_o;
 }
