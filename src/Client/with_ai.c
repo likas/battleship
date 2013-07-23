@@ -48,7 +48,7 @@ int with_ai()
 	{
 //		hit_place = De_Move(EMAP);
 		printf("Enter coord:\n");
-		scanf("%d %d");
+		scanf("%d %d", &(hit_place.x), &(hit_place.y));
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
