@@ -7,6 +7,7 @@ int with_ai()
 	COORDS hit_place;
 	message ch_ai;
 	ch_ai.command = MSG_SG;
+	ai_rand_matr(SMAP);
 	/*creating field*/
 	De_Init(SMAP,EMAP);
 	ai_set_field(SMAP);
