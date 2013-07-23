@@ -28,6 +28,7 @@ message ai( message msg )
 				answer.params[ 0 ] = 's';
 				return answer;
 			}
+			break;
 		case MSG_HM:
 			ai_shoot( &coords );
 			answer.command = ai_hit( player_field, coords, PLAYER );
