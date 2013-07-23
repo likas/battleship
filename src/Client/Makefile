@@ -2,13 +2,13 @@ SOURCES=socket_init.c client_send_text.c go_list.c client_send_attack.c coords_i
 OBJ=$(SOURCES:.c=.o)
 MAIN=client.c
 HEADER=client.h
-KEYS=-Wall -pedantic -g 
+KEYS=-std=c99 -Wall -pedantic -g 
 all: $(MAIN) libClient.a
 	gcc $(KEYS) $(MAIN) -o cl -L. -lClient -L../GUI/ -lgui -L../AI/ -lAI -lncurses
 libClient.a: $(OBJ)
 	ar cr libClient.a $(OBJ) 
 %.o:%.c
-	gcc -c $*.c -o $*.o
+	gcc $(KEYS) -c $*.c -o $*.o
 
 clear:
 	rm *.o *.a cl

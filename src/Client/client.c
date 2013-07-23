@@ -92,7 +92,7 @@ int main(int argc, char* argv[]){
 	}*/
 	while(received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
 		if(YOURMOVE){
-			xy=De_Move(&EMAP);
+			xy=De_Move(EMAP);
 			client_send_attack(xy);
 		}else{
 			while(1){
