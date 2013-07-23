@@ -1,4 +1,30 @@
 #include "client.h"
+void draw_cell(enum _CELL_STATE state)
+{
+    switch(state)
+    {
+        case CELL_NONE: printf("_"); break;
+        case CELL_SHIP: printf("S"); break;
+        case CELL_SHIP_FIRE: printf("@"); break;
+        case CELL_MISS: printf("*"); break;
+        default: break;
+    }
+}
+
+void ai_draw(int **field_first, int **field_second)
+{
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+            draw_cell(field_first[i][j]);
+        printf("\t");
+        for(int j = 0; j < SIZE; j++)
+            draw_cell(field_second[i][j]);
+        printf("\n");
+    }
+    printf("\n");
+}
+
 
 int with_ai()
 {
@@ -9,7 +35,7 @@ int with_ai()
 	ch_ai.command = MSG_SG;
 	ai_rand_matr(SMAP);
 	/*creating field*/
-	De_Init(SMAP,EMAP);
+//	De_Init(SMAP,EMAP);
 	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == 'f')
@@ -20,11 +46,16 @@ int with_ai()
 	{
 	if (turn==1)
 	{
-		hit_place = De_Move(EMAP);
+//		hit_place = De_Move(EMAP);
+		printf("Enter coord:\n");
+		scanf("%d %d", &(hit_place.x), &(hit_place.y));
 		ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
-		sscanf(ch_ai.params,"%s", buf);
+		//sscanf(ch_ai.params,"%s", buf);
+		ch_ai.params[0]=buf[0];  
+        ch_ai.params[1]=buf[1];
+
 		ch_ai=ai(ch_ai);
 		switch (ch_ai.command) 
 		{
@@ -78,12 +109,13 @@ int with_ai()
 			}
 			case REQ_DESTROYED:
 			{
-				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				SMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 			}
 			
 		}
 	}
-	render(SMAP, EMAP,1);
+//	render(SMAP, EMAP,1);
+	ai_draw(SMAP, EMAP);
 	}	
 	return g_o;
 }
