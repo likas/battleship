@@ -53,7 +53,7 @@ int with_ai()
 		{
 			ch_ai.command = REQ_DISCONNECT;
 			ai(ch_ai);
-			return REQ_YOULOSE;
+			return REQ_DISCONNECT;
 		}
 		ch_ai.command = MSG_AT;
 		char buf[128];

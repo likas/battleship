@@ -17,6 +17,7 @@ op_win=calloc(10,sizeof(WINDOW**));
 initscr();
 cbreak();
 noecho();
+keypad(stdscr, TRUE);
 clear();
 
 term_height=stdscr->_maxy;
