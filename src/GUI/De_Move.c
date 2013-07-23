@@ -23,6 +23,12 @@ COORDS De_Move(int **op_mas)
 	//	wrefresh(op_win[i][j]);
 	        wnoutrefresh(op_win[i][j]);
 		switch(key){
+			case 'q':
+				endgui( -1 );
+				rt.x = -1;
+				rt.y = -1;
+				return rt;
+				break;
 			case 'w':
 				if(i!=0)
 					i--;
