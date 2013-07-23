@@ -18,8 +18,6 @@ initscr();
 cbreak();
 noecho();
 clear();
-getch();
-
 
 term_height=stdscr->_maxy;
 term_width=stdscr->_maxx;
