@@ -125,7 +125,7 @@ void ras(int **smap)
 		    if(!f)
 		    {
 		        for(i=0;i<len;i++)
-			    /**(smap+SIZE*(y+i)+x)*/smap[y+i][x]=1;
+			    /**(smap+SIZE*(y+i)+x)*/smap[y+i][x]=CELL_SHIP;
 			render(SMAP,EMAP,0);
 			kor[len-1]--;
 			if(!kor[len-1])
