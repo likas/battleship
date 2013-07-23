@@ -1,5 +1,5 @@
-#ifndef INCLUDE_FOR_FORK
-#define INCLUDE_FOR_FORK
+#ifndef SERVER_H
+#define SERVER_H
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
@@ -17,6 +17,7 @@
 #include <sys/poll.h>
 #include<signal.h>
 #include "../mboi.h"
+#include <unistd.h>
 
 #define MAX_PL 16
 #define thr_max_cnt 50
