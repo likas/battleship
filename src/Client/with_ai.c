@@ -109,7 +109,7 @@ int with_ai()
 			}
 			case REQ_DESTROYED:
 			{
-				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				SMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 			}
 			
 		}
