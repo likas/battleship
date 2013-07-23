@@ -41,7 +41,7 @@ message ai( message msg )
 			}
 
 			ai_get_respond( answer.command );
-			ai_clear_variants( ai_enemy_field );
+			//ai_clear_variants( ai_enemy_field );
 			return answer;
 			break;
 		case MSG_AT:
