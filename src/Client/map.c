@@ -8,6 +8,11 @@ void map_init()
 	{
 		SMAP[i]=(int*)calloc(SIZE,sizeof(int));
 		EMAP[i]=(int*)calloc(SIZE,sizeof(int));
+		for(int j = 0; j < SIZE; j++)
+		{
+			EMAP[i][j] = CELL_NONE;
+			SMAP[i][j] = CELL_NONE;
+		}
 	}
 }
 
