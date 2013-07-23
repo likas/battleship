@@ -15,20 +15,26 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <sys/poll.h>
+#include<signal.h>
 #include "../mboi.h"
-#include "for_fork.h"
 #include <unistd.h>
 
-int childWork(int sockClient);
-void* Game(void*);
+#define MAX_PL 16
+#define thr_max_cnt 50
+
+
 
 typedef struct {
     int _id;
     char name[30];
 }Player;
 
+void * Game(void * arg);
+void nn_sg(message* msg, Player* pl, int sock);
+
 int port;
-int thread_id[50];
+int thread_id[thr_max_cnt];
 int game_sockd;
+message** gm;
 
 #endif

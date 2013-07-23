@@ -33,9 +33,9 @@ AC_CHECK_FUNCS([bzero inet_ntoa memset socket])
 AC_CONFIG_MACRO_DIR([m4])
 
 AC_CONFIG_FILES([Makefile]
-				[AI/Makefile]
-				[Client/Makefile]
-				[GUI/Makefile]
-				[Server/Makefile])
+				[src/AI/Makefile]
+				[src/Client/Makefile]
+				[src/GUI/Makefile]
+				[src/Server/Makefile])
 #AC_CONFIG_SUBDIRS([AI])
 AC_OUTPUT
