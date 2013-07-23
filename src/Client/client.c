@@ -18,6 +18,7 @@ int main(int argc, char* argv[]){
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
 	gui();
+	map_init();
 	if(!ONLINE){
 		/* possibly init*/
 		WOL=with_ai(); 

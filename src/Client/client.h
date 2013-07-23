@@ -13,8 +13,8 @@
 /*----------------------*/
 
 int ser_soc;
-int SMAP[10][10];
-int EMAP[10][10];
+int **SMAP;
+int **EMAP;
 int TUNNEL;
 int GAME_TUNNEL;
 int YOURMOVE;
@@ -34,4 +34,6 @@ int parser_itoa(int number, char* buf);
 int with_ai(); 
 
 /*----------------------*/
+void map_init();
+void map_deinit();
 #endif
