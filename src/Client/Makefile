@@ -50,8 +50,12 @@ PROGRAMS = $(bin_PROGRAMS)
 am_Client_OBJECTS = client.$(OBJEXT) client_send_attack.$(OBJEXT) \
 	client_send_text.$(OBJEXT) coords_atoi.$(OBJEXT) \
 	coords_itoa.$(OBJEXT) go_list.$(OBJEXT) hit.$(OBJEXT) \
+<<<<<<< HEAD
 	ras.$(OBJEXT) socket_init.$(OBJEXT) with_ai.$(OBJEXT) \
 	map.$(OBJEXT)
+=======
+	ras.$(OBJEXT) socket_init.$(OBJEXT) with_ai.$(OBJEXT)
+>>>>>>> autotools
 Client_OBJECTS = $(am_Client_OBJECTS)
 Client_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -295,7 +299,10 @@ include ./$(DEPDIR)/coords_atoi.Po
 include ./$(DEPDIR)/coords_itoa.Po
 include ./$(DEPDIR)/go_list.Po
 include ./$(DEPDIR)/hit.Po
+<<<<<<< HEAD
 include ./$(DEPDIR)/map.Po
+=======
+>>>>>>> autotools
 include ./$(DEPDIR)/ras.Po
 include ./$(DEPDIR)/socket_init.Po
 include ./$(DEPDIR)/with_ai.Po
