@@ -1,11 +1,8 @@
 #include "ai.h"
 
-void ai_rand_cell_wrap(int **matr, COORDS *coord, int const count_free_cell)
+void ai_rand_cell_wrap(int **matr, COORDS *coord)
 {
-	int ai_cells_left_temp = ai_cells_left;
-	ai_cells_left = count_free_cell;
 	ai_rand_cell(matr, coord, Y_X);
-	ai_cells_left = ai_cells_left_temp;
 }
 
 /* функция во возвращает количество пробных клеток корабля установленных на матрице*/
@@ -58,7 +55,7 @@ int conditional_ship(int **matr, COORDS *coord, int const size_ship, AI_DIRECTIO
 }
 
 
-void set_ship(int **matr, COORDS *coord, AI_DIRECTION *direct, int *count_free_cell, int const size_ship, int way)
+void set_ship(int **matr, COORDS *coord, AI_DIRECTION *direct, int const size_ship, int way)
 {
 	int count_cell_ship = 0;
 	int count_motion_forward,
@@ -68,7 +65,6 @@ void set_ship(int **matr, COORDS *coord, AI_DIRECTION *direct, int *count_free_c
 	int x, y;
 	for (x = coord->x, y = coord->y; ; x += direct->dx, y += direct->dy) {
 			matr[y][x] = CELL_SHIP;
-			--(*count_free_cell);
 			if (++count_cell_ship == size_ship)
 				break;
 	}
@@ -110,7 +106,6 @@ void set_ship(int **matr, COORDS *coord, AI_DIRECTION *direct, int *count_free_c
 		if ((x >= 0) && (x < SIZE) && (y >= 0) && (y < SIZE)) {
 			if (matr[y][x] != CELL_MISS) {
 				matr[y][x] = CELL_MISS;
-				--(*count_free_cell);
 			}
 		}
 		if (count_motion_forward) {
@@ -131,7 +126,7 @@ void set_ship(int **matr, COORDS *coord, AI_DIRECTION *direct, int *count_free_c
 	}
 }
 
-void rand_loc_ship(int **matr, int const size_ship, int *count_free_cell)
+void rand_loc_ship(int **matr, int const size_ship )
 {
 	COORDS coord;
 	AI_DIRECTION direct; // напрвление корабля в векторе (1,0) - вправо/(-1,0) - влево/(0,1) - вверх/(0,-1) - вниз
@@ -139,15 +134,14 @@ void rand_loc_ship(int **matr, int const size_ship, int *count_free_cell)
 	int way; // направление корабля 0/1/2/3
 
 	do {
-		ai_rand_cell_wrap(matr, &coord, *count_free_cell);
+		ai_rand_cell_wrap(matr, &coord);
 	} while(conditional_ship(matr, &coord, size_ship, &direct, &way) != size_ship);
-	set_ship(matr, &coord, &direct, count_free_cell, size_ship, way);
+	set_ship(matr, &coord, &direct,size_ship, way);
 }
 
 
 int ai_rand_matr(int **matr)
 {
-	int count_free_cell = SIZE * SIZE;
 	if (matr == NULL) {
 		return -1;
 	}
@@ -164,16 +158,10 @@ int ai_rand_matr(int **matr)
 		}
 	}
 
-	rand_loc_ship(matr, 4, &count_free_cell);
-	rand_loc_ship(matr, 3, &count_free_cell);
-	rand_loc_ship(matr, 3, &count_free_cell);
-	rand_loc_ship(matr, 2, &count_free_cell);
-	rand_loc_ship(matr, 2, &count_free_cell);
-	rand_loc_ship(matr, 2, &count_free_cell);
-	rand_loc_ship(matr, 1, &count_free_cell);
-	rand_loc_ship(matr, 1, &count_free_cell);
-	rand_loc_ship(matr, 1, &count_free_cell);
-	rand_loc_ship(matr, 1, &count_free_cell);
+	for(int i = COUNT_SHIP; i > 0; i--)
+		for(int j = 0; j <= COUNT_SHIP - i; j++)
+			rand_loc_ship(matr, i);
+
 	for (int i = 0; i < SIZE; ++i) {
 		for (int j = 0; j < SIZE; ++j) {
 			if (matr[i][j] != CELL_SHIP)

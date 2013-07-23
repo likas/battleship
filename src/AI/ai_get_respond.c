@@ -2,11 +2,10 @@
 
 void ai_mark_miss( int x, int y )
 {
-	if( !(x < 0 ||  x >= SIZE ||
-		 y < 0 || y >= SIZE ) &&
-		ai_enemy_field[ x ][ y ] == CELL_NONE ) {
+	if( x >= 0 &&  x < SIZE && y >= 0 &&  y < SIZE &&
+		ai_enemy_field[ x ][ y ] == CELL_NONE ) 
+	{
 		ai_enemy_field[ x ][ y ] = CELL_MISS;
-		ai_cells_left--;
 	}
 }
 
@@ -82,24 +81,5 @@ void ai_get_respond( enum _REQUESTS req )
      }
  
      if( req == REQ_HIT ) 
-	 {
-		if((ai_direction.dx != 0 && ai_direction.dy != 0) &&
-		   (ai_last_shot.x + ai_direction.dx < 0 || 
-		    ai_last_shot.y + ai_direction.dy < 0 ||
-		    ai_last_shot.x + ai_direction.dx >= SIZE || 
-		    ai_last_shot.y + ai_direction.dy >= SIZE))
-		{
-			ai_direction.dx *= -1;
-			ai_direction.dy *= -1;
-			while(ai_enemy_field[ai_last_shot.x + ai_direction.dx]
-					            [ai_last_shot.y + ai_direction.dy] == CELL_SHIP_FIRE)
-			{
-				ai_last_shot.x += ai_direction.dx;
-				ai_last_shot.y += ai_direction.dy;
-			}
-			printf("%d %d/n", ai_last_shot.x, ai_last_shot.y);
-		}
-		
         ai_last_shot_suc = ai_last_shot;
-	 }
 }

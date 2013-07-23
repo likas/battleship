@@ -35,7 +35,6 @@ enum _GAMERS
 
 // AI resources
 int ai_ship_count;						// Number of ship AI still has alive
-int ai_cells_left;						// Number of cells on the map that hasn't been hit yet
 int **ai_player_field;					// It is the field of AI where his ships are placed
 int **ai_enemy_field;					// It is the field on whitch AI would mark his whots and enemy dead/hit ships
 int **player_field;						// It is the client's field where his ships are placed, used to calculate hits and misses
