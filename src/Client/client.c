@@ -1,7 +1,7 @@
-#ifndef CLIENT_H
+#include "../mboi.h"
 #include "client.h"
-#endif
 #include <stdio.h>
+
 /* GLOBALS */
 pthread_t chat_thread;
 /* struct sockaddr_in  */
@@ -22,8 +22,8 @@ int main(int argc, char* argv[]){
 	
 	if(!ONLINE){
 		/* possibly init*/
-		WOL=with_ai(); 
-		/*printf("Sorry, no AI functions yet\n");*/
+		WOL=with_ai();
+		endgui(-1);
 		/* message */
 	}else{
 	char player_id=-1;
@@ -66,7 +66,9 @@ int main(int argc, char* argv[]){
 	/* and waiting socket from server, no matter are we first or second */
 	TUNNEL=GAME_TUNNEL;
 	GAME_TUNNEL=received.command;
-	/* TODO FIX */
+	/* set ships here */
+	/* TODO set ships here, init map (here?) im thinking about 'init' first, then passing fields to set up ships
+	* as parameters */
 	/* sending a gamefield */
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who
@@ -109,8 +111,10 @@ int main(int argc, char* argv[]){
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
 					break;
 				case REQ_YOUWIN: /* done */
+					WOL=1;
 					break;
 				case REQ_YOULOSE: /* done */
+					WOL=0;
 					break;
 				case MSG_AT:
 					/*COORDS*/coords_itoa(received.params, &xy);
@@ -152,8 +156,8 @@ int main(int argc, char* argv[]){
 
 
 
-
 	}/* this is for }else{ of ONLINE */
+	
 	return 0;
 }
 

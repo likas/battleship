@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include <strings.h>
 #include <errno.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<pthread.h>
-#include<netinet/in.h>
-#include<netdb.h>
-#include<sys/poll.h>
-#include"../mboi.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <pthread.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <sys/poll.h>
+#include "../mboi.h"
 
 int childWork(int sockClient);
 void* Game(void*);
