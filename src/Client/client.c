@@ -19,6 +19,7 @@ int main(int argc, char* argv[]){
 	* with no idea how... */
 	gui();
 	map_init();
+	
 	if(!ONLINE){
 		/* possibly init*/
 		WOL=with_ai(); 
