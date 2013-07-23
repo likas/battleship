@@ -10,7 +10,7 @@ int socket_init(){
 		exit(1);
 	}
 	addr.sin_family=AF_INET;
-	addr.sin_port=htons(777);
+	addr.sin_port=htons(7778);
 	inet_aton("172.0.0.1", &addr.sin_addr);
 /* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
 /* 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK); */
