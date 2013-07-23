@@ -9,7 +9,8 @@ int ai_rand_cell(int **matr, COORDS *coord, DIRECTION_WAY const change)
 			if(matr[i][j] == CELL_NONE)
 				count_free_cell++;
 
-	rand_cell = (int)(((double) rand() * count_free_cell / (double) RAND_MAX));
+//	rand_cell = (int)(((double) rand() * count_free_cell / (double) RAND_MAX));
+	rand_cell = rand() % count_free_cell;
 	if (change == Y_X) {
 		for (int y = 0, count_cell = 0; y < SIZE; ++y) {
 			for (int x = 0; x < SIZE; ++x) {
