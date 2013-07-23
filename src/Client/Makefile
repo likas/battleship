@@ -1,4 +1,4 @@
-SOURCES=socket_init.c client_send_text.c go_list.c client_send_attack.c coords_itoa.c coords_atoi.c with_ai.c
+SOURCES=socket_init.c client_send_text.c go_list.c client_send_attack.c coords_itoa.c coords_atoi.c with_ai.c map.c
 OBJ=$(SOURCES:.c=.o)
 MAIN=client.c
 HEADER=client.h
