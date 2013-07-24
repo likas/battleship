@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <pthread.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "../mboi.h"
 #include "../AI/ai.h" 
 #include "../GUI/gui.h"
