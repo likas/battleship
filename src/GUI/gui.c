@@ -2,18 +2,24 @@
 
 void sig(int handler)
 {
-int i,j;
+int i,j,SIZEFLAG=0;
 struct winsize wins;
-
-//wins.ws_row=50;
-//wins.ws_col=100;
 
 int term_height,term_width;
 ioctl(0, TIOCGWINSZ, &wins);
 
 term_height=wins.ws_row;
 term_width=wins.ws_col;
+if(term_height <30 || term_width<50){
+	endwin();
+	SIZEFLAG=1;
+	system("clear");
+	printf("Minumum size is 50x30\n");
+	return;
+}
+else SIZEFLAG=0;
 
+if(!SIZEFLAG){
 for(i=0;i<10;i++)
   for(j=0;j<10;j++)
 	{
@@ -43,7 +49,10 @@ init_pair(1,COLOR_WHITE,COLOR_BLACK);
 init_pair(2,COLOR_GREEN,COLOR_BLUE); //water
 init_pair(3,COLOR_BLACK,COLOR_WHITE);//ship
 init_pair(4,COLOR_CYAN,COLOR_RED);//hit
-init_pair(5,COLOR_MAGENTA,COLOR_YELLOW);//miss
+init_pair(5,COLOR_MAGENTA,COLOR_YELLOW);//
+
+//wsetattr(stdscr,COLOR_PAIR(0));
+//FINref(stdscr,0,0);
 
 keypad(stdscr,TRUE);
 chat=newwin(term_height/4-2,term_width-1,term_height-term_height/4+2,1);
@@ -53,16 +62,9 @@ FINref(chat,2,0);
 GUICHATLEN=FINchat("SYSTEM","Hello",GUICHATLEN);
 GUICHATLEN=FINchat(username,"Hi, System",GUICHATLEN);
 
-
-
-
-//FINref(stdscr,1,0);
-
-//chat=newwin(term_height/4-2,term_width-3,term_height-term_height/4,1);
-
-///FINref(chat,2,0);
 De_Init(MY,OP);
-//render(MY,OP,1);
+}
+
 }
 
 
