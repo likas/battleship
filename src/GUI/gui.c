@@ -1,6 +1,5 @@
 #include "gui.h"
-#define COLOR_BLACK COLOR_WHITE
-//#define COLOR_WHITE COLOR_BLACK
+
 void sig(int handler)
 {
 int i,j,SIZEFLAG=0;
@@ -48,9 +47,9 @@ start_color();
 init_pair(0,COLOR_BLACK,COLOR_WHITE);
 init_pair(1,COLOR_WHITE,COLOR_BLACK);
 init_pair(2,COLOR_GREEN,COLOR_BLUE); //water
-init_pair(3,COLOR_BLACK,COLOR_WHITE);//ship
+init_pair(3,COLOR_BLACK,COLOR_CYAN);//ship
 init_pair(4,COLOR_CYAN,COLOR_RED);//hit
-init_pair(5,COLOR_MAGENTA,COLOR_BLACK);//miss
+init_pair(5,COLOR_MAGENTA,COLOR_YELLOW);//
 
 //wsetattr(stdscr,COLOR_PAIR(0));
 //FINref(stdscr,0,0);
@@ -99,7 +98,7 @@ start_color();
 init_pair(0,COLOR_BLACK,COLOR_WHITE);
 init_pair(1,COLOR_WHITE,COLOR_BLACK);
 init_pair(2,COLOR_GREEN,COLOR_BLUE); //water
-init_pair(3,COLOR_BLACK,COLOR_WHITE);//ship
+init_pair(3,COLOR_BLACK,COLOR_CYAN);//ship
 init_pair(4,COLOR_CYAN,COLOR_RED);//hit
 init_pair(5,COLOR_MAGENTA,COLOR_YELLOW);//miss
 init_pair(6,COLOR_BLACK,COLOR_CYAN);
