@@ -68,11 +68,11 @@ ONLINE=MODEFLAG;
 	TUNNEL=GAME_TUNNEL;
 	GAME_TUNNEL=received.command;
 	/* set ships here */
-	De_Init(SMAP, EMAP);
 	if(ONLINE & 1) //Manual field or random
           ras(SMAP);
       else
           ai_rand_matr(SMAP);
+	De_Init(SMAP, EMAP);
 	/* sending a gamefield */
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who
