@@ -13,7 +13,8 @@ term_width=wins.ws_col;
 if(term_height <30 || term_width<50){
 	endwin();
 	SIZEFLAG=1;
-	system("clear");
+//	system("clear");
+	printf("\033[2J\n");
 	printf("Minumum size is 50x30\n");
 	return;
 }
