@@ -23,13 +23,18 @@
 #define thr_max_cnt 50
 
 
+typedef struct {
+	int id1;
+	int id2;
+	int thr_cnt;
+} args;
 
 typedef struct {
     int _id;
     char name[30];
 }Player;
 
-//void * Game(void * arg);
+void * Game(void * arg);
 //void nn_sg(message* msg, Player* pl, int sock);
 
 int port;

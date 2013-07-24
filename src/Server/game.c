@@ -89,9 +89,15 @@ void * Game(void *arg){
 	struct sockaddr_in servaddr;
 	message mesg;
 	COORDS XY;
+	args temp;
 
-	id=*((int *)arg);
-	if( (game_sockd=socket(AF_INET,SOCK_STREAM,0)) <0 ){
+	temp=*((args *)arg);
+	fds[0].fd=temp.id1;
+	fds[0].events=POLLIN;
+	fds[1].fd=temp.id2;
+	fds[1].events=POLLIN;
+	id=temp.thr_cnt;
+/*	if( (game_sockd=socket(AF_INET,SOCK_STREAM,0)) <0 ){
 		perror("Error socket");
 		exit(1);
 	}
@@ -118,7 +124,7 @@ void * Game(void *arg){
 		perror("Accept");
 		exit(1);
 	}
-	fds[1].events=POLLIN;
+	fds[1].events=POLLIN;*/
 
 	while(1){
 		ret=poll(fds,2,10000);

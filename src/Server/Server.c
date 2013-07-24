@@ -1,6 +1,5 @@
 #include"server.h"
 
-
 int count=0;
 struct pollfd fds[16];//fds-массив структур для poll();
 
@@ -11,13 +10,34 @@ void close_all(){
 	exit(0);
 }
 
+void del_fds(struct pollfd *fds[],int number,Player *_player[]){
+    int i = number;
+    while (i < MAX_PL - 1) {
+        fds[i] = fds[i+1];
+        _player[i-1]->_id = _player[i]->_id;
+        strcpy(_player[i-1]->name,_player[i]->name);
+        i++;
+    }
+	printf("i = %d\n", i);
+    fds[i]->fd = 0;
+    fds[i]->events = 0;
+    _player[i-1]->_id = -1;
+    strcpy(_player[i-1]->name,"");
+}
 int main(int argc, char *argv[]){
 	if(argc<2){printf("Not enough arguments"); exit(1);}
 	int ret,i,j,id;//count-счётчик количества элементов в структуре fds;
 	struct sockaddr_in servaddr;
 	pthread_t thread[16];
 	Player player[16];
+	/*if ( (player = malloc(sizeof(Player)*16)) == NULL){
+		printf("error_add_memory\n");
+		exit(1);
+	}*/
 	message msg;
+	for(i = 0; i < MAX_PL; i++) {
+		player[i]._id = -1;
+	}
 
 	port=atoi(argv[1]);
 	memset(thread_id,0,16);
@@ -49,7 +69,7 @@ int main(int argc, char *argv[]){
 		if(ret==0)
 			continue;
 		for(i=0;i<count;i++){
-			if(fds[i].revents){
+			if(fds[i].revents & POLLIN){
 				printf("READ\n");
 //если действие произошло по дескриптору главного сокета то обрабатываем подключение клиента
 				if(i==0){
@@ -57,15 +77,18 @@ int main(int argc, char *argv[]){
 						perror("Error accept!");
 						exit(1);
 					}
+
+					fds[count].events=POLLIN;
 					player[count-1]._id=count-1;
 					strcpy(player[count-1].name,"");
 					count++;
 				}else{
+					printf("Else\n");
 					if( (recv(fds[i].fd,(void *)&msg,sizeof(message),0)) <0){
 						perror("Error recv!");
 						exit(1);
 					}
-					nn_sg(&msg,player,fds[i].fd);
+					nn_sg(&msg,player, i, fds);
 				}
 			}
 		}
