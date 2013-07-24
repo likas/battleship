@@ -28,11 +28,13 @@ int go_list()
 		}
 		i++;
 	}
-	if(i<0){
-		printf("if called\n"); 
+	printf("i=%d\n", i);
+	if(lists[0].command==-1){
+		strcpy(lists[0].params, "No-one else in list. Press here or 'r' to refresh\n");
+/*		printf("if called\n");  */
 		/* ant_player_list(lists, 16);
 		return lists[0].command; */
-		return -1;
+		return lists[ant_player_list(lists,1)].command;
 	}else{
 		return lists[ant_player_list(lists,i)].command;
 	}
