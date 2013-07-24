@@ -59,6 +59,7 @@ int show_menu()
 				wrefresh( win_submenu );
 				break;
 			case 10:
+				refresh();
 				return select_return( item_index( current_item( menu ) ) ); 
 				break;
 			default:
@@ -71,19 +72,19 @@ int select_return( int item_indx )
 {
 	switch( item_indx ) {
 		case 0:
-			return show_submenu();
+			return ( 2 | show_submenu() );
 			break;
 		case 1:
-			return MULTI;
+			return show_submenu();
 			break;
 		case 2:
 			return QUIT;
 			break;
 		case 3:
-			return SINGLE;
+			return 1;
 			break;
 		case 4:
-			return SINGLE_R;
+			return 0;
 			break;
 		case 5:
 			return BACK;
