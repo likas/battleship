@@ -1,8 +1,7 @@
 #ifndef AI_H
 #define AI_H
 #include <stdio.h>
-#include <sys/time.h>
-#include <time.h>
+#include <unistd.h>
 #include "../mboi.h"
 #include "../Client/client.h"
 
