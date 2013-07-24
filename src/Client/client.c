@@ -8,68 +8,109 @@ pthread_t chat_thread;
 
 int main(int argc, char* argv[]){
 	int WOL=-1;
-	if(argc==1){
-		printf("Input 1 as a parameter to play with AI, 2 for another user\n");
-		exit(1);
-	}else{
-		ONLINE=(*argv[1]=='1')?0:1;
-	}
+	message sent;
+	srand(time(NULL));
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
-	gui();
+	int menu_status = gui();
+	if(menu_status == QUIT)
+		return;
 	map_init();
-	
-	if(!ONLINE){
+	if(menu_status >> 1) //Game with ai
+	{
 		/* possibly init*/
-		WOL=with_ai();
-		
+		WOL=with_ai(menu_status & 1);
+		getch();		
 		endgui(WOL);
-		/* message */
-	}else{
+	}
+	else //Game with other client
+	{
 	char player_id=-1;
 	message received;
 	COORDS xy; xy.x=-1; xy.y=-1;
-	GAME_TUNNEL=socket_init(); /* TUNNEL is lying somewhere in the header, ask
+	/*GAME_TUNNEL=socket_init(); */ /* TUNNEL is lying somewhere in the header, ask
 						   * someone else, what do you want from me, for
 						   * Christ sake?! */
+	struct sockaddr_in addr;
+	GAME_TUNNEL=socket(AF_INET, SOCK_STREAM, 0);
+	if(GAME_TUNNEL<0){
+		perror("socket");
+		exit(1);
+	}
+	addr.sin_family=AF_INET;
+	addr.sin_port=htons(1999);
+/*	inet_aton("127.0.0.1", &addr.sin_addr); */
+/* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
+/* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
+ 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+	if(connect(GAME_TUNNEL, (struct sockaddr *)&addr, sizeof(addr)) < 0){
+		perror("connect");
+		exit(1);
+	}
 	/*here is something like: */
 	/*there we send a NN located in nickname global which is defined in gui.h
 	* to the server with TUNNEL established earlier */
 	/*here server shall send us a list of existing games, and we get it like: */
-	while(1){
+	if((client_send_text(40, username))>0){
+		printf("Somethin' glitched during process of sending NN\n");
+		exit(1);
+	}
+	while(player_id==-1){
+	if((client_send_text(MSG_RL, (char*)0))!=0){ /* sending MSG_RL */
+		printf("client_send_text return an error\n");
+		exit(1);
+	}
+		while(1){ /* receiving answer */
+				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
+					break;
+				}}
+		switch(received.command){ /* it can be as below: */
+			case REQ_STARTLIST: /* it's for getting/updating player's list */
+				player_id=go_list(); /* callin' ant_player_list(usn, len) inside,
+							* and it returns number of player's structure
+							* which is converted to player's id and returned, OR
+							* OR -1 in case of chosing new game */ 
+				break;
+			case REQ_DECLINE: /* it's for case of error */
+				printf("An error occured: server return DECLINE\n");
+				exit(1);
+				break;
+			case REQ_GAMESTARTED: /* it's when someone pick our player as an opponent */
+				player_id=-2; /* to exit waiting cycle */
+				break;
+			default:
+				printf("An error occurred: Error while receiving player list\n");
+				exit(1);
+				break;
+		}
+
+		if(player_id>0){ /* /отправляем номер, если мы сами его выбрали */
+			client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
+		}
+		/* waiting for response */
+		while(1){
 			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
 				break;
-			}}
-	switch(received.command){
-		case REQ_STARTLIST:
-			player_id=(char)go_list(); /* callin' ant_player_list(usn, len) inside,
-						* and it returns number of player's structure
-						* which is converted to player's id and returned */ 
+			}
+		}
+		if(received.command==REQ_DECLINE){
+			/* if it's DECLINE answer, we have to start again with that while() staff, */
+			player_id=-1;
+		}else if(received.command==REQ_ACCEPT){
+			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
-		case REQ_DECLINE:
-			printf("An error occured: server return DECLINE\n");
-			exit(1);
-			break;
-		default:
-			printf("An error occurred: Error while receiving player list");
-			exit(1);
-			break;
-	}
-	/* sending a player id; getting socket for new game instead */
-	if(player_id>0){ /* if player's list isnt empty */
-		client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
-	}
-	while(1){
-			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
-				break;
-			}}
-	/* and waiting socket from server, no matter are we first or second */
-	TUNNEL=GAME_TUNNEL;
-	GAME_TUNNEL=received.command;
+		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); }
+	} /* end of 'while(player_id..)'
+	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
-	/* TODO set ships here, init map (here?) im thinking about 'init' first, then passing fields to set up ships
-	* as parameters */
+	if(menu_status & 1) { //Manual field or random
+		De_Init(SMAP, EMAP);
+        ras(SMAP);
+	} else {
+        ai_rand_matr(SMAP);
+		De_Init(SMAP, EMAP);
+	}
 	/* sending a gamefield */
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who
@@ -95,6 +136,7 @@ int main(int argc, char* argv[]){
 	while(received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
 		if(YOURMOVE){
 			xy=De_Move(EMAP);
+			/* TODO if -1;-1 : exit */
 			client_send_attack(xy);
 		}else{
 			while(1){
@@ -152,7 +194,6 @@ int main(int argc, char* argv[]){
 			}
 			}
 		} /* for game cycle */
-	GAME_TUNNEL=TUNNEL;
 
 
 

@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <pthread.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "../mboi.h"
 #include "../AI/ai.h" 
 #include "../GUI/gui.h"
@@ -19,7 +21,6 @@ int **EMAP;
 int TUNNEL;
 int GAME_TUNNEL;
 int YOURMOVE;
-int ONLINE;
 /*----------------------*/
 
 int coords_atoi(char *, COORDS);
@@ -33,6 +34,8 @@ int socket_init();
 int go_list();
 int parser_itoa(int number, char* buf);
 int with_ai(); 
+void round_ship(int **smap,int x,int y);
+void ras(int **smap);
 
 /*----------------------*/
 void map_init();

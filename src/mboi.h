@@ -13,6 +13,11 @@
 #define MSG_LEN 128
 #endif 
 #include <stdlib.h>
+#include <sys/time.h>
+#include <time.h>
+
+//Select game with ai or other client
+int GAME_WITH_AI;
 
 enum _CELL_STATE
 {
@@ -78,5 +83,13 @@ enum _GAMERS
   PLAYER
 } GAMERS;
 
+enum _MENU_VAR
+{
+	MULTI_R,
+ 	MULTI,       
+ 	SINGLE_R,   
+    SINGLE,     
+    BACK,        
+    QUIT        
+} MENU_VAR;
 #endif
-

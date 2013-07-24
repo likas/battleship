@@ -9,14 +9,24 @@
 #include <string.h>
 
 #include <ncurses.h>
+#include <menu.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
+
+#include <signal.h>
 
 WINDOW*** my_win;
 WINDOW*** op_win;
 WINDOW* chat;
 WINDOW* info;
+
+
+int **MY;
+int **OP;
+
+//Is blocking multithreading flag
+int SIZEFLAG;
 
 int GUICHATLEN;//служебная переменная для листинга чата
 char username[100];//ник игрока
@@ -27,9 +37,8 @@ struct pair {int x; int y; }; //структура для возврата па�
 
 int gui();
  //общая инициализация
-void guiturn(int);
+void guiturn(int,int);
 void endgui(int);
-
 void FINref(WINDOW*, int, int);
 //очистка окна. Первый аргумент окно которое нужно очистить, второй номер цветовой пары, третий флаг 0 или 1, 0 - очистить вместе с содержимым окна
 //1-просто обновить окно
@@ -57,4 +66,5 @@ char* ant_login(int);
 int ant_player_list(message* , int);
 //листинг списка игроков
 
+int show_menu();
 #endif

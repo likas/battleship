@@ -18,7 +18,6 @@ void del_fds(struct pollfd *fds[],int number,Player *_player[]){
         strcpy(_player[i-1]->name,_player[i]->name);
         i++;
     }
-	printf("i = %d\n", i);
     fds[i]->fd = 0;
     fds[i]->events = 0;
     _player[i-1]->_id = -1;
@@ -28,7 +27,7 @@ int main(int argc, char *argv[]){
 	if(argc<2){printf("Not enough arguments"); exit(1);}
 	int ret,i,j,id;//count-счётчик количества элементов в структуре fds;
 	struct sockaddr_in servaddr;
-	pthread_t thread[16];
+    pthread_t thread[MAX_PL];
 	Player player[16];
 	/*if ( (player = malloc(sizeof(Player)*16)) == NULL){
 		printf("error_add_memory\n");
@@ -73,6 +72,7 @@ int main(int argc, char *argv[]){
 				printf("READ\n");
 //если действие произошло по дескриптору главного сокета то обрабатываем подключение клиента
 				if(i==0){
+                    printf("New Client");
 					if( (fds[count].fd=accept(fds[0].fd,0,0)) < 0){
 						perror("Error accept!");
 						exit(1);

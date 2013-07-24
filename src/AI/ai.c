@@ -30,6 +30,7 @@ message ai( message msg )
 			}
 			break;
 		case MSG_HM:
+			usleep(400000);
 			ai_shoot( &coords );
 			answer.command = ai_hit( player_field, coords, PLAYER );
 			coords_atoi( answer.params, coords );
@@ -41,7 +42,7 @@ message ai( message msg )
 			}
 
 			ai_get_respond( answer.command );
-			//ai_clear_variants( ai_enemy_field );
+//			ai_clear_variants( ai_enemy_field );
 			return answer;
 			break;
 		case MSG_AT:
