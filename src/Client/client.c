@@ -23,7 +23,8 @@ int main(int argc, char* argv[]){
 	if(!ONLINE){
 		/* possibly init*/
 		WOL=with_ai();
-		endgui(-1);
+		
+		endgui(WOL);
 		/* message */
 	}else{
 	char player_id=-1;
