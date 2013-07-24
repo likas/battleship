@@ -13,10 +13,16 @@
 #include <sys/types.h>
 #include <sys/ioctl.h>
 
+#include <signal.h>
+
 WINDOW*** my_win;
 WINDOW*** op_win;
 WINDOW* chat;
 WINDOW* info;
+
+
+int **MY;
+int **OP;
 
 int GUICHATLEN;//служебная переменная для листинга чата
 char username[100];//ник игрока
@@ -29,7 +35,6 @@ int gui();
  //общая инициализация
 void guiturn(int,int);
 void endgui(int);
-
 void FINref(WINDOW*, int, int);
 //очистка окна. Первый аргумент окно которое нужно очистить, второй номер цветовой пары, третий флаг 0 или 1, 0 - очистить вместе с содержимым окна
 //1-просто обновить окно

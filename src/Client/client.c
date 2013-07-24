@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 	if(!ONLINE){
 		/* possibly init*/
 		WOL=with_ai();
-		
+		getch();		
 		endgui(WOL);
 		/* message */
 	}else{

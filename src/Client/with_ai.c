@@ -47,17 +47,20 @@ int with_ai()
 	while (g_o==0)
 	{
 	if (turn==1)
-	{
-		hit_place = De_Move(EMAP);
+	{	
+		do
+		{
+			hit_place = De_Move(EMAP);
+			if ((hit_place.x==-1)&&(hit_place.y==-1))
+			{
+				ch_ai.command = REQ_DISCONNECT;
+				ai(ch_ai);
+				return REQ_DISCONNECT;
+			}	
+		} while (EMAP[hit_place.x][hit_place.y] != CELL_NONE);
 //		printf("Enter coord:\n");
 //		scanf("%d %d", &(hit_place.x), &(hit_place.y));
-		if ((hit_place.x==-1)&&(hit_place.y==-1))
-		{
-			ch_ai.command = REQ_DISCONNECT;
-			ai(ch_ai);
-			return REQ_DISCONNECT;
-		}
-		ch_ai.command = MSG_AT;
+	ch_ai.command = MSG_AT;
 		char buf[128];
 		coords_atoi(buf,hit_place);
 		//sscanf(ch_ai.params,"%s", buf);
@@ -80,6 +83,8 @@ int with_ai()
 			}
 			case REQ_YOUWIN:
 			{
+				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				round_ship(EMAP,hit_place.x,hit_place.y);	
 				g_o=REQ_YOUWIN;
 				break;
 			}
@@ -87,10 +92,12 @@ int with_ai()
 			{
 				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 				round_ship(EMAP,hit_place.x,hit_place.y);	
+//				render(SMAP,EMAP,1);
 				break;
 			}			
 			
 		}
+//		FINchcell(hit_place.x,hit_place.y,EMAP[hit_place.x][hit_place.y],1);
 		if (!g_o)
 			guiturn(PLAYER,ch_ai.command);
 	}
@@ -115,7 +122,8 @@ int with_ai()
 				break;
 			}
 			case REQ_YOULOSE:
-			{
+			{	
+				SMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 				g_o=REQ_YOULOSE;
 				break;
 			}
@@ -126,8 +134,11 @@ int with_ai()
 			}
 			
 		}
+//		FINchcell(hit_place.x,hit_place.y,SMAP[hit_place.x][hit_place.y],0);
 		if (!g_o)
+		{
 			guiturn(ENEMY,ch_ai.command);
+		}
 
 	}
 	render(SMAP, EMAP,1);
