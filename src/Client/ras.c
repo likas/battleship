@@ -43,17 +43,20 @@ void ras(int **smap)
     rend_ship(x,y,dir,len,temp,smap);
     while(1)
     {
-	key=getchar();
+	noecho();
+	keypad(stdscr, TRUE);
+	key = getch();
+	//key=getchar();
 	switch(key)//отслеживаем нажатие клавиш
 	{
-	    case 'w':
+	    case 'w': case KEY_UP:
 		if(x>0)
 		{
 		    x--;
 		    rend_ship(x,y,dir,len,temp,smap);
 		}
 		break;
-	    case 's':
+	    case 's': case KEY_DOWN:
 		if(dir)
 		{
 		    if(x<SIZE-1)
@@ -69,14 +72,14 @@ void ras(int **smap)
 			rend_ship(x,y,dir,len,temp,smap);
 		    }
 		break;
-	    case 'a':
+	    case 'a': case KEY_LEFT:
 		if(y>0)
 		{
 		    y--;
 		    rend_ship(x,y,dir,len,temp,smap);
 		}
 		break;
-	    case 'd':
+	    case 'd': case KEY_RIGHT:
 		if(!dir)
 		{
 		    if(y<SIZE-1)
@@ -92,7 +95,7 @@ void ras(int **smap)
 			rend_ship(x,y,dir,len,temp,smap);
 		    }
 		break;
-	    case 'g'://если можно разместить корабль, размещаем (горизонтально)
+	    case '\n'://если можно разместить корабль, размещаем (горизонтально)
 		if(dir)
 		{
 		    //------------------------
@@ -159,7 +162,7 @@ void ras(int **smap)
 		}
 		rend_ship(x,y,dir,len,temp,smap);
 		break;
-	    case 32://смена направления в котором будет осуществляться размещение
+	    case ' '://смена направления в котором будет осуществляться размещение
 		if(dir)
 		{
 		    dir=0;
@@ -178,3 +181,8 @@ void ras(int **smap)
     }
 }
 /*----------------------------*/
+
+
+
+
+
