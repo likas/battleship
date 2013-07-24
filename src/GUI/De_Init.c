@@ -49,7 +49,7 @@ int De_Init(int **my_mas, int **op_mas){
 	wnoutrefresh(op_win[i][j]);		
 		}
 	}
- info=newwin(2,20,my_stpoint[0]+10*cell_h+2, my_stpoint[1] );
+ info=newwin(2,50,my_stpoint[0]+10*cell_h+2, my_stpoint[1] );
  FINref(info,4,0);	  	
  doupdate();
 	return 0;

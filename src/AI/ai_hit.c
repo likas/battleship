@@ -152,7 +152,7 @@ int is_next_cell_valid( int** field, COORDS coords, AI_DIRECTION* direction )
 
 void kill_the_ship( int who, int ship_size )
 {
-	if ( who == AI ) {
+	if ( who == ENEMY) {
 		ai_ship_count--;
 	}
 
@@ -165,7 +165,7 @@ void kill_the_ship( int who, int ship_size )
 
 int is_game_ended( int who )
 {
-	if ( who == AI ) {
+	if ( who == ENEMY ) {
 		if ( ai_ship_count == 0 ) {
 			return 1;
 		} else {
@@ -193,7 +193,7 @@ int who_won( int who )
 		return REQ_YOULOSE;
 	}
 
-	if ( who == AI ) {
+	if ( who == ENEMY ) {
 		return REQ_YOUWIN;
 	}
 

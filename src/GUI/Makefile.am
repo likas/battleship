@@ -16,6 +16,6 @@ listing.c			\
 login.c				\
 ref.c				\
 render.c			\
-scroll.c
-
+scroll.c			\
+panel.c
 
