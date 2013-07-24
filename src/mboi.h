@@ -71,4 +71,11 @@ typedef struct
 	int x;
 	int y;
 } COORDS;
+enum _GAMERS 
+{
+  ENEMY = 100,
+  PLAYER
+} GAMERS;
+
 #endif
+
