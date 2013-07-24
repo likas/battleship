@@ -13,7 +13,8 @@ term_width=wins.ws_col;
 if(term_height <30 || term_width<50){
 	endwin();
 	SIZEFLAG=1;
-	system("clear");
+//	system("clear");
+	printf("\033[2J\n");
 	printf("Minumum size is 50x30\n");
 	return;
 }
@@ -105,10 +106,14 @@ init_pair(6,COLOR_BLACK,COLOR_CYAN);
 
 keypad(stdscr,TRUE);
 chat=newwin(term_height/4-2,term_width-2,term_height-term_height/4+2,1);
-
-
 ant_hello("Welcome to SeaBattle","Press any key to continue");
 ant_login(35);
+
+
+
+while((MODEFLAG = show_menu()) == BACK)
+        if(MODEFLAG == QUIT) { endwin(); return; }
+
 FINref(stdscr,1,0);
 FINref(chat,2,0);
 GUICHATLEN=FINchat("SYSTEM","Hello",GUICHATLEN);
