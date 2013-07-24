@@ -27,7 +27,7 @@ struct pair {int x; int y; }; //структура для возврата па�
 
 int gui();
  //общая инициализация
-void guiturn(int);
+void guiturn(int,int);
 void endgui(int);
 
 void FINref(WINDOW*, int, int);
