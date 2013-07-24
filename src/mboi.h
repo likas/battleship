@@ -13,7 +13,8 @@
 #define MSG_LEN 128
 #endif 
 #include <stdlib.h>
-
+#include <sys/time.h>
+#include <time.h>
 enum _CELL_STATE
 {
 	CELL_NONE = 2,

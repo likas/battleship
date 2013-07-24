@@ -8,6 +8,7 @@ pthread_t chat_thread;
 
 int main(int argc, char* argv[]){
 	int WOL=-1;
+	srand(time(NULL));
 	if(argc==1){
 		printf("Input 1 as a parameter to play with AI, 2 for another user\n");
 		exit(1);
