@@ -4,6 +4,7 @@
 // he must get ready for it
 void ai_init()
 {
+	srand(time(NULL));
 	ai_ship_count = 10;
 	ai_last_shot.x = -1;
 	ai_last_shot.y = -1;
