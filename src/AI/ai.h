@@ -1,6 +1,7 @@
 #ifndef AI_H
 #define AI_H
 #include <stdio.h>
+#include <unistd.h>
 #include "../mboi.h"
 #include "../Client/client.h"
 
