@@ -24,6 +24,8 @@
 #define BACK        4
 #define QUIT        5
 
+int MODEFLAG;
+
 WINDOW*** my_win;
 WINDOW*** op_win;
 WINDOW* chat;

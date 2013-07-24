@@ -22,8 +22,8 @@ int show_menu()
 							 "MULTIPLAYER",
 							 "QUIT" };
 
-	init_pair( 0, COLOR_WHITE, COLOR_BLACK );
-	init_pair( 1, COLOR_RED, COLOR_BLUE );
+//init_pair( 0, COLOR_WHITE, COLOR_BLACK );
+//	init_pair( 1, COLOR_RED, COLOR_BLUE );
 	wbkgd( stdscr, COLOR_PAIR( 0 ) );
 	win_menu = newwin( menu_size_y, menu_size_x, term_win_sz_y / 2 + 4, \
 					   ( term_win_sz_x - menu_size_x ) / 2 );
@@ -127,8 +127,8 @@ int show_submenu()
 							 "PLACE SHIPS RANDOMLY",
 							 "BACK" };
 
-	init_pair( 0, COLOR_WHITE, COLOR_BLACK );
-	init_pair( 1, COLOR_RED, COLOR_BLUE );
+//	init_pair( 0, COLOR_WHITE, COLOR_BLACK );
+//	init_pair( 1, COLOR_RED, COLOR_BLUE );
 	wbkgd( stdscr, COLOR_PAIR( 0 ) );
 	win_menu = newwin( menu_size_y, menu_size_x, term_win_sz_y / 2 + 4, \
 					   ( term_win_sz_x - menu_size_x ) / 2 );
@@ -180,8 +180,8 @@ int show_submenu()
 }
 
 void free_items( ITEM** items, int n_items )
-{
-	for (int i = 0; i < n_items; i++) {
+{ int i;
+	for (i = 0; i < n_items; i++) {
 		free_item( items[ i ] );
 	}
 }
