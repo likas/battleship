@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <ncurses.h>
+#include <menu.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
@@ -57,4 +58,5 @@ char* ant_login(int);
 int ant_player_list(message* , int);
 //листинг списка игроков
 
+int show_menu();
 #endif
