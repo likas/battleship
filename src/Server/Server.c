@@ -11,25 +11,25 @@ void close_all(){
 	exit(0);
 }
 
-void del_fds(struct pollfd *fds[],int number,int dlina,Player *_player[]){
+void del_fds(struct pollfd *fds[],int number,Player *_player[]){
     int i = number;
-    while (i < dlina) {
+    while (i < MAX_PL) {
         fds[i] = fds[i+1];
-        _player[i]->_id = _player[i+1]->_id;
-        strcpy(_player[i]->name,_player[i+1]->name);
+        _player[i-1]->_id = _player[i]->_id;
+        strcpy(_player[i-1]->name,_player[i]->name);
         i++;
     }
     fds[i]->fd = 0;
     fds[i]->events = 0;
-    _player[i]->_id = -1;
-    strcpy(_player[i]->name,"");
+    _player[i-1]->_id = -1;
+    strcpy(_player[i-1]->name,"");
 }
 
 int main(int argc, char *argv[]){
 	if(argc<2){printf("Not enough arguments"); exit(1);}
 	int ret,i,j,id;//count-счётчик количества элементов в структуре fds;
 	struct sockaddr_in servaddr;
-	pthread_t thread[16];
+    pthread_t thread[MAX_PL];
 	Player player[16];
 	message msg;
 
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
 						exit(1);
 					}
 					nn_sg(&msg,player,fds[i].fd);
-				}
+				}                
 			}
 		}
 	}
