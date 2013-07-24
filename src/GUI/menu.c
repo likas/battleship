@@ -1,12 +1,4 @@
 #include "gui.h"
-
-// These values will be returned by menu 
-#define QUIT		0
-#define MULTI		1
-#define SINGLE		2
-#define SINGLE_R	3
-#define BACK		4
-
 int show_menu();
 int show_submenu();
 int select_return( int );
