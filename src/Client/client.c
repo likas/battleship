@@ -14,9 +14,9 @@ int main(int argc, char* argv[]){
 	* with no idea how... */
 	gui();
 	map_init();
-	while((ONLINE = show_menu()) == BACK);
-	if(ONLINE == QUIT) return;
-	
+//	while((ONLINE = show_menu()) == BACK);
+//	if(ONLINE == QUIT) return;
+ONLINE=MODEFLAG;	
 	if(ONLINE >> 1) //Game with ai
 	{
 		/* possibly init*/

@@ -27,11 +27,11 @@ int show_menu()
 	wbkgd( stdscr, COLOR_PAIR( 0 ) );
 	win_menu = newwin( menu_size_y, menu_size_x, term_win_sz_y / 2 + 4, \
 					   ( term_win_sz_x - menu_size_x ) / 2 );
-	wbkgd( win_menu, COLOR_PAIR( 1 ) );
+	wbkgd( win_menu, COLOR_PAIR( 2 ) );
 	
 	win_submenu = newwin( submenu_size_y, submenu_size_x, term_win_sz_y / 2 + 7, \
 					   ( term_win_sz_x - menu_size_x ) / 2 + 3 );
-	wbkgd( win_submenu, COLOR_PAIR( 1 ) );
+	wbkgd( win_submenu, COLOR_PAIR( 2 ) );
 
 	menu_items[ 0 ] = new_item( menu_choices[0], "" );
 	menu_items[ 1 ] = new_item( menu_choices[1], "" );
@@ -132,11 +132,11 @@ int show_submenu()
 	wbkgd( stdscr, COLOR_PAIR( 0 ) );
 	win_menu = newwin( menu_size_y, menu_size_x, term_win_sz_y / 2 + 4, \
 					   ( term_win_sz_x - menu_size_x ) / 2 );
-	wbkgd( win_menu, COLOR_PAIR( 1 ) );
+	wbkgd( win_menu, COLOR_PAIR( 2 ) );
 	
 	win_submenu = newwin( submenu_size_y, submenu_size_x, term_win_sz_y / 2 + 7, \
 					   ( term_win_sz_x - menu_size_x ) / 2 + 3 );
-	wbkgd( win_submenu, COLOR_PAIR( 1 ) );
+	wbkgd( win_submenu, COLOR_PAIR( 2 ) );
 
 	submenu_items[ 0 ] = new_item( menu_choices[0], "" );
 	submenu_items[ 1 ] = new_item( menu_choices[1], "" );
