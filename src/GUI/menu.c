@@ -65,7 +65,8 @@ int show_menu()
 				unpost_menu( menu );
 				free_items( menu_items, 3 );
 				free_menu( menu );	
-				clear();
+				delwin( win_submenu );
+				delwin( win_menu );
 				refresh();
 				return status;	
 				break;
@@ -170,7 +171,9 @@ int show_submenu()
 				unpost_menu( submenu );
 				free_items( submenu_items, 3 );
 				free_menu( submenu );	
-				clear();
+				delwin( win_submenu );
+				delwin( win_menu );
+				refresh();
 				return status;
 				break;
 			default:
