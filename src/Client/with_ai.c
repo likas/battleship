@@ -84,10 +84,13 @@ int with_ai()
 			case REQ_DESTROYED:
 			{
 				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				round_ship(EMAP,hit_place.x,hit_place.y);	
 				break;
 			}			
 			
 		}
+		if (!g_o)
+			guiturn(PLAYER,ch_ai.command);
 	}
 	else
 	{
@@ -121,6 +124,9 @@ int with_ai()
 			}
 			
 		}
+		if (!g_o)
+			guiturn(ENEMY,ch_ai.command);
+
 	}
 	render(SMAP, EMAP,1);
 //	ai_draw(SMAP, EMAP);

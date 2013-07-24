@@ -27,7 +27,7 @@ COORDS De_Move(int **op_mas)
 		switch(key)
 		{
 			//exit program
-			case 'Q':
+			case 'Q': case 27:
 				rt.x = -1;
 				rt.y = -1;
 				return rt;
