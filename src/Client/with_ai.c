@@ -85,10 +85,12 @@ int with_ai()
 			{
 				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 				round_ship(EMAP,hit_place.x,hit_place.y);	
+//				render(SMAP,EMAP,1);
 				break;
 			}			
 			
 		}
+//		FINchcell(hit_place.x,hit_place.y,EMAP[hit_place.x][hit_place.y],1);
 		if (!g_o)
 			guiturn(PLAYER,ch_ai.command);
 	}
@@ -124,8 +126,11 @@ int with_ai()
 			}
 			
 		}
+//		FINchcell(hit_place.x,hit_place.y,SMAP[hit_place.x][hit_place.y],0);
 		if (!g_o)
+		{
 			guiturn(ENEMY,ch_ai.command);
+		}
 
 	}
 	render(SMAP, EMAP,1);
