@@ -47,10 +47,12 @@ int ant_player_list (message *list, int leng) {
         Fscroll(left,0,1);
         wrefresh(left);
     key = 0;
+	keypad(left,TRUE);
     while (1) {
         key = wgetch(left);
         switch (key) {
-            case 's':
+            case 's': case KEY_DOWN:
+		if(left->_cury==leng) break;
                 if(left->_cury==left->_maxy-1 && start+left->_maxy<=leng){
                         start++;
                         wclear(left);
@@ -71,7 +73,7 @@ int ant_player_list (message *list, int leng) {
                                 Fscroll(left,1,0);
                 break;
 
-           case 'w':
+           case 'w': case KEY_UP:
                 if(left->_cury==1 && start!=0){
                         start--;
                         wclear(left);
@@ -93,6 +95,7 @@ int ant_player_list (message *list, int leng) {
                                 Fscroll(left,-1,0);
 
                 break;
+	    case 'r': case 'R': return -1; break;	
 	    case 10:
 		 for(i=0;i<100;i++) opname[i]='\0';
 		  ret=left->_cury-1+start;

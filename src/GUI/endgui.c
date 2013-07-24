@@ -2,10 +2,21 @@
 
 void endgui(int fl)
 {
-getch();
-FINref(stdscr,1,0);
-if(fl==0) ant_hello("GAME OVER! YOU LOSE!", "Press any key to escape");
-else ant_hello("YOU WIN!","Press any key to escape");
-endwin();
+	FINref(stdscr,1,0);
+	switch(fl)
+	{
+		case REQ_YOULOSE: 
+			ant_hello("GAME OVER! YOU LOSE!", "Press any key to escape");
+			break;
+		case REQ_YOUWIN:
+			ant_hello("YOU WIN!","Press any key to escape");
+			break;
+		case REQ_DISCONNECT:
+			ant_hello("YOU'VE LEFT BATTLEFIELD!!!","COWARD, press any key to escape");
+			break;
+		ant_hello("GAME ACCIDENTALY FINISHED!","Press any key to escape"); 
+	}
+	
+	endwin();
 }
 

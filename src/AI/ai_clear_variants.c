@@ -28,7 +28,7 @@ void ai_clear_variants( int **ai_emeny_field )
 	
 	for ( row = 0; row < SIZE; row++) {
 		blank_cells_cnt = 0;
-		for ( coll = 0; coll < SIZE; coll++ ) {
+		for ( coll = 1; coll < SIZE; coll++ ) {
 			if ( ai_enemy_field[ row ][ coll ] != CELL_NONE ) {
 				if ( blank_cells_cnt < ship_min_length ) {
 					fill_gaps(ai_enemy_field, row, coll - 1, blank_cells_cnt, ship_min_length );	
@@ -51,7 +51,7 @@ void fill_gaps( int** ai_enemy_field, int row, int coll, int blank_cells_cnt, in
 			ai_enemy_field[ pos_x ][ pos_y ] = CELL_MISS;
 		}
 		pos_x--;
-	} while (blanks != 0);
+	} while ((blanks != 0)&&(pos_x>=0));
 }	
 
 // this function helps AI decide if a ship could occur in the current cell 

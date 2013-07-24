@@ -1,6 +1,9 @@
 #include "gui.h"
 
 void ant_hello (char *str1, char *str2) {
+	struct winsize wins;
+  	ioctl(0, TIOCGWINSZ, &wins);
+
     WINDOW *win;
     int maxx, maxy;
     int w_maxy = 6;
@@ -8,8 +11,8 @@ void ant_hello (char *str1, char *str2) {
     int x = 0;
     int y = 0;
     FINref(stdscr,1,0);
-    maxy   = stdscr->_maxy;
-    maxx   = stdscr->_maxx;
+    maxy   = wins.ws_row;
+    maxx   = wins.ws_col;
     win = newwin(w_maxy, w_maxx, (maxy - w_maxy) / 2, (maxx - w_maxx) / 2);
     box (win, '*', '*');
     wbkgd (win, COLOR_PAIR(2) | A_BOLD);

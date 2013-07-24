@@ -43,7 +43,7 @@ int ai_hit( int** field, COORDS coords, int whos_been_hit )
 int is_ship_dead( int** field, COORDS coords, int who )
 {
 	int ship_size = 0;
-	AI_DIRECTION direction;
+	AI_DIRECTION direction={0,0};
 	COORDS start_position = coords;
 	
 	choose_direction( field, coords, &direction );
@@ -55,8 +55,8 @@ int is_ship_dead( int** field, COORDS coords, int who )
 	
 	// Forward check
 	do {
-		++ship_size;
 		
+		++ship_size;
 		coords.x += direction.dx;
 		coords.y += direction.dy;
 		if ( coords.x >= SIZE || coords.x < 0 ||
@@ -67,29 +67,34 @@ int is_ship_dead( int** field, COORDS coords, int who )
 		if ( field[ coords.x ][ coords.y ] == CELL_SHIP ) {
 			return 0;
 		}
-	} while (field[ coords.x ][ coords.y ] != CELL_NONE  &&
+	} while ( field[ coords.x ][ coords.y ] != CELL_NONE  &&
 			 field[ coords.x ][ coords.y ] != CELL_MISS );
 	
 	// Backward check
 	direction.dx *= -1;
 	direction.dy *= -1;
-	coords.x = start_position.x;
-	coords.y = start_position.y;
-	do {
+	coords.x = start_position.x + direction.dx;
+	coords.y = start_position.y + direction.dy;
+	if ( coords.x >= SIZE || coords.x < 0 ||
+		 coords.y >= SIZE || coords.y < 0 ) {
+		kill_the_ship( who, ship_size );
+		return 1;
+	}
+
+	while ( field[ coords.x ][ coords.y ] != CELL_NONE  &&
+			field[ coords.x ][ coords.y ] != CELL_MISS ) {
+		if ( field[ coords.x ][ coords.y ] == CELL_SHIP ) {
+			return 0;
+		}	
 		++ship_size;
-		
+
 		coords.x += direction.dx;
 		coords.y += direction.dy;
 		if ( coords.x >= SIZE || coords.x < 0 ||
 			 coords.y >= SIZE || coords.y < 0 ) {
 			break;
 		}
-		
-		if ( field[ coords.x ][ coords.y ] == CELL_SHIP ) {
-			return 0;
-		}
-	} while (field[ coords.x ][ coords.y ] != CELL_NONE  &&
-			 field[ coords.x ][ coords.y ] != CELL_MISS );
+	}
 	
 	kill_the_ship( who, ship_size );
 	return 1;
@@ -102,28 +107,28 @@ void choose_direction( int** field, COORDS coords, AI_DIRECTION* direction )
 	direction->dx = 1;
 	direction->dy = 0;
 
-	if ( is_next_cell_valid( field, coords, direction ) ) {
+	if ( !is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = -1;
 		direction->dy = 0;
 	} else {
 		return;
 	}
 
-	if ( is_next_cell_valid( field, coords, direction ) ) {
+	if ( !is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = 0;
 		direction->dy = 1;
 	} else {
 		return;
 	}
 
-	if ( is_next_cell_valid( field, coords, direction ) ) {
+	if ( !is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = 0;
 		direction->dy = -1;
 	} else {
 		return;
 	}
 	
-	if ( is_next_cell_valid( field, coords, direction ) ) {
+	if ( !is_next_cell_valid( field, coords, direction ) ) {
 		direction->dx = 0;
 		direction->dy = 0;
 	} else {
@@ -136,8 +141,8 @@ int is_next_cell_valid( int** field, COORDS coords, AI_DIRECTION* direction )
 {
 	if ( ( ( coords.x + direction->dx ) < SIZE && ( coords.x + direction->dx ) > -1 ) &&
 		 ( ( coords.y + direction->dy ) < SIZE && ( coords.y + direction->dy ) > -1 ) &&
-		 ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_NONE  ||
-		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_MISS ) ) {
+		 ( field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_SHIP  ||
+		 field[ coords.x + direction->dx ][ coords.y + direction->dy ] == CELL_SHIP_FIRE ) ) {
 		return 1;
 	}
 	return 0;
@@ -147,7 +152,7 @@ int is_next_cell_valid( int** field, COORDS coords, AI_DIRECTION* direction )
 
 void kill_the_ship( int who, int ship_size )
 {
-	if ( who == AI ) {
+	if ( who == ENEMY) {
 		ai_ship_count--;
 	}
 
@@ -160,7 +165,7 @@ void kill_the_ship( int who, int ship_size )
 
 int is_game_ended( int who )
 {
-	if ( who == AI ) {
+	if ( who == ENEMY ) {
 		if ( ai_ship_count == 0 ) {
 			return 1;
 		} else {
@@ -188,7 +193,7 @@ int who_won( int who )
 		return REQ_YOULOSE;
 	}
 
-	if ( who == AI ) {
+	if ( who == ENEMY ) {
 		return REQ_YOUWIN;
 	}
 

@@ -9,24 +9,25 @@ pthread_t chat_thread;
 int main(int argc, char* argv[]){
 	int WOL=-1;
 	message sent;
-	if(argc==1){
-		printf("Input 1 as a parameter to play with AI, 2 for another user\n");
-		exit(1);
-	}else{
-		ONLINE=(*argv[1]=='1')?0:1;
-	}
+	srand(time(NULL));
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
 	gui();
 	map_init();
-	
-	if(!ONLINE){
+	while((ONLINE = show_menu()) == BACK);
+	if(ONLINE == QUIT) return;
+/* ONLINE=MODEFLAG;	 */
+	if(ONLINE >> 1) //Game with ai
+	{
 		/* possibly init*/
-		WOL=with_ai();
-		endgui(-1);
+		WOL=with_ai(ONLINE & 1);
+		getch();		
+		endgui(WOL);
 		/* message */
-	}else{
+	}
+	else //Game with other client
+	{
 	char player_id=-1;
 	message received;
 	COORDS xy; xy.x=-1; xy.y=-1;
@@ -53,14 +54,10 @@ int main(int argc, char* argv[]){
 	/*there we send a NN located in nickname global which is defined in gui.h
 	* to the server with TUNNEL established earlier */
 	/*here server shall send us a list of existing games, and we get it like: */
-/*	sent.command = 1024;
-    sent.params[0]='c';
-    send(GAME_TUNNEL, &sent, sizeof(message), 0); */
 	if((client_send_text(40, username))>0){
 		printf("Somethin' glitched during process of sending NN\n");
 		exit(1);
 	}
-	De_Init(SMAP, EMAP);
 	while(player_id==-1){
 	if((client_send_text(MSG_RL, (char*)0))!=0){ /* sending MSG_RL */
 		printf("client_send_text return an error\n");
@@ -109,8 +106,13 @@ int main(int argc, char* argv[]){
 	} /* end of 'while(player_id..)'
 	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
-	/* TODO set ships here, init map (here?) im thinking about 'init' first, then passing fields to set up ships
-	* as parameters */
+	if(ONLINE & 1) { //Manual field or random
+		De_Init(SMAP, EMAP);
+        ras(SMAP);
+	} else {
+        ai_rand_matr(SMAP);
+		De_Init(SMAP, EMAP);
+	}
 	/* sending a gamefield */
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who
@@ -202,9 +204,6 @@ int main(int argc, char* argv[]){
 	
 	return 0;
 }
-
-
-
 
 
 
