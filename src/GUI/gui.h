@@ -9,11 +9,20 @@
 #include <string.h>
 
 #include <ncurses.h>
+#include <menu.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 
 #include <signal.h>
+
+// These values will be returned by menu 
+#define MULTI_R     0
+#define MULTI       1
+#define SINGLE_R    2 
+#define SINGLE      3
+#define BACK        4
+#define QUIT        5
 
 WINDOW*** my_win;
 WINDOW*** op_win;
@@ -62,4 +71,5 @@ char* ant_login(int);
 int ant_player_list(message* , int);
 //листинг списка игроков
 
+int show_menu();
 #endif

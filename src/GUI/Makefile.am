@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 AM_CFLAGS = -std=c99
-AM_LDFLAGS  = -lncurses
+AM_LDFLAGS  = -lncurses -lmenu
 
 lib_LTLIBRARIES = ../include/libGUI.la
 ___include_libGUI_la_SOURCES =	\
@@ -17,5 +17,6 @@ login.c				\
 ref.c				\
 render.c			\
 scroll.c			\
-panel.c
+panel.c 			\
+menu.c
 

@@ -9,26 +9,24 @@ pthread_t chat_thread;
 int main(int argc, char* argv[]){
 	int WOL=-1;
 	srand(time(NULL));
-//	srand(10);
-	if(argc==1){
-		printf("Input 1 as a parameter to play with AI, 2 for another user\n");
-		exit(1);
-	}else{
-		ONLINE=(*argv[1]=='1')?0:1;
-	}
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
 	gui();
 	map_init();
+	while((ONLINE = show_menu()) == BACK);
+	if(ONLINE == QUIT) return;
 	
-	if(!ONLINE){
+	if(ONLINE >> 1) //Game with ai
+	{
 		/* possibly init*/
-		WOL=with_ai();
+		WOL=with_ai(ONLINE & 1);
 		getch();		
 		endgui(WOL);
 		/* message */
-	}else{
+	}
+	else //Game with other client
+	{
 	char player_id=-1;
 	message received;
 	COORDS xy; xy.x=-1; xy.y=-1;
@@ -70,8 +68,11 @@ int main(int argc, char* argv[]){
 	TUNNEL=GAME_TUNNEL;
 	GAME_TUNNEL=received.command;
 	/* set ships here */
-	/* TODO set ships here, init map (here?) im thinking about 'init' first, then passing fields to set up ships
-	* as parameters */
+	De_Init(SMAP, EMAP);
+	if(ONLINE & 1) //Manual field or random
+          ras(SMAP);
+      else
+          ai_rand_matr(SMAP);
 	/* sending a gamefield */
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who

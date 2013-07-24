@@ -26,16 +26,20 @@ void ai_draw(int **field_first, int **field_second)
 }
 
 
-int with_ai()
+int with_ai(int is_manual)
 {
 	int turn=0;
 	int g_o=0;
 	COORDS hit_place;
 	message ch_ai;
 	ch_ai.command = MSG_SG;
-	ai_rand_matr(SMAP);
-	/*creating field*/
 	De_Init(SMAP,EMAP);
+
+	if(is_manual)
+		ras(SMAP);
+	else
+		ai_rand_matr(SMAP);
+	
 	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == 'f')
