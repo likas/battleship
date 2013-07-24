@@ -2,6 +2,7 @@
 int show_menu();
 int show_submenu();
 int select_return( int );
+void free_items( ITEM**, int );
 
 int show_menu()
 {
@@ -15,6 +16,7 @@ int show_menu()
 	int submenu_size_y = 3;  
 	int term_win_sz_x = stdscr->_maxx;
 	int	term_win_sz_y = stdscr->_maxy;
+	int status = -1;
 	
 	char* menu_choices[] = { "SINGLE PLAYER",
 							 "MULTIPLAYER",
@@ -59,8 +61,13 @@ int show_menu()
 				wrefresh( win_submenu );
 				break;
 			case 10:
+				status = select_return( item_index( current_item( menu ) ) ); 
+				unpost_menu( menu );
+				free_items( menu_items, 3 );
+				free_menu( menu );	
+				clear();
 				refresh();
-				return select_return( item_index( current_item( menu ) ) ); 
+				return status;	
 				break;
 			default:
 				break;
@@ -70,9 +77,15 @@ int show_menu()
 
 int select_return( int item_indx )
 {
+	int stat;
 	switch( item_indx ) {
 		case 0:
-			return ( 2 | show_submenu() );
+			stat = show_submenu();
+			if ( stat != BACK ) {
+				return ( 2 | stat );
+			} else {
+			   return BACK;	
+			}
 			break;
 		case 1:
 			return show_submenu();
@@ -107,6 +120,8 @@ int show_submenu()
 	int submenu_size_y = 3;  
 	int term_win_sz_x = stdscr->_maxx;
 	int	term_win_sz_y = stdscr->_maxy;
+	int status = -1;
+
 	
 	char* menu_choices[] = { "PLACE SHIPS YOURSELF",
 							 "PLACE SHIPS RANDOMLY",
@@ -151,10 +166,22 @@ int show_submenu()
 				wrefresh( win_submenu );
 				break;
 			case 10:
-				return select_return( ( item_index( current_item( submenu ) ) + 3 ) ); 
+				status = select_return( ( item_index( current_item( submenu ) ) + 3 ) ); 
+				unpost_menu( submenu );
+				free_items( submenu_items, 3 );
+				free_menu( submenu );	
+				clear();
+				return status;
 				break;
 			default:
 				break;
 		}
+	}
+}
+
+void free_items( ITEM** items, int n_items )
+{
+	for (int i = 0; i < n_items; i++) {
+		free_item( items[ i ] );
 	}
 }
