@@ -80,7 +80,8 @@ int main(int argc, char *argv[]){
 						perror("Error recv!");
 						exit(1);
 					}
-					nn_sg(&msg,player,fds[i].fd);
+					//fix id =1
+					nn_sg(&msg,player,1,&fds[i].fd);
 				}                
 			}
 		}

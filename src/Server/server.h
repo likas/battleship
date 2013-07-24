@@ -30,7 +30,7 @@ typedef struct {
 }Player;
 
 void * Game(void * arg);
-void nn_sg(message* msg, Player* pl, int id,struct pollfd **fd);
+void nn_sg(message* msg, Player** pl, int id,struct pollfd **fd);
 
 int port;
 int thread_id[thr_max_cnt];
