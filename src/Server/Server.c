@@ -15,12 +15,14 @@ void del_fds(struct pollfd *fds[],int number,int dlina,Player *_player[]){
     int i = number;
     while (i < dlina) {
         fds[i] = fds[i+1];
-        _player[i]->_id = -1;
-        strcpy(_player[i]->name,"");
+        _player[i]->_id = _player[i+1]->_id;
+        strcpy(_player[i]->name,_player[i+1]->name);
         i++;
     }
     fds[i]->fd = 0;
     fds[i]->events = 0;
+    _player[i]->_id = -1;
+    strcpy(_player[i]->name,"");
 }
 
 int main(int argc, char *argv[]){
