@@ -81,6 +81,8 @@ int with_ai()
 			}
 			case REQ_YOUWIN:
 			{
+				EMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
+				round_ship(EMAP,hit_place.x,hit_place.y);	
 				g_o=REQ_YOUWIN;
 				break;
 			}
@@ -118,7 +120,8 @@ int with_ai()
 				break;
 			}
 			case REQ_YOULOSE:
-			{
+			{	
+				SMAP[hit_place.x][hit_place.y]=CELL_SHIP_FIRE;
 				g_o=REQ_YOULOSE;
 				break;
 			}
