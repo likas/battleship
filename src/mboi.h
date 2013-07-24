@@ -63,7 +63,8 @@ enum _MSG_TSK
 	MSG_AT,		 /* атака */
 	MSG_HM,		 /* попадание */
 	MSG_SG,		 /* начало игры */
-	MSG_SF		 /* Начало передачи поля */
+	MSG_SF,		 /* Начало передачи поля */
+	MSG_RL
 } MSG_TSK;
 
 typedef struct 
