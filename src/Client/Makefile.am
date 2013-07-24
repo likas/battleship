@@ -15,4 +15,5 @@ hit.c					\
 ras.c					\
 socket_init.c			\
 with_ai.c				\
-map.c
+map.c  \
+round_ship.c
