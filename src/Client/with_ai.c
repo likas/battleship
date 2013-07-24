@@ -35,11 +35,13 @@ int with_ai(int is_manual)
 	ch_ai.command = MSG_SG;
 //	De_Init(SMAP,EMAP);
 
-	if(is_manual)
+	if(is_manual) {
+		De_Init(SMAP,EMAP);	
 		ras(SMAP);
-	else
+	} else {
 		ai_rand_matr(SMAP);
-	De_Init(SMAP,EMAP);	
+		De_Init(SMAP,EMAP);
+	}	
 	ai_set_field(SMAP);
 	ch_ai=ai(ch_ai);
 	if(ch_ai.params[0] == 'f')
