@@ -95,6 +95,7 @@ int ant_player_list (message *list, int leng) {
                                 Fscroll(left,-1,0);
 
                 break;
+	    case 'r': case 'R': return -1; break;	
 	    case 10:
 		 for(i=0;i<100;i++) opname[i]='\0';
 		  ret=left->_cury-1+start;
