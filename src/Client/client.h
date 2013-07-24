@@ -34,6 +34,8 @@ int go_list();
 int parser_itoa(int number, char* buf);
 int with_ai(); 
 void round_ship(int **smap,int x,int y);
+void ras(int **smap);
+
 /*----------------------*/
 void map_init();
 void map_deinit();

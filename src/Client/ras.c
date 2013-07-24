@@ -1,27 +1,25 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "client.h"
-#include "../mboi.h"
-#include "../GUI/gui.h"
+//#include "../mboi.h"
+//#include "../GUI/gui.h"
 /*----------------------------*/
-void rend_ship(int x,int y,int dir,int len,int cl)//функция отрисовки корабля
+void rend_ship(int x,int y,int dir,int len,int **temp,int **smap)//функция отрисовки корабля
 {						//x,y координаты , dir направление, len длина
-	int i;
-	for(i=0;i<len;i++)//3 -water 4-ship
+	int i,j;
+	for(i=0;i<SIZE;i++)
+	    for(j=0;j<SIZE;j++)
+		temp[i][j]=CELL_NONE;
+
+	for(i=0;i<len;i++)
 		if(!dir)
-		{
-		    if(!cl)
-			FINchcell(x+i,y,4,0);
-		    else
-			FINchcell(x+i,y,3,0);
-		}
+		    temp[x+i][y]=CELL_SHIP_FIRE;
 		else
-		{ 
-		    if(!cl)
-			FINchcell(x,y+i,4,0);
-		    else
-			FINchcell(x,y+i,4,0);
-		}
+		    temp[x][y+i]=CELL_SHIP_FIRE;
+	
+	for(i=0;i<SIZE;i++)
+	    for(j=0;j<SIZE;j++)
+		if(temp[i][j]==CELL_NONE)
+		    temp[i][j]=smap[i][j];
+	render(temp,smap,0);
 }
 /*----------------------------*/
 void ras(int **smap)
@@ -32,69 +30,94 @@ void ras(int **smap)
     int f=0;
     int kor[4]={4,3,2,1};//количество кораблей
     int b,e;
+    int **temp;
+    temp=(int**)malloc(sizeof(int*)*SIZE);
     //---------------------
+    for(i=0;i<SIZE;i++)
+    {	
+	temp[i]=(int*)malloc(sizeof(int)*SIZE);
+	for(j=0;j<SIZE;j++)
+	    smap[i][j]=CELL_NONE;
+    }
     
-    rend_ship(x,y,dir,len,0);
+    rend_ship(x,y,dir,len,temp,smap);
     while(1)
     {
-	key=getch();
-	rend_ship(x,y,dir,len,1);
+	key=getchar();
 	switch(key)//отслеживаем нажатие клавиш
 	{
 	    case 'w':
-		if(y>0)
-		    y--;
+		if(x>0)
+		{
+		    x--;
+		    rend_ship(x,y,dir,len,temp,smap);
+		}
 		break;
 	    case 's':
-		if(!dir)
-		{
-		    if(y<SIZE-1)
-			y++;
-		}
-		else
-		    if(y<SIZE-len)
-			y++;
-		break;
-	    case 'a':
-		if(x>0)
-		    x--;
-		break;
-	    case 'd':
 		if(dir)
 		{
 		    if(x<SIZE-1)
+		    {
 			x++;
+			rend_ship(x,y,dir,len,temp,smap);
+		    }
 		}
 		else
 		    if(x<SIZE-len)
-		        x++;
+		    {
+			x++;
+			rend_ship(x,y,dir,len,temp,smap);
+		    }
 		break;
-	    case 10://если можно разместить корабль, размещаем (горизонтально)
+	    case 'a':
+		if(y>0)
+		{
+		    y--;
+		    rend_ship(x,y,dir,len,temp,smap);
+		}
+		break;
+	    case 'd':
 		if(!dir)
+		{
+		    if(y<SIZE-1)
+		    {
+			y++;
+			rend_ship(x,y,dir,len,temp,smap);
+		    }
+		}
+		else
+		    if(y<SIZE-len)
+		    {
+		        y++;
+			rend_ship(x,y,dir,len,temp,smap);
+		    }
+		break;
+	    case 'g'://если можно разместить корабль, размещаем (горизонтально)
+		if(dir)
 		{
 		    //------------------------
 		    f=0;
 		    b=0;
 		    e=0; 
-		    if(x>0) b=-1;
-		    if(x<SIZE-len) e=1;
+		    if(y>0) b=-1;
+		    if(y<SIZE-len) e=1;
 		    
 		    for(i=b;i<len+e;i++)//проверяем присутстувие кораблей на соседних клетках, на 
 		    {			//пересечение с другими кораблями
-			if(/**(smap+SIZE*y+x+i)*/smap[y][x+i])
+			if(/**(smap+SIZE*y+x+i)*/smap[x][y+i]==CELL_SHIP)
 			    f=1;
-			if(y>0)
-			    if(/**(smap+SIZE*(y-1)+x+i)*/smap[y-1][x+i])
+			if(x>0)
+			    if(/**(smap+SIZE*(y-1)+x+i)*/smap[x-1][y+i]==CELL_SHIP)
 				f=1;
-			if(y<SIZE-1)
-			    if(/**(smap+SIZE*(y+1)+x+i)*/smap[y+1][x+i])
+			if(x<SIZE-1)
+			    if(/**(smap+SIZE*(y+1)+x+i)*/smap[x+1][y+i]==CELL_SHIP)
 				f=1;
 		    }
 		    //------------------------
 		    if(!f)//если помех нет, то размещаем корабль
 		    {
 		        for(i=0;i<len;i++)
-			    /**(smap+SIZE*y+x+i)*/smap[y][x+i]=1;
+			    /**(smap+SIZE*y+x+i)*/smap[x][y+i]=CELL_SHIP;
 			kor[len-1]--;
 			if(!kor[len-1])
 			    len--;
@@ -107,25 +130,25 @@ void ras(int **smap)
 		    f=0;
 		    b=0;
 		    e=0; 
-		    if(y>0) b=-1;
-		    if(y<SIZE-len) e=1;
+		    if(x>0) b=-1;
+		    if(x<SIZE-len) e=1;
 		    
 		    for(i=b;i<len+e;i++)
 		    {
-			if(/**(smap+SIZE*(y+i)+x)*/smap[y+i][x])
+			if(/**(smap+SIZE*(y+i)+x)*/smap[x+i][y]==CELL_SHIP)
 			    f=1;
-			if(x>0)
-			    if(/**(smap+SIZE*(y+i)+x-1)*/smap[y+i][x-1])
+			if(y>0)
+			    if(/**(smap+SIZE*(y+i)+x-1)*/smap[x+i][y-1]==CELL_SHIP)
 				f=1;
-			if(x<SIZE-1)
-			    if(/**(smap+SIZE*(y+i)+x+1)*/smap[y+i][x+1])
+			if(y<SIZE-1)
+			    if(/**(smap+SIZE*(y+i)+x+1)*/smap[x+i][y+1]==CELL_SHIP)
 				f=1;
 		    }
 		    //----------------------------------
 		    if(!f)
 		    {
 		        for(i=0;i<len;i++)
-			    /**(smap+SIZE*(y+i)+x)*/smap[y+i][x]=CELL_SHIP;
+			    /**(smap+SIZE*(y+i)+x)*/smap[x+i][y]=CELL_SHIP;
 			render(SMAP,EMAP,0);
 			kor[len-1]--;
 			if(!kor[len-1])
@@ -134,6 +157,7 @@ void ras(int **smap)
 			    return;
 		    }
 		}
+		rend_ship(x,y,dir,len,temp,smap);
 		break;
 	    case 32://смена направления в котором будет осуществляться размещение
 		if(dir)
@@ -148,9 +172,9 @@ void ras(int **smap)
 		    if(y+len>=SIZE)
 			y=SIZE-len;
 		}
+		rend_ship(x,y,dir,len,temp,smap);
 		break;
 	}
-	rend_ship(x,y,dir,len,0);
     }
 }
 /*----------------------------*/
