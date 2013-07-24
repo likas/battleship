@@ -67,6 +67,7 @@ int main(int argc, char *argv[]){
 				printf("READ\n");
 //если действие произошло по дескриптору главного сокета то обрабатываем подключение клиента
 				if(i==0){
+                    printf("New Client");
 					if( (fds[count].fd=accept(fds[0].fd,0,0)) < 0){
 						perror("Error accept!");
 						exit(1);
