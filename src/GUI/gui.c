@@ -2,7 +2,12 @@
 
 void sig(int handler)
 {
-	int i,j,SIZEFLAG=0;
+int i,j;
+
+//Multithread blocking
+if(SIZEFLAG)
+{
+	SIZEFLAG = 0;
 	struct winsize wins;
 
 	int term_height,term_width;
@@ -58,12 +63,14 @@ void sig(int handler)
 
 		De_Init(MY,OP);
 	}
-
+	SIZEFLAG = 1;
+}
 }
 
 
 int gui()
 {
+SIZEFLAG = 1;
 signal(SIGWINCH,sig);
 
 int term_height,term_width;

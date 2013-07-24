@@ -25,6 +25,9 @@ WINDOW* info;
 int **MY;
 int **OP;
 
+//Is blocking multithreading flag
+int SIZEFLAG;
+
 int GUICHATLEN;//служебная переменная для листинга чата
 char username[100];//ник игрока
 char opname[100];//ник противника
