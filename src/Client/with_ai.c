@@ -33,7 +33,6 @@ int with_ai(int is_manual)
 	COORDS hit_place;
 	message ch_ai;
 	ch_ai.command = MSG_SG;
-//	De_Init(SMAP,EMAP);
 
 	if(is_manual) {
 		De_Init(SMAP,EMAP);	

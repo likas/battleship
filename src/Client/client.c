@@ -13,18 +13,16 @@ int main(int argc, char* argv[]){
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
-	gui();
+	int menu_status = gui();
+	if(menu_status == QUIT)
+		return;
 	map_init();
-	while((ONLINE = show_menu()) == BACK);
-	if(ONLINE == QUIT) return;
-/* ONLINE=MODEFLAG;	 */
-	if(ONLINE >> 1) //Game with ai
+	if(menu_status >> 1) //Game with ai
 	{
 		/* possibly init*/
-		WOL=with_ai(ONLINE & 1);
+		WOL=with_ai(menu_status & 1);
 		getch();		
 		endgui(WOL);
-		/* message */
 	}
 	else //Game with other client
 	{
@@ -106,7 +104,7 @@ int main(int argc, char* argv[]){
 	} /* end of 'while(player_id..)'
 	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
-	if(ONLINE & 1) { //Manual field or random
+	if(menu_status & 1) { //Manual field or random
 		De_Init(SMAP, EMAP);
         ras(SMAP);
 	} else {

@@ -21,7 +21,6 @@ int **EMAP;
 int TUNNEL;
 int GAME_TUNNEL;
 int YOURMOVE;
-int ONLINE;
 /*----------------------*/
 
 int coords_atoi(char *, COORDS);

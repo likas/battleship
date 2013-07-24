@@ -16,16 +16,6 @@
 
 #include <signal.h>
 
-// These values will be returned by menu 
-#define MULTI_R     0
-#define MULTI       1
-#define SINGLE_R    2 
-#define SINGLE      3
-#define BACK        4
-#define QUIT        5
-
-int MODEFLAG;
-
 WINDOW*** my_win;
 WINDOW*** op_win;
 WINDOW* chat;
