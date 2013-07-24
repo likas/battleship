@@ -46,7 +46,7 @@ message ai( message msg )
 			break;
 		case MSG_AT:
 			coords_itoa( msg.params, &coords );
-			answer.command = ai_hit( ai_player_field, coords, AI );
+			answer.command = ai_hit( ai_player_field, coords, ENEMY);
 			if ( answer.command == REQ_YOULOSE ||
 				 answer.command == REQ_YOUWIN ) {
 				ai_uninit();

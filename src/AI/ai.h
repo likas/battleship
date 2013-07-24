@@ -24,13 +24,6 @@ typedef struct _AI_DIRECTION
 	int dy;
 } AI_DIRECTION;
 
-// Used to define whos being hit in ai_hit function
-enum _GAMERS 
-{
-  AI = 100,
-  PLAYER
-} GAMERS;
-
 
 
 // AI resources
