@@ -43,7 +43,7 @@ int ai_hit( int** field, COORDS coords, int whos_been_hit )
 int is_ship_dead( int** field, COORDS coords, int who )
 {
 	int ship_size = 0;
-	AI_DIRECTION direction;
+	AI_DIRECTION direction={0,0};
 	COORDS start_position = coords;
 	
 	choose_direction( field, coords, &direction );
