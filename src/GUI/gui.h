@@ -16,6 +16,21 @@
 
 #include <signal.h>
 
+// These values will be returned by menu 
+#define MULTI_R     0
+#define MULTI       1
+#define SINGLE_R    2 
+#define SINGLE      3
+#define BACK        4
+#define QUIT        5
+
+int MODEFLAG;
+int HELLOFLAG;
+int LOGINFLAG;
+int INITFLAG;
+
+int RFLAG;
+
 WINDOW*** my_win;
 WINDOW*** op_win;
 WINDOW* chat;
@@ -24,9 +39,6 @@ WINDOW* info;
 
 int **MY;
 int **OP;
-
-//Is blocking multithreading flag
-int SIZEFLAG;
 
 int GUICHATLEN;//служебная переменная для листинга чата
 char username[100];//ник игрока
@@ -58,10 +70,10 @@ void render(int**,int**,int);
 COORDS  De_Move(int**);
  //Наш ход, подается массив поля противника
 
-void ant_hello(char* , char*);
+int ant_hello(char* , char*);
 //Приветствие
 
-char* ant_login(int);
+int ant_login(int);
 //Присваивание имени игроку
 int ant_player_list(message* , int);
 //листинг списка игроков
