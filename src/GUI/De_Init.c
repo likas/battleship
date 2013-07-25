@@ -33,7 +33,7 @@ int De_Init(int **my_mas, int **op_mas){
 	
 	term_height=wins.ws_row;
 	term_width=wins.ws_col;
-	
+	FINref(stdscr,1,0);	
 	chat=newwin(term_height/4-2,term_width-2,term_height-term_height/4+2,1);
 	FINref(chat,2,0);
 //	GUICHATLEN=FINchat("SYSTEM","Hello",GUICHATLEN);
