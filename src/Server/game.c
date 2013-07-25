@@ -92,7 +92,10 @@ void *Game(args *arg){
 	args temp;
 
 //	memcpy(&temp, arg, sizeof(arg));
-	
+
+	printf("id1: %d\n", arg->id1);
+	printf("id2: %d\n", arg->id2);
+
 	temp.id1 = arg->id1;
 	temp.id2 = arg->id2;
 	temp.thr_cnt = arg->thr_cnt;
@@ -131,8 +134,11 @@ void *Game(args *arg){
 	}
 	fds[1].events=POLLIN;*/
 
+//	int rand_turn = rand()
+
 	while (1) {
 		ret = poll(fds, 2, 10000);
+		printf("ret: %d\n", ret);
 		if (ret == - 1)
 			perror("Error poll");
 		if (ret == 0)

@@ -12,7 +12,7 @@ int client_send_text(int action, char* text){
 	int check;
 	/* @ FIELD_START FIELD_END @ */
 	msg.command=action; /* type of message: chat message: NN, TT, SG */
-	if(action==MSG_RL){
+	if((action == MSG_RL) || (action == MSG_SF)){
 		
 	} else if (action == MSG_SG) {
 //		strcpy(msg.params, text)

@@ -121,7 +121,8 @@ int main(int argc, char* argv[]){
         ai_rand_matr(SMAP);
 		De_Init(SMAP, EMAP);
 	}
-	/* sending a gamefield */
+	/* sendiing a gamefield */
+	client_send_text(MSG_SF, 0);
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who
 	* plays first */

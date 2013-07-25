@@ -74,7 +74,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 		//recv(fd[ind]->fd, msg, sizeof(message), 0);//???
 		if(msg->command == MSG_SG) {
 			int id=(int)(msg->params[0]);
-			for(i=0;pl[i]._id != id; i++);
+			for(i = 0; pl[i]._id != id; i++);
 			printf("Select game\n");
 			for(in = 0; in < MAX_PL; in++) {
 				if((int)msg->params[0] == pl[in]._id) 
