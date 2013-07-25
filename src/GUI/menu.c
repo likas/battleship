@@ -132,23 +132,22 @@ void init_subm_itms()
 
 void sig_handler( int signal )
 {
-	if ( SIZEFLAG ) {
-		SIZEFLAG = 0;
-		if ( submenu != NULL ) {
-			unpost_menu( submenu );
-			redraw_submenu();
-		} else if ( menu != NULL ) {
-			unpost_menu( menu );
-			redraw_menu();
-		}
+	if ( submenu != NULL ) {
+		unpost_menu( submenu );
+		redraw_submenu();
+	} else if ( menu != NULL ) {
+		unpost_menu( menu );
+		redraw_menu();
 	}
-	refresh();
-	wrefresh(win_bg_menu);
-	wrefresh(win_list_menu);
+	//refresh();
+	//wrefresh(win_bg_menu);
+	//wrefresh(win_list_menu);
 }
 
 void redraw_menu()
 {
+	clear();
+	refresh();
 	struct winsize window;
 	ioctl(0, TIOCGWINSZ, &window);
 	
@@ -163,6 +162,7 @@ void redraw_menu()
 	if ( win_list_menu != NULL ) {
 		delwin( win_list_menu );
 	}
+	refresh();
 	init_m_itms();
 	win_bg_menu = newwin( bg_menu_size_y, bg_menu_size_x, ( term_win_sz_y - bg_menu_size_y ) / 2 , \
 						( term_win_sz_x - bg_menu_size_x ) / 2 );
@@ -174,6 +174,7 @@ void redraw_menu()
 	menu = new_menu( m_itms );
 	set_menu_format( menu, 3, 1 );
 	set_menu_win( menu, win_list_menu );
+	refresh();
 	mvwprintw( win_bg_menu, 1, bg_menu_size_x / 2 - 2, "MENU" );
 	wrefresh( win_bg_menu );
 	post_menu( menu );
@@ -183,6 +184,8 @@ void redraw_menu()
 
 void redraw_submenu()
 {
+	clear();
+	refresh();
 	struct winsize window;
 	ioctl(0, TIOCGWINSZ, &window);
 	
@@ -208,6 +211,7 @@ void redraw_submenu()
 	submenu = new_menu( subm_itms );
 	set_menu_format( submenu, 3, 1 );
 	set_menu_win( submenu, win_list_menu );
+	refresh();
 	mvwprintw( win_bg_menu, 1, bg_submenu_size_x / 2 - 2, "MENU" );
 	wrefresh( win_bg_menu );
 	post_menu( submenu );
@@ -221,7 +225,7 @@ int select_return( int item_indx )
 	switch( item_indx ) {
 		case 0:
 			stat = show_submenu();
-			if ( stat != BACK && stat != RESIZE ) {
+			if ( stat != BACK ) {
 				return ( 2 | stat );
 			} else {
 			   return BACK;	
