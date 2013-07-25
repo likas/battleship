@@ -25,6 +25,11 @@
 #define QUIT        5
 
 int MODEFLAG;
+int HELLOFLAG;
+int LOGINFLAG;
+int INITFLAG;
+
+int RFLAG;
 
 WINDOW*** my_win;
 WINDOW*** op_win;
@@ -65,10 +70,10 @@ void render(int**,int**,int);
 COORDS  De_Move(int**);
  //Наш ход, подается массив поля противника
 
-void ant_hello(char* , char*);
+int ant_hello(char* , char*);
 //Приветствие
 
-char* ant_login(int);
+int ant_login(int);
 //Присваивание имени игроку
 int ant_player_list(message* , int);
 //листинг списка игроков

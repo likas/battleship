@@ -76,6 +76,7 @@ int **b=calloc(10,sizeof(int*));
 
 gui();
 ant_player_list(st,leng);
+//show_menu();
 De_Init(a,b);
 guiturn(PLAYER,REQ_HIT);
 //////////////////////////////////////////////////

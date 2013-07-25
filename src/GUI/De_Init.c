@@ -33,6 +33,11 @@ int De_Init(int **my_mas, int **op_mas){
 	
 	term_height=wins.ws_row;
 	term_width=wins.ws_col;
+	
+	chat=newwin(term_height/4-2,term_width-2,term_height-term_height/4+2,1);
+	FINref(chat,2,0);
+//	GUICHATLEN=FINchat("SYSTEM","Hello",GUICHATLEN);
+//	GUICHATLEN=FINchat(username,"Hi, System",GUICHATLEN);
 
 	my_stpoint[0]=1; my_stpoint[1]=1;
 	xmax=term_width; ymax=term_height;
@@ -62,5 +67,8 @@ int De_Init(int **my_mas, int **op_mas){
  info=newwin(1,50,my_stpoint[0]+10*cell_h+1, my_stpoint[1] );
  FINref(info,4,0);	  	
  doupdate();
+ INITFLAG=1;
+ HELLOFLAG=1;
+ LOGINFLAG=1;		
 	return 0;
 }

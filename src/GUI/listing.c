@@ -109,11 +109,6 @@ int ant_player_list (message *list, int leng) {
 	         wgetch(right);
 		
 		FINref(stdscr,1,0);
-		FINref(chat,2,0);
-		GUICHATLEN=0;
-		GUICHATLEN=FINchat("SYSTEM","Hello",GUICHATLEN);
-		GUICHATLEN=FINchat(username,"Hi, System",GUICHATLEN);
-		FINref(chat,2,1);
 		 return ret ;	
 		 break; 	
             default:
