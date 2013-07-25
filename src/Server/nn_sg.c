@@ -30,8 +30,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 	}*/
 	game_sockd = -1;
 	if(msg->command == MSG_NN) {
-		strcpy(pl[ind - 1].name, msg->params);
-
+		
 			/*send to player the list of gamers*/
 			recv(fd[ind].fd, req, sizeof(message), 0);
 			
@@ -58,6 +57,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 			//for(i = 0; msg->params[i] != '\0'; i++)
 			//	pl[ind - 1]->name[i] = msg->params[i];
 			//printf("name: %s\n", msg->params);
+			strcpy(pl[ind - 1].name, msg->params);
 
 			/*fill struct game*/
 			/*for(ind = 0; gm[ind]->command != -1 && \

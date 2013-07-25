@@ -87,7 +87,6 @@ int main(int argc, char* argv[]){
 
 		if(player_id>0){ /* /отправляем номер, если мы сами его выбрали */
 			client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
-		}
 		/* waiting for response */
 		while(1){
 			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
@@ -100,7 +99,9 @@ int main(int argc, char* argv[]){
 		}else if(received.command==REQ_ACCEPT){
 			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
-		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); }
+		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
+		}
+		}
 	} /* end of 'while(player_id..)'
 	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
