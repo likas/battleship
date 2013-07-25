@@ -13,73 +13,112 @@ int parse(char *str,int position){
     return ret;
 }
 
-
-int gameover(int *smap)/*If game is over function (return 1) , if not (return 0) Ex: gameover((int*)a);*/
+int gameover(int **smap)/*If game is over function (return 1) , if not (return 0)*/
 {
-    int i;
-    for(i=0;i<size*size;i++)
-        if(*(smap+i)==1)
-            return 0;
+    int i,j;
+    for(i=0;i<SIZE;i++)
+    for(j=0;j<SIZE;j++)
+    if(smap[i][j]==CELL_SHIP)
+        return 0;
     return 1;
 }
 //---------------------------/*Example: int a[n][n]; typedef struct{int x; int y}shot; shot b;  shoot((int*)a,b);*/
-int shoot(int *smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 - ERROR*/
+int shoot(int **smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 - ERROR*/
 {
-    short int vis[size][size]={0};
+    short int vis[SIZE][SIZE]={0};
+    short int i,j;
     int x=a.x;
     int y=a.y;
     /*-------------------*/
-    if((x>=size)||(y>=size)||(x<0)||(y<0)||(*(smap+x*size+y)==3))
-        return -1;
+    if((x>=SIZE)||(y>=SIZE)||(x<0)||(y<0)||(smap[x][y]==CELL_MISS)||(smap[x][y]==CELL_SHIP_FIRE)||(smap[x][y]==CELL_SHIP_DEAD))
+    return -1;
     /*-------------------*/
     int killed(int x,int y)/*Killed or not killed*/
     {
         vis[x][y]=1;
-        if((*(smap+x*size+y)==0)||(*(smap+x*size+y)==3))
-            return 0;
-        else if(*(smap+x*size+y)==1)
-            return 1;
-        else if(*(smap+x*size+y)==2)
-        {
-            /*--------------------------*/
-            if(x-1>=0)
-                if(!vis[x-1][y])
-                    if(killed(x-1,y)==1)
-                        return 1;
-            /*--------------------------*/
-            if(x+1<size)
-                if(!vis[x+1][y])
-                    if(killed(x+1,y)==1)
-                        return 1;
-            /*--------------------------*/
-            if(y-1>=0)
-                if(!vis[x][y-1])
-                    if(killed(x,y-1)==1)
-                        return 1;
-            /*--------------------------*/
-            if(y+1<size)
-                if(!vis[x][y+1])
-                    if(killed(x,y+1)==1)
-                        return 1;
-            /*--------------------------*/
-            return 0;
-        }
-    }
-    /*-------------------*/
-    if(!(*(smap+x*size+y)))/*If miss*/
+    if((smap[x][y]==CELL_NONE)||(smap[x][y]==CELL_MISS))
+        return 0;
+    else if(smap[x][y]==CELL_SHIP)
+        return 1;
+    else if(smap[x][y]==CELL_SHIP_FIRE)
     {
-        *(smap+x*size+y)=3;
+        /*--------------------------*/
+        if(x-1>=0)
+        if(!vis[x-1][y])
+            if(killed(x-1,y)==1)
+            return 1;
+        /*--------------------------*/
+        if(x+1<SIZE)
+        if(!vis[x+1][y])
+            if(killed(x+1,y)==1)
+            return 1;
+        /*--------------------------*/
+        if(y-1>=0)
+        if(!vis[x][y-1])
+            if(killed(x,y-1)==1)
+            return 1;
+        /*--------------------------*/
+        if(y+1<SIZE)
+        if(!vis[x][y+1])
+            if(killed(x,y+1)==1)
+            return 1;
+        /*--------------------------*/
         return 0;
     }
+    }
     /*-------------------*/
-    *(smap+x*size+y)=2;
+    void r_ship(int x,int y)
+    {
+    if((vis[x][y])||(smap[x][y]==CELL_MISS))
+        return;
+    vis[x][y]=1;
+    if(smap[x][y]==CELL_NONE)
+    {
+        smap[x][y]=CELL_MISS;
+        return;
+    }
+    if(smap[x][y]==CELL_SHIP_FIRE)
+        smap[x][y]==CELL_SHIP_DEAD;
+    /*------------*/
+    if((x-1>=0)&&(y-1>=0))
+        r_ship(x-1,y-1);
+    if((x-1>=0)&&(y+1<SIZE))
+        r_ship(x-1,y+1);
+    if((x+1<SIZE)&&(y-1>=0))
+        r_ship(x+1,y-1);
+    if((x+1<SIZE)&&(y+1<SIZE))
+        r_ship(x+1,y+1);
+    /*------------*/
+    if(x-1>=0)
+        r_ship(x-1,y);
+    if(x+1<SIZE)
+        r_ship(x+1,y);
+    if(y-1>=0)
+        r_ship(x,y-1);
+    if(y+1<SIZE)
+        r_ship(x,y+1);
+    return;
+    }
+    /*-------------------*/
+    if(smap[x][y]==CELL_NONE)/*If miss*/
+    {
+    smap[x][y]=CELL_MISS;
+    return REQ_MISS;
+    }
+    /*-------------------*/
+    smap[x][y]=CELL_SHIP_FIRE;
     if(!killed(x,y))
-        return 2;/*If you kill the ship*/
+    {
+    for(i=0;i<SIZE;i++)
+        for(j=0;j<SIZE;j++)
+        vis[i][j]=0;
+    r_ship(x,y);
+    return REQ_DESTROYED;/*If you kill the ship*/
+    }
     else
-        return 1;/*If you just hit it*/
+    return REQ_HIT;/*If you just hit it*/
 }
-
-
+//-----------------------------------
 
 
 
@@ -241,7 +280,7 @@ void *Game(args *arg){
                     y=parse(mesg.params,1);
                     XY.x=x;
                     XY.y=y;
-                    mesg.command=shoot((int *)field[receiver],XY);
+                    mesg.command=shoot(field[receiver],XY);
                     if(mesg.command==-1) break;
 
                     if(mesg.command==REQ_MISS){
@@ -254,7 +293,7 @@ void *Game(args *arg){
                             perror("Error send");
                             exit(1);
                         }
-                    if((tmp=gameover((int *)field[receiver]))==1){
+                    if((tmp=gameover(field[receiver]))==1){
                         memset(mesg.params,0,128);
                         mesg.command=REQ_YOUWIN;
                         if(send(fds[shooter].fd,(void *)&mesg,sizeof(message),0)<0){
