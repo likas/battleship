@@ -108,7 +108,12 @@ int main(int argc, char* argv[]){
 //			getch();
 			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
-		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
+		}else if(received.command == REQ_GAMESTARTED)
+		{
+			break;
+		}else
+		{
+		    printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
 		}
 		}
 	} /* end of 'while(player_id..)'

@@ -3,9 +3,6 @@
 #include "../mboi.h"
 extern int GAME_TUNNEL;
 int client_send_text(int action, char* text){
-	printf("%s\n", __func__);
-	printf("action: %d\n", action);
-	printf("message: %s\n", text);
 //	getch();
 //	printf("T: %d\n", GAME_TUNNEL); 
 	message	msg; /* struct message{ int command, char* params[128] } */
@@ -24,7 +21,6 @@ int client_send_text(int action, char* text){
 	check=send(GAME_TUNNEL, (message*)&msg, sizeof(message),0); /* TUNNEL is global 
 														* and attach to socket
 														* we send messages to */
-	printf("%d=%d\n", check, sizeof(message));
 	if(check!=sizeof(message)){
 		perror("send");
 		exit(1);

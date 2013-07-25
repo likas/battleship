@@ -4,7 +4,7 @@
 
 //int game_sockd=-1;
 
-int parse(char *str,int position){
+/*int parse(char *str,int position){
     char x[2];
     int ret;
     x[0]=str[position];
@@ -12,6 +12,7 @@ int parse(char *str,int position){
     ret=atoi(x);
     return ret;
 }
+*/
 
 int gameover(int **smap)/*If game is over function (return 1) , if not (return 0)*/
 {
@@ -30,7 +31,7 @@ int shoot(int **smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 
     int x=a.x;
     int y=a.y;
     /*-------------------*/
-    if((x>=SIZE)||(y>=SIZE)||(x<0)||(y<0)||(smap[x][y]==CELL_MISS)||(smap[x][y]==CELL_SHIP_FIRE)||(smap[x][y]==CELL_SHIP_DEAD))
+    if((x>SIZE)||(y>SIZE)||(x<0)||(y<0)||(smap[x][y]==CELL_MISS)||(smap[x][y]==CELL_SHIP_FIRE)||(smap[x][y]==CELL_SHIP_DEAD))
     return -1;
     /*-------------------*/
     int killed(int x,int y)/*Killed or not killed*/
@@ -144,37 +145,8 @@ void *Game(args *arg){
     fds[1].fd = temp.id2;
     fds[1].events = POLLIN;
     id = temp.thr_cnt;
-    /*	if( (game_sockd=socket(AF_INET,SOCK_STREAM,0)) <0 ){
-        perror("Error socket");
-        exit(1);
-    }
-
-    memset(&servaddr,0,sizeof(struct sockaddr_in));
-    servaddr.sin_family=AF_INET;
-    servaddr.sin_addr.s_addr=htonl(INADDR_ANY);
-    servaddr.sin_port=htons(port);
-
-    if(bind(game_sockd,(struct sockaddr *)&servaddr,sizeof(struct sockaddr))<0){
-        perror("Error bind");
-        exit(1);
-    }
-
-    listen(game_sockd,2);
-
-    if( (fds[0].fd=accept(game_sockd,0,0)) <0){
-        perror("Accept");
-        exit(1);
-    }
-    fds[0].events=POLLIN;
-
-    if( (fds[1].fd=accept(game_sockd,0,0)) <0){
-        perror("Accept");
-        exit(1);
-    }
-    fds[1].events=POLLIN;*/
-
-    //	int rand_turn = rand()
-    proverka = rand()%2;
+    
+/*	proverka = rand()%2;
     char pl1 = "",pl2 = "";
     mesg.command = MSG_RQ;
     if(proverka){
@@ -195,7 +167,7 @@ void *Game(args *arg){
         exit(1);
     }
 
-
+*/
 
 
     while (1) {
@@ -276,10 +248,12 @@ void *Game(args *arg){
                     /*Receive attack data*/
                 case MSG_AT:
                     if(i!=shooter) break;
-                    x=parse(mesg.params,0);
-                    y=parse(mesg.params,1);
-                    XY.x=x;
-                    XY.y=y;
+                    //x=parse(mesg.params,0);
+                    //y=parse(mesg.params,1);
+                    //XY.x=x;
+                    //XY.y=y;
+					XY.x = (int)mesg.params[0];
+					XY.y = (int)mesg.params[1];
                     mesg.command=shoot(field[receiver],XY);
                     if(mesg.command==-1) break;
 
@@ -311,6 +285,13 @@ void *Game(args *arg){
                         exit(0);
                     }
                     break;
+					case MSG_RL:
+					mesg.command = REQ_GAMESTARTED;
+					if(send(fds[i].fd, (void *)&mesg, sizeof(message), 0) < 0){
+						perror("Error answering to msg RL!");
+						exit(1);
+					}
+					break;	
                 }
             }
         }
