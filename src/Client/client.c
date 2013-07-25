@@ -39,7 +39,11 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	addr.sin_family=AF_INET;
-	addr.sin_port=htons(1999);
+	if (argc > 1) {
+		addr.sin_port=htons(atoi(argv[1]));
+	} else {
+		addr.sin_port=htons(1999);
+	}
 /*	inet_aton("127.0.0.1", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
