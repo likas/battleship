@@ -10,18 +10,19 @@ void close_all(){
 	exit(0);
 }
 
-void del_fds(struct pollfd *fds[],int number,Player *_player[]){
+void del_fds(struct pollfd *fds,int number,Player *_player){
+	printf("address of: fds = %p, pl = %p", fds, _player);
     int i = number;
     while (i < MAX_PL - 1) {
         fds[i] = fds[i+1];
-        _player[i-1]->_id = _player[i]->_id;
-        strcpy(_player[i-1]->name,_player[i]->name);
+        _player[i-1]._id = _player[i]._id;
+        strcpy(_player[i-1].name,_player[i].name);
         i++;
     }
-    fds[i]->fd = 0;
-    fds[i]->events = 0;
-    _player[i-1]->_id = -1;
-    strcpy(_player[i-1]->name,"");
+    fds[i].fd = 0;
+    fds[i].events = 0;
+    _player[i-1]._id = -1;
+    strcpy(_player[i-1].name,"");
 }
 int main(int argc, char *argv[]){
 	if(argc<2){printf("Not enough arguments"); exit(1);}

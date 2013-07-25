@@ -10,7 +10,7 @@ void thread(args *game_arg) {
 	for(thr_cnt = 0; thread_id[thr_cnt] > 0 && thr_cnt < thr_max_cnt; thr_cnt++);
 
 	game_arg->thr_cnt = thr_cnt;
-	if(pthread_create(&threads[thr_cnt], NULL, Game, (void*)&game_arg) < 0) {
+	if(pthread_create(&threads[thr_cnt], NULL, Game, game_arg) < 0) {
 		perror("error_create_thread");
 		exit(1);
 	}
@@ -138,6 +138,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 					gm[in]->params[i] = ' ';
 					i++;
 				}*/
+				printf("address of: fds = %p, pl = %p", fd, pl);
 				del_fds(fd, ind, pl);
 			}}
 			if(msg->command == MSG_RL) {

@@ -83,7 +83,7 @@ int shoot(int *smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 -
 
 
 
-void * Game(void *arg){
+void *Game(args *arg){
 	int field[2][10][10],ret,i,j,ready=0,shooter,receiver,x,y,tmp,id;
 	struct pollfd fds[2];
 	struct sockaddr_in servaddr;
@@ -91,12 +91,17 @@ void * Game(void *arg){
 	COORDS XY;
 	args temp;
 
-	temp=*((args *)arg);
-	fds[0].fd=temp.id1;
-	fds[0].events=POLLIN;
-	fds[1].fd=temp.id2;
-	fds[1].events=POLLIN;
-	id=temp.thr_cnt;
+//	memcpy(&temp, arg, sizeof(arg));
+	
+	temp.id1 = arg->id1;
+	temp.id2 = arg->id2;
+	temp.thr_cnt = arg->thr_cnt;
+
+	fds[0].fd = temp.id1;
+	fds[0].events = POLLIN;
+	fds[1].fd = temp.id2;
+	fds[1].events = POLLIN;
+	id = temp.thr_cnt;
 /*	if( (game_sockd=socket(AF_INET,SOCK_STREAM,0)) <0 ){
 		perror("Error socket");
 		exit(1);
@@ -126,13 +131,13 @@ void * Game(void *arg){
 	}
 	fds[1].events=POLLIN;*/
 
-	while(1){
-		ret=poll(fds,2,10000);
-		if(ret==-1)
+	while (1) {
+		ret = poll(fds, 2, 10000);
+		if (ret == - 1)
 			perror("Error poll");
-		if(ret==0)
+		if (ret == 0)
 			continue;
-		for(i=0;i<2;i++){
+		for(i = 0; i < 2; i++){
 			if(fds[i].revents & POLLIN){
 				if( (ret=recv(fds[i].fd,(void *)&mesg,sizeof(message),0)) < 0){
 					perror("Error recv");
