@@ -81,6 +81,7 @@ int main(int argc, char* argv[]){
 				exit(1);
 				break;
 			case REQ_GAMESTARTED: /* it's when someone pick our player as an opponent */
+				
 				player_id=-2; /* to exit waiting cycle */
 				break;
 			default:
@@ -89,7 +90,7 @@ int main(int argc, char* argv[]){
 				break;
 		}
 
-		if(player_id>0){ /* /отправляем номер, если мы сами его выбрали */
+		if(player_id>=0){ /* /отправляем номер, если мы сами его выбрали */
 			client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
 		/* waiting for response */
 		while(1){
@@ -100,7 +101,11 @@ int main(int argc, char* argv[]){
 		if(received.command==REQ_DECLINE){
 			/* if it's DECLINE answer, we have to start again with that while() staff, */
 			player_id=-1;
+			printf("DECLINE\n");
+//			getch();
 		}else if(received.command==REQ_ACCEPT){
+			printf("accept\n");
+//			getch();
 			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
 		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
