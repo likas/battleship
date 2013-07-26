@@ -12,7 +12,7 @@ COORDS De_Move(int **op_mas)
 	leaveok(op_win[i][j],TRUE);
 	wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j])|A_REVERSE);
 	wclear(op_win[i][j]);
-	wborder(op_win[i][j],ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER);
+	wborder(op_win[i][j],ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, '*', '*','*' ,'*');
 	wmove(op_win[i][j],op_win[i][j]->_maxy/2,op_win[i][j]->_maxx/2-1);
 	wprintw(op_win[i][j],"%c:%d",'a'+i,j);
 	wrefresh(op_win[i][j]);
@@ -22,6 +22,7 @@ COORDS De_Move(int **op_mas)
 		key=wgetch(op_win[i][j]);
 		wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j]));
 		wclear(op_win[i][j]);
+		wborder(op_win[i][j],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
 //		wrefresh(op_win[i][j]);
 	        wnoutrefresh(op_win[i][j]);
 		switch(key)
@@ -78,7 +79,7 @@ COORDS De_Move(int **op_mas)
 		wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j])|A_REVERSE);
 	        wclear(op_win[i][j]);
 		leaveok(op_win[i][j],TRUE);
-	        wborder(op_win[i][j],ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, ACS_ULCORNER, ACS_URCORNER, ACS_LLCORNER, ACS_LRCORNER); 
+	        wborder(op_win[i][j],ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, '*', '*', '*', '*'); 
 		wmove(op_win[i][j],op_win[i][j]->_maxy/2,op_win[i][j]->_maxx/2-1);
 		wprintw(op_win[i][j],"%c:%d",'a'+i,j);
 //	       wrefresh(op_win[i][j]);

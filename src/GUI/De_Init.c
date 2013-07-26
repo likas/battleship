@@ -54,12 +54,14 @@ int De_Init(int **my_mas, int **op_mas){
 			my_win[i][j]=newwin(cell_h, cell_w, my_stpoint[0]+i*cell_h, my_stpoint[1]+j*cell_w);
 			wbkgdset(my_win[i][j], COLOR_PAIR(my_mas[i][j]));
 			wclear(my_win[i][j]);
+			wborder(my_win[i][j],ACS_VLINE, ACS_VLINE,ACS_HLINE,ACS_HLINE,ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
 //			wrefresh(my_win[i][j]);
 	wnoutrefresh(my_win[i][j]);		
 			
 			op_win[i][j]=newwin(cell_h, cell_w, op_stpoint[0]+i*cell_h,op_stpoint[1]+j*cell_w);
                         wbkgdset(op_win[i][j], COLOR_PAIR(op_mas[i][j]));
                         wclear(op_win[i][j]);
+			wborder(op_win[i][j],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
 //                       wrefresh(op_win[i][j]);
 	wnoutrefresh(op_win[i][j]);		
 		}
