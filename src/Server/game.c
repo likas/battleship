@@ -2,18 +2,6 @@
 
 #define size 10
 
-//int game_sockd=-1;
-
-/*int parse(char *str,int position){
-    char x[2];
-    int ret;
-    x[0]=str[position];
-    x[1]='\0';
-    ret=atoi(x);
-    return ret;
-}
-*/
-
 int gameover(int **smap)/*If game is over function (return 1) , if not (return 0)*/
 {
     int i,j;
@@ -151,30 +139,6 @@ void *Game(args *arg){
     fds[1].events = POLLIN;
     id = temp.thr_cnt;
     
-/*	proverka = rand()%2;
-    char pl1 = "",pl2 = "";
-    mesg.command = MSG_RQ;
-    if(proverka){
-        pl1 = 'f';
-        pl2 = 's';
-    }else {
-        pl1 = 's';
-        pl2 = 'f';
-    }
-    strcpy(mesg.params,&pl1);
-    if( (send(fds[0].fd,(void *)&mesg,sizeof(message),0)) <0){
-        perror("Error send!");
-        exit(1);
-    }
-    strcpy(mesg.params,&pl2);
-    if( (send(fds[1].fd,(void *)&mesg,sizeof(message),0)) <0){
-        perror("Error send!");
-        exit(1);
-    }
-
-*/
-
-
     while (1) {
         ret = poll(fds, 2, 10000);
         printf("ret: %d\n", ret);

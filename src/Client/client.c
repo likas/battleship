@@ -146,14 +146,20 @@ int main(int argc, char* argv[]){
 	}*/
 while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
 		if(YOURMOVE){
-			xy=De_Move(EMAP);
-			if(xy.x == -1 && xy.y == -1)
+			do
 			{
-				client_send_text(REQ_DISCONNECT, 0);
-				WOL = REQ_DISCONNECT;
-				break;
-			}
-			else	
+				xy=De_Move(EMAP);
+				
+				if(xy.x == -1 && xy.y == -1)
+				{
+					client_send_text(REQ_DISCONNECT, 0);
+					WOL = REQ_DISCONNECT;
+					break;
+				}
+			}while(EMAP[xy.x][xy.y] != CELL_NONE );
+			
+				
+			if(xy.x != -1 && xy.y != -1)
 				client_send_attack(xy);
 		}
 			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) < 0){
@@ -181,11 +187,10 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
 						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
 					else
-						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
 						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
-					YOURMOVE =! YOURMOVE;
 					/* перерисовать карту противника на промах */
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
@@ -194,6 +199,7 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 					else
 						SMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
 						FINchcell(xy.x, xy.y, CELL_MISS, 0); /* рисуем в GUI */
+					YOURMOVE =! YOURMOVE;
 					break;
 				case REQ_DESTROYED:
 					/* перерисовать карту противника на хит */
