@@ -31,8 +31,12 @@ int shoot(int **smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 
     int x=a.x;
     int y=a.y;
     /*-------------------*/
-    if((x>SIZE)||(y>SIZE)||(x<0)||(y<0)||(smap[x][y]==CELL_MISS)||(smap[x][y]==CELL_SHIP_FIRE)||(smap[x][y]==CELL_SHIP_DEAD))
-    return -1;
+    if((x>=SIZE) || (y>=SIZE) || 
+		(x<0)   || (y<0)    ||
+        (smap[x][y]==CELL_MISS)||
+        (smap[x][y]==CELL_SHIP_FIRE)||
+        (smap[x][y]==CELL_SHIP_DEAD))
+    	return -1;
     /*-------------------*/
     int killed(int x,int y)/*Killed or not killed*/
     {
@@ -124,8 +128,9 @@ int shoot(int **smap, COORDS a)/*0 - Miss ; 1 - Hit ship ; 2 - Ship killed ; -1 
 
 
 void *Game(args *arg){
-    int field[2][10][10],ret,i,j,ready=0,shooter,receiver,x,y,tmp,id;
-    struct pollfd fds[2];
+    int ***field,ret,i,j,ready=0,shooter,receiver,x,y,tmp,id;
+    field = (int ***) malloc (2 * sizeof(int**));
+	struct pollfd fds[2];
     struct sockaddr_in servaddr;
     message mesg;
     COORDS XY;
@@ -200,11 +205,26 @@ void *Game(args *arg){
                 switch(mesg.command){
                 /*Receive player's game fields*/
                 case MSG_SF:
-                    if( (ret=recv(fds[i].fd,(void *)&field[i],(sizeof(int)*100),0)) < 0){
-                        perror("Error recv");
-                        exit(1);
-                    }
+					field[i] = (int **) malloc (sizeof(int *) * SIZE);
+                    for(int u = 0; u < SIZE; u++)
+					{
+						field[i][u] = (int *) malloc (sizeof(int) * SIZE);
+						if((ret=recv(fds[i].fd, field[i][u],(sizeof(int)*SIZE),0)) < 0)
+						{
+                        	perror("Error recv");
+                        	exit(1);
+                    	}
+					}
                     if(++ready==2){
+							for(int j = 0; j < SIZE; j++)
+							{
+								for(int k = 0; k < SIZE; k++)
+									printf("%d ", field[0][j][k]);
+								printf("\t");
+								for(int k = 0; k < SIZE; k++)
+									printf("%d ", field[1][j][k]);
+								printf("\n");
+							}	
                         mesg.command=MSG_RQ;
                         srand(time(NULL));
                         if( (rand()%2)==0){
@@ -255,9 +275,9 @@ void *Game(args *arg){
                     //XY.y=y;
 					XY.x = (int)mesg.params[0];
 					XY.y = (int)mesg.params[1];
-                    mesg.command=shoot(field[receiver],XY);
-                    if(mesg.command==-1) break;
-
+					printf("Attack! %d %d\n", XY.x, XY.y);
+					mesg.command=shoot(field[receiver], XY);
+                    if(mesg.command==-1) break;	
                     if(mesg.command==REQ_MISS){
                         tmp=shooter;
                         shooter=receiver;

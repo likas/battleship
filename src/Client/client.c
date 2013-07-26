@@ -128,7 +128,8 @@ int main(int argc, char* argv[]){
 	}
 	/* sendiing a gamefield */
 	client_send_text(MSG_SF, 0);
-	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
+	for(int i = 0; i < SIZE; i++)
+		send(GAME_TUNNEL, SMAP[i], (sizeof(int)*SIZE), 0);
 	/* here we go: have a socket for game; next received message will be about who
 	* plays first */
 	while(1){
@@ -175,32 +176,36 @@ int main(int argc, char* argv[]){
 				case REQ_YOULOSE: /* done */
 					WOL=0;
 					break;
-				case MSG_AT:
-					/*COORDS*/coords_itoa(received.params, &xy);
-					while(1){
-						if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
-							break;
-						}
-					}
-					if(received.command==REQ_MISS){ YOURMOVE=1; }
-					/* перерисовываем свою! ячейку */
-					SMAP[xy.x][xy.y]=received.command; /* записываем локально */
-					FINchcell(xy.x, xy.y, received.command, 0); /* рисуем в GUI */
-					break;
+		//		case MSG_AT:
+		//			/*COORDS*/coords_itoa(received.params, &xy);
+		//			while(1){
+		//				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
+		//					break;
+		//				}
+		//			}
+		//			if(received.command==REQ_MISS){ YOURMOVE=1; }
+		//			/* перерисовываем свою! ячейку */
+		//			SMAP[xy.x][xy.y]=received.command; /* записываем локально */
+		//			FINchcell(xy.x, xy.y, received.command, 0); /* рисуем в GUI */
+		//			break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
-					EMAP[xy.x][xy.y]=received.command; /* записываем локально */
-					FINchcell(xy.x, xy.y, received.command, 1); /* рисуем в GUI */
+					coords_itoa(received.params, &xy);
+					EMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+					FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
+					YOURMOVE=1;
 					/* перерисовать карту противника на промах */
-					EMAP[xy.x][xy.y]=received.command; /* записываем локально */
-					FINchcell(xy.x, xy.y, received.command, 1); /* рисуем в GUI */
+					coords_itoa(received.params, &xy);
+					EMAP[xy.x][xy.y]= CELL_MISS; /* записываем локально */
+					FINchcell(xy.x, xy.y, CELL_MISS, 1); /* рисуем в GUI */
 					break;
 				case REQ_DESTROYED:
 					/* перерисовать карту противника на хит */
-					EMAP[xy.x][xy.y]=REQ_HIT; /* записываем локально */
-					FINchcell(xy.x, xy.y, REQ_HIT, 1); /* рисуем в GUI */
+					coords_itoa(received.params, &xy);
+					EMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+					FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
 
 					/* вывести в чат уничтожение */
 					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
