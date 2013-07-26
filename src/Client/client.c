@@ -114,9 +114,11 @@ int main(int argc, char* argv[]){
 	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
 	if(menu_status & 1) { //Manual field or random
+		FINref(stdscr,1,0);
 		De_Init(SMAP, EMAP);
         ras(SMAP);
 	} else {
+		FINref(stdscr,1,0);
         ai_rand_matr(SMAP);
 		De_Init(SMAP, EMAP);
 	}
