@@ -17,24 +17,19 @@ int go_list()
 		}
 		if (lists[i].command == REQ_STORLIST){
 			if(i==0){
-				printf("stoplist acquired\n");
+				strcpy(lists[0].params, "No-one else in list. Press here or 'r' to refresh\n");
+				ant_player_list(lists,1);
 				return -1;
 			}
 			break;
 		}
 		if(lists[i].command == -1){
-			/* i--; */
 			continue;
 		}
 		i++;
 	}
-	printf("i=%d\n", i);
-	if(lists[1].command==REQ_STORLIST){
-		lists[0].command=-1;
+	if(lists[0].command==REQ_STORLIST){
 		strcpy(lists[0].params, "No-one else in list. Press here or 'r' to refresh\n");
-/*		printf("if called\n");  */
-		/* ant_player_list(lists, 16);
-		return lists[0i].command; */
 		ant_player_list(lists,1);
 		return -1;
 	}else{
@@ -43,7 +38,5 @@ int go_list()
 			return -1;
 		}
 		return lists[flag].command;
-	
 	}
-	/* return lists[ant_player_list(lists,i)].command; */
 }

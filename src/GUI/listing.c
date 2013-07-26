@@ -104,9 +104,9 @@ int ant_player_list (message *list, int leng) {
 		  opname[i-2]=c;
 		  }
 		 opname[i-2]='\0';
-		 mvwprintw(right,2,2,"You opponent: %s NUM=%d",opname,ret);
+		// mvwprintw(right,2,2,"You opponent: %s NUM=%d",opname,ret);
 		 FINref(right,2,1);
-	         wgetch(right);
+	    //     wgetch(right);
 		
 		FINref(stdscr,1,0);
 		 return ret ;	

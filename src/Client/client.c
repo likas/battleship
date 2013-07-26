@@ -31,9 +31,6 @@ int main(int argc, char* argv[]){
 	char player_id=-1;
 	message received;
 	COORDS xy; xy.x=-1; xy.y=-1;
-	/*GAME_TUNNEL=socket_init(); */ /* TUNNEL is lying somewhere in the header, ask
-						   * someone else, what do you want from me, for
-						   * Christ sake?! */
 	struct sockaddr_in addr;
 	GAME_TUNNEL=socket(AF_INET, SOCK_STREAM, 0);
 	if(GAME_TUNNEL<0){
@@ -46,8 +43,6 @@ int main(int argc, char* argv[]){
 	} else {
 		addr.sin_port=htons(1999);
 	}
-/* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
-/* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
  	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 	if(connect(GAME_TUNNEL, (struct sockaddr *)&addr, sizeof(addr)) < 0){
 		perror("connect");
@@ -183,10 +178,10 @@ int main(int argc, char* argv[]){
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
 					break;
 				case REQ_YOUWIN: /* done */
-					WOL=REQ_YOUWIN; endgui(WOL); return;
+					WOL=REQ_YOUWIN; 
 					break;
 				case REQ_YOULOSE: /* done */
-					WOL=REQ_YOULOSE; endgui(WOL); return;
+					WOL=REQ_YOULOSE; 
 					break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
@@ -228,7 +223,6 @@ int main(int argc, char* argv[]){
 						}
 					/* вывести в чат уничтожение */
 					render(SMAP,EMAP,1);
-//					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
 					break;
 				default:
 					endgui(REQ_DISCONNECT);
@@ -236,10 +230,7 @@ int main(int argc, char* argv[]){
 					break;
 			}
 		} /* for game cycle */
-		while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE );
-
-
-
+		while(received.command!=REQ_DISCONNECT && received.command!=REQ_YOUWIN && received.command!=REQ_YOULOSE );
 	}/* this is for else of ONLINE */
 	
 	endgui(WOL);

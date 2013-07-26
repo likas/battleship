@@ -25,53 +25,24 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 	printf("ind: %d\n", ind);
 	message* req=(message*)malloc(sizeof(message));	
 	args* game_args = (args*)malloc(sizeof(args));
-	//gm = malloc(MAX_PL * sizeof(message*));
-
-	/*while(i < MAX_PL) {i
-		gm[i] = malloc(sizeof(message));
-		i++;
-	}*/
 	game_sockd = -1;
 	if(msg->command == MSG_NN) {
-		
 			/*send to player the list of gamers*/
+			strcpy(pl[ind - 1].name, msg->params);
 			recv(fd[ind].fd, req, sizeof(message), 0);
 			
 			if(req->command == MSG_RL) {
 				req->command = REQ_STARTLIST;
 				send(fd[ind].fd, req, sizeof(message),0);
 				for(i = 0; i < MAX_PL; i++) {
-					send(fd[ind].fd, (void *)&pl[i], sizeof(message),0);
+					if(ind - 1 != i)	
+						send(fd[ind].fd, (void *)&pl[i], sizeof(message),0);
 				}
 				req->command = REQ_STORLIST;
 				send(fd[ind].fd, req, sizeof(message), 0);
 			}
 
-			/*req->command = REQ_STARTLIST;
-			printf("Sent %d\n", send(fd[ind]->fd, req, sizeof(message),0));
-			for(i = 0; i < MAX_PL; i++) {
-				send(fd[ind]->fd, pl[i], sizeof(message),0);
-			}
-			req->command = REQ_STORLIST;
-			send(fd[ind]->fd, req, sizeof(message), 0);
-			*/
-				/*fill field name in struct Player*/
-			/*printf("name = %s:params = %s\n", pl[ind-1].name, msg->params);*/
-			//for(i = 0; msg->params[i] != '\0'; i++)
-			//	pl[ind - 1]->name[i] = msg->params[i];
-			//printf("name: %s\n", msg->params);
-			strcpy(pl[ind - 1].name, msg->params);
-
-			/*fill struct game*/
-			/*for(ind = 0; gm[ind]->command != -1 && \
-				ind < MAX_PL;ind++);
-			gm[ind]->command = pl->_id;*/
-	
-			/*for(i=0; pl->name[i] != '\0';i++)
-				gm[ind]->params[i]=pl->name[i];*/
-			//printf("gm_id=%d\n", gm[ind]->command);
 		} 
-		//recv(fd[ind]->fd, msg, sizeof(message), 0);//???
 		if(msg->command == MSG_SG) {
 			int id=(int)(msg->params[0]);
 			for(i = 0; pl[i]._id != id; i++);
@@ -90,54 +61,23 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 				send(fd[ind].fd, req,sizeof(message),0);
 				/* send second player  */
 
-
-				/*
-				 * recv from player
-				 * 
-				 *
-				 *
-				 * */
-			
 				recv(fd[i + 1].fd, req, sizeof(message), 0);
 				printf("to player2: %d\n", fd[i + 1].fd);
 				printf("req->command: %d\n", req->command);
 				printf("req->params: %s\n", req->params);
 				
 				req->command = REQ_GAMESTARTED;
-//				send(fd[message].fd, req,sizeof(message),0);
 				send(fd[i+1].fd, req, sizeof(message), 0);
 				
 				printf("from player2: %d\n", fd[i + 1].fd);
 				printf("req->command: %d\n", req->command);
 				printf("req->params: %s\n", req->params);
-
 				
-
-
-
-
-				
-
 				game_args->id1 = fd[ind].fd;
 				game_args->id2 = fd[i+1].fd;
 				
 				thread(game_args);
-
-				/*while(game_sockd == -1) continue;
-				req->command = game_sockd;
-				send(fd[ind].fd, req, sizeof(message), 0);
-*/
 				i = 0;
-							
-				/*for(in = 0; id != gm[in]->command &&\
-					 gm[in]->command != -1; in++);
-
-				gm[in]->command = -1;
-				
-				while(gm[in]->params[i] != '\0') {
-					gm[in]->params[i] = ' ';
-					i++;
-				}*/
 				printf("address of: fds = %p, pl = %p", fd, pl);
 				del_fds(fd, ind, pl);
 				del_fds(fd, i + 1, pl);
@@ -145,8 +85,10 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 			if(msg->command == MSG_RL) {
 				req->command = REQ_STARTLIST;
 				send(fd[ind].fd, req, sizeof(message),0);
-				for(i = 0; i < MAX_PL; i++) {
-					send(fd[ind].fd, (void*)&pl[i], sizeof(message),0);
+				for(i = 0; i < MAX_PL; i++) 
+				{
+					if(i != ind - 1)
+						send(fd[ind].fd, (void*)&pl[i], sizeof(message),0);
 				}
 				req->command = REQ_STORLIST;
 				send(fd[ind].fd, req, sizeof(message), 0);
