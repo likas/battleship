@@ -183,10 +183,10 @@ int main(int argc, char* argv[]){
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
 					break;
 				case REQ_YOUWIN: /* done */
-					WOL=REQ_YOUWIN; endgui(WOL); return;
+					WOL=REQ_YOUWIN; 
 					break;
 				case REQ_YOULOSE: /* done */
-					WOL=REQ_YOULOSE; endgui(WOL); return;
+					WOL=REQ_YOULOSE;
 					break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
@@ -236,7 +236,7 @@ int main(int argc, char* argv[]){
 					break;
 			}
 		} /* for game cycle */
-		while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE );
+		while(received.command!=REQ_DISCONNECT && received.command!=REQ_YOUWIN && received.command!=REQ_YOULOSE );
 
 
 
