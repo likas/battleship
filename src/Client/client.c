@@ -76,6 +76,7 @@ int main(int argc, char* argv[]){
 				}}
 		switch(received.command){ /* it can be as below: */
 			case REQ_STARTLIST: /* it's for getting/updating player's list */
+		//		sleep(1000);
 				player_id=go_list(); /* callin' ant_player_list(usn, len) inside,
 							* and it returns number of player's structure
 							* which is converted to player's id and returned, OR

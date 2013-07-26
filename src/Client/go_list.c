@@ -11,9 +11,14 @@ int go_list()
 	}
 	i=0;
 	while ((i<16)){
-		if(recv(GAME_TUNNEL,&lists[i],sizeof(message),0) <sizeof(message)){
-//			perror("error receiving list");
-//			exit(1);
+//<<<<<<< Updated upstream
+//		if(recv(GAME_TUNNEL,&lists[i],sizeof(message),0) <sizeof(message)){
+//=======
+//		if(recv(GAME_TUNNEL,&lists[i],sizeof(message),0) <sizeof(int) + sizeof(char) * 30){
+		if(recv(GAME_TUNNEL, &lists[i], sizeof(message), MSG_WAITALL) < 0) {
+//>>>>>>> Stashed changes
+			perror("error receiving list");
+			exit(1);
 		}
 		if (lists[i].command == REQ_STORLIST){
 			if(i==0){
@@ -24,10 +29,12 @@ int go_list()
 			break;
 		}
 		if(lists[i].command == -1){
+//			++i;
 			continue;
 		}
 		i++;
 	}
+
 	if(lists[0].command==REQ_STORLIST){
 		strcpy(lists[0].params, "No-one else in list. Press here or 'r' to refresh\n");
 		ant_player_list(lists,1);
