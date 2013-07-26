@@ -6,6 +6,7 @@ int De_Move(int **op_mas, COORDS* rt, char *str)
 	char c;
 	static int i=0,j=0;
 	int strcount=0;
+	flushinp();
 	noecho();
 	leaveok(op_win[i][j],TRUE);
 	wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j])|A_REVERSE);
