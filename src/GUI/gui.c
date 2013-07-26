@@ -10,11 +10,11 @@ void sig(int handler)
 
 	term_height=wins.ws_row;
 	term_width=wins.ws_col;
-		if(term_height <30 || term_width<50){
+		if(term_height <24 || term_width<50){
 			endwin();
 			SIZEFLAG=1;
 			printf("\033[2J\n");
-			printf("Minumum size is 50x30\n");
+			printf("Minumum size is 50x24\n");
 			return;
 		}
 		else
@@ -82,6 +82,15 @@ HELLOFLAG=0;
 LOGINFLAG=0;
 INITFLAG=0;
 RFLAG=0;
+
+struct winsize wins;
+
+ioctl(0, TIOCGWINSZ, &wins);
+if(wins.ws_row<24 || wins.ws_col<50){
+	printf("\033[2J\n");
+	printf("Minumum size is 50x24, reopen game with another sizes\n");
+	exit(1);
+}
 
 my_win=calloc(10,sizeof(WINDOW**));
 op_win=calloc(10,sizeof(WINDOW**));

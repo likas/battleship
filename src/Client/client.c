@@ -13,15 +13,15 @@ int main(int argc, char* argv[]){
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
-	int menu_status = gui();
-	if(menu_status == QUIT) {
+	gui();
+	if(MODEFLAG == QUIT) {
 		return 0;
 	}
 	map_init();
-	if(menu_status >> 1) //Game with ai
+	if(MODEFLAG >> 1) //Game with ai
 	{
 		/* possibly init*/
-		WOL=with_ai(menu_status & 1);
+		WOL=with_ai(MODEFLAG & 1);
 		getch();		
 		endgui(WOL);
 	}
@@ -45,7 +45,6 @@ int main(int argc, char* argv[]){
 	} else {
 		addr.sin_port=htons(1999);
 	}
-/*	inet_aton("127.0.0.1", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
  	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
@@ -117,9 +116,9 @@ int main(int argc, char* argv[]){
 		}
 		}
 	} /* end of 'while(player_id..)'
-	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
+	 здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
-	if(menu_status & 1) { //Manual field or random
+	if(MODEFLAG & 1) { //Manual field or random
 		De_Init(SMAP, EMAP);
         ras(SMAP);
 	} else {
@@ -212,7 +211,7 @@ int main(int argc, char* argv[]){
 					break;
 				default:
 					break;
-			}
+		}
 			}
 		} /* for game cycle */
 
