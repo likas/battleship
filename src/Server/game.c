@@ -183,6 +183,7 @@ void *Game(args *arg){
                     perror("Error recv");
                     exit(1);
                 }
+				printf("Cmd:%d Prm 0:%d\nPrm 1: %d\n", mesg.command, mesg.params[0], mesg.params[1]);
                 if(ret==0){
                     close(fds[i].fd);
                     mesg.command=REQ_DISCONNECT;
