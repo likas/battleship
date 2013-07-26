@@ -12,8 +12,8 @@ int go_list()
 	i=0;
 	while ((i<16)){
 		if(recv(GAME_TUNNEL,&lists[i],sizeof(message),0) <sizeof(message)){
-			perror("error receiving list");
-			exit(1);
+//			perror("error receiving list");
+//			exit(1);
 		}
 		if (lists[i].command == REQ_STORLIST){
 			if(i==0){
