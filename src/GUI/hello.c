@@ -1,6 +1,6 @@
 #include "gui.h"
 
-void ant_hello (char *str1, char *str2) {
+int ant_hello (char *str1, char *str2) {
 	struct winsize wins;
   	ioctl(0, TIOCGWINSZ, &wins);
 
@@ -20,8 +20,11 @@ void ant_hello (char *str1, char *str2) {
     getyx (win, y, x);
     mvwaddstr (win, y + 1, (w_maxx - strlen(str2)) / 2, str2);
     wrefresh(win);
+
+    if(RFLAG) {RFLAG=0; return 0;}	
     wgetch(win);
-    return;
+    if(RFLAG) {RFLAG=0; return 0;}	
+    return 1;
 }
 
 

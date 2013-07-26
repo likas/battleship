@@ -13,14 +13,16 @@ int main(int argc, char* argv[]){
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
-	int menu_status = gui();
-	if(menu_status == QUIT)
-		return;
+	gui();
+	if(MODEFLAG == QUIT) {
+	    endgui(3);
+		exit(0);
+	}
 	map_init();
-	if(menu_status >> 1) //Game with ai
+	if(MODEFLAG >> 1) //Game with ai
 	{
 		/* possibly init*/
-		WOL=with_ai(menu_status & 1);
+		WOL=with_ai(MODEFLAG & 1);
 		getch();		
 		endgui(WOL);
 	}
@@ -44,7 +46,6 @@ int main(int argc, char* argv[]){
 	} else {
 		addr.sin_port=htons(1999);
 	}
-/*	inet_aton("127.0.0.1", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
  	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
@@ -81,7 +82,6 @@ int main(int argc, char* argv[]){
 				exit(1);
 				break;
 			case REQ_GAMESTARTED: /* it's when someone pick our player as an opponent */
-				
 				player_id=-2; /* to exit waiting cycle */
 				break;
 			default:
@@ -110,10 +110,10 @@ int main(int argc, char* argv[]){
 		    printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
 		}
 		}
-	} /* end of 'while(player_id..)'*/
-	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
+	} /* end of 'while(player_id..)'
+	 здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
-	if(menu_status & 1) { //Manual field or random
+	if(MODEFLAG & 1) { //Manual field or random
 		De_Init(SMAP, EMAP);
         ras(SMAP);
 	} else {
@@ -144,6 +144,11 @@ int main(int argc, char* argv[]){
 		perror("thread create");								  from server, no matter what we also do 
 		exit(1);
 	}*/
+	if (YOURMOVE)
+		guiturn(PLAYER,NULL);
+	else
+		guiturn(ENEMY,NULL);
+	
 		do{
 		if(YOURMOVE){
 			do
@@ -152,7 +157,7 @@ int main(int argc, char* argv[]){
 				
 				if(xy.x == -1 && xy.y == -1)
 				{
-					client_send_text(REQ_DISCONNECT, 0);
+					client_send_text(REQ_DISCONNECT, "Blobloblo");
 					WOL = REQ_DISCONNECT;
 					break;
 				}
@@ -161,6 +166,8 @@ int main(int argc, char* argv[]){
 				
 			if(xy.x != -1 && xy.y != -1)
 				client_send_attack(xy);
+			else
+				break;
 		}
 			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) < 0){
 				WOL = REQ_DISCONNECT;	
@@ -169,7 +176,7 @@ int main(int argc, char* argv[]){
 			/* и обработка принятого */
 			switch(received.command){
 				case REQ_DISCONNECT: /* done */
-					WOL = REQ_DISCONNECT;
+					WOL = REQ_NDISCONNECT;
 					break;
 				case MSG_TT: /* done */
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
@@ -185,9 +192,11 @@ int main(int argc, char* argv[]){
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
 						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
+						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1), /* рисуем в GUI */
+						guiturn(PLAYER,REQ_HIT);
 					else
 						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
+						guiturn(ENEMY,REQ_HIT),
 						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
@@ -195,10 +204,12 @@ int main(int argc, char* argv[]){
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
 						EMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_MISS, 1); /* рисуем в GUI */
+						FINchcell(xy.x, xy.y, CELL_MISS, 1), /* рисуем в GUI */
+						guiturn(PLAYER,REQ_MISS);
 					else
 						SMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
 						FINchcell(xy.x, xy.y, CELL_MISS, 0); /* рисуем в GUI */
+						guiturn(ENEMY,REQ_MISS);	
 					YOURMOVE =! YOURMOVE;
 					break;
 				case REQ_DESTROYED:
@@ -206,23 +217,27 @@ int main(int argc, char* argv[]){
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
 						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
-					else
-						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
+						round_ship(EMAP,xy.x,xy.y),
 					/* вывести в чат уничтожение */
-					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
+						guiturn(PLAYER,REQ_DESTROYED);
+					else
+						{
+						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+						guiturn(ENEMY,REQ_DESTROYED);
+						}
+					/* вывести в чат уничтожение */
+					render(SMAP,EMAP,1);
+//					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
 					break;
 				default:
 					break;
 			}
 		} /* for game cycle */
-		while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE);
+		while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE );
 
 
 
-
-	}/* this is for }else{ of ONLINE */
+	}/* this is for else of ONLINE */
 	
 	endgui(WOL);
 	map_deinit();
