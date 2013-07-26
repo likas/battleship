@@ -67,6 +67,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 				printf("req->params: %s\n", req->params);
 				
 				req->command = REQ_GAMESTARTED;
+				strcpy(req->params, pl[ind - 1].name);
 				send(fd[i+1].fd, req, sizeof(message), 0);
 				
 				printf("from player2: %d\n", fd[i + 1].fd);

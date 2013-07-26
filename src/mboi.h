@@ -11,6 +11,7 @@
 
 #ifndef MSG_LEN
 #define MSG_LEN 128
+#define MAX_STR_NICK 30
 #endif 
 #include <stdlib.h>
 #include <sys/time.h>

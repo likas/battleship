@@ -41,8 +41,8 @@ int **MY;
 int **OP;
 
 int GUICHATLEN;//служебная переменная для листинга чата
-char username[100];//ник игрока
-char opname[100];//ник противника
+char username[MAX_STR_NICK];//ник игрока
+char opname[MAX_STR_NICK];//ник противника
 struct pair {int x; int y; }; //структура для возврата пары координат массива
 //typedef struct {int command; char params[128]; } message;
 
@@ -67,7 +67,7 @@ int De_Init(int **, int **);
 void render(int**,int**,int);
 //Рисовка полей, подаются 2 массива представляющих из себя поля.
 
-COORDS  De_Move(int**);
+int De_Move(int**, COORDS*, char*);
  //Наш ход, подается массив поля противника
 
 int ant_hello(char* , char*);

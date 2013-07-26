@@ -7,7 +7,8 @@ pthread_t chat_thread;
 /* struct sockaddr_in  */
 
 int main(int argc, char* argv[]){
-	int WOL=-1;
+	int WOL=-1, ret;
+	char chat[128];
 	message sent;
 	srand(time(NULL));
 	/*here lies gui_init(). it gives control to us when user input his name 
@@ -78,6 +79,7 @@ int main(int argc, char* argv[]){
 				break;
 			case REQ_GAMESTARTED: /* it's when someone pick our player as an opponent */
 				player_id=-2; /* to exit waiting cycle */
+				strcpy(opname, received.params);
 				break;
 			default:
 				printf("An error occurred: Error while receiving player list\n");
@@ -144,23 +146,32 @@ int main(int argc, char* argv[]){
 		guiturn(PLAYER,NULL);
 	else
 		guiturn(ENEMY,NULL);
-	
+	int flag_end_turn = 1;
 		do{
 		if(YOURMOVE){
 			do
 			{
-				xy=De_Move(EMAP);
-				
-				if(xy.x == -1 && xy.y == -1)
+				flag_end_turn = 1;
+				ret = De_Move(EMAP, &xy, chat);
+				switch(ret)
 				{
-					client_send_text(REQ_DISCONNECT, "Blobloblo");
-					WOL = REQ_DISCONNECT;
-					break;
+					case 0:
+						client_send_text(REQ_DISCONNECT, "Blobloblo");
+						WOL = REQ_DISCONNECT;
+						flag_end_turn = 0;
+						break;
+					case 1:
+						if(EMAP[xy.x][xy.y] == CELL_NONE)
+							flag_end_turn = 0;
+						break;
+					case 2:
+						client_send_text(MSG_TT, chat);
+						break;
 				}
-			}while(EMAP[xy.x][xy.y] != CELL_NONE );
+			}while(flag_end_turn);
 			
 				
-			if(xy.x != -1 && xy.y != -1)
+			if(ret)
 				client_send_attack(xy);
 			else
 				break;

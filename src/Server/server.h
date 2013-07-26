@@ -22,7 +22,6 @@
 #define MAX_PL 16
 #define thr_max_cnt 50
 
-
 typedef struct {
 	int id1;
 	int id2;
@@ -31,7 +30,7 @@ typedef struct {
 
 typedef struct {
     int _id;
-    char name[30];
+    char name[MAX_STR_NICK];
 }Player;
 
 void *Game(args *arg);

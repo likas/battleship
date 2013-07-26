@@ -1,10 +1,8 @@
 #include "gui.h"
 
-COORDS De_Move(int **op_mas)
+int De_Move(int **op_mas, COORDS* rt, char *str)
 {        
-	COORDS  rt;
 	int key=0;
-	char *str=malloc(255*sizeof(char));
 	char c;
 	static int i=0,j=0;
 	int strcount=0;
@@ -29,9 +27,7 @@ COORDS De_Move(int **op_mas)
 		{
 			//exit program
 			case 'Q': case 27:
-				rt.x = -1;
-				rt.y = -1;
-				return rt;
+				return 0;
 				break;
 			case 'w': case KEY_UP:
 				if(i!=0)
@@ -73,7 +69,8 @@ COORDS De_Move(int **op_mas)
 				}
 				GUICHATLEN=FINchat(username,str,GUICHATLEN);
 				noecho();
-				strcount=0; 
+				strcount=0;
+				return 2; 
 				break;
 		}
 		wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j])|A_REVERSE);
@@ -82,12 +79,11 @@ COORDS De_Move(int **op_mas)
 	        wborder(op_win[i][j],ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE, '*', '*', '*', '*'); 
 		wmove(op_win[i][j],op_win[i][j]->_maxy/2,op_win[i][j]->_maxx/2-1);
 		wprintw(op_win[i][j],"%c:%d",'a'+i,j);
-//	       wrefresh(op_win[i][j]);
 		wnoutrefresh(op_win[i][j]);
 		doupdate();
 	}
 	while(key!=10);
-	rt.x=i;
-	rt.y=j;
-	return rt;
+	rt->x = i;
+	rt->y = j;
+	return 1;
 }
