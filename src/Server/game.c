@@ -236,7 +236,7 @@ void *Game(args *arg){
                         if(j!=i){
                             if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
                                 perror("Error send disconnect");
-                                exit(1);
+                                return;
                             }
                         }
 		    break;

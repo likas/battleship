@@ -23,6 +23,7 @@ void del_fds(struct pollfd *fds,int number,Player *_player){
     fds[i].events = 0;
     _player[i-1]._id = -1;
     strcpy(_player[i-1].name,"");
+	--count;
 }
 int main(int argc, char *argv[]){
 	if(argc<2){printf("Not enough arguments"); exit(1);}

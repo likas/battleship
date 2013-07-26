@@ -117,6 +117,7 @@ int main(int argc, char* argv[]){
 		De_Init(SMAP, EMAP);
         ras(SMAP);
 	} else {
+		FINref(stdscr,1,0);
         ai_rand_matr(SMAP);
 		De_Init(SMAP, EMAP);
 	}
