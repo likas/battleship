@@ -1,12 +1,4 @@
-#include "../mboi.h"
-#include "client.h"
-#include <stdio.h>
 
-/* GLOBALS */
-pthread_t chat_thread;
-/* struct sockaddr_in  */
-
-int main(int argc, char* argv[]){
 	int WOL=-1;
 	message sent;
 	srand(time(NULL));
@@ -98,14 +90,8 @@ int main(int argc, char* argv[]){
 			}
 		}
 		if(received.command==REQ_DECLINE){
-			/* if it's DECLINE answer, we have to start again with that while() staff, */
 			player_id=-1;
-			printf("DECLINE\n");
-//			getch();
 		}else if(received.command==REQ_ACCEPT){
-			printf("accept\n");
-//			getch();
-			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
 		}else if(received.command == REQ_GAMESTARTED)
 		{
@@ -149,63 +135,66 @@ int main(int argc, char* argv[]){
 		perror("thread create");								  from server, no matter what we also do 
 		exit(1);
 	}*/
-	while(received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
+while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
 		if(YOURMOVE){
 			xy=De_Move(EMAP);
-			/* TODO if -1;-1 : exit */
-			client_send_attack(xy);
-		}else{
-			while(1){
-				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
+			if(xy.x == -1 && xy.y == -1)
+			{
+				client_send_text(REQ_DISCONNECT, 0);
+				WOL = REQ_DISCONNECT;
+				break;
+			}
+			else	
+				client_send_attack(xy);
+		}
+			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) < 0){
+				WOL = REQ_DISCONNECT;	
 				break;
 				}
-			}
 			/* и обработка принятого */
 			switch(received.command){
 				case REQ_DISCONNECT: /* done */
-					printf("Your partner suddenly disconnected. Game over\n");
-					exit(1);
+					WOL = REQ_DISCONNECT;
 					break;
 				case MSG_TT: /* done */
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
 					break;
 				case REQ_YOUWIN: /* done */
-					WOL=1;
+					WOL=REQ_YOUWIN;
 					break;
 				case REQ_YOULOSE: /* done */
-					WOL=0;
+					WOL=REQ_YOULOSE;
 					break;
-		//		case MSG_AT:
-		//			/*COORDS*/coords_itoa(received.params, &xy);
-		//			while(1){
-		//				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
-		//					break;
-		//				}
-		//			}
-		//			if(received.command==REQ_MISS){ YOURMOVE=1; }
-		//			/* перерисовываем свою! ячейку */
-		//			SMAP[xy.x][xy.y]=received.command; /* записываем локально */
-		//			FINchcell(xy.x, xy.y, received.command, 0); /* рисуем в GUI */
-		//			break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
 					coords_itoa(received.params, &xy);
-					EMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
-					FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
+					if(YOURMOVE)
+						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
+						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
+					else
+						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
-					YOURMOVE=1;
+					YOURMOVE =! YOURMOVE;
 					/* перерисовать карту противника на промах */
 					coords_itoa(received.params, &xy);
-					EMAP[xy.x][xy.y]= CELL_MISS; /* записываем локально */
-					FINchcell(xy.x, xy.y, CELL_MISS, 1); /* рисуем в GUI */
+					if(YOURMOVE)
+						EMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
+						FINchcell(xy.x, xy.y, CELL_MISS, 1); /* рисуем в GUI */
+					else
+						SMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
+						FINchcell(xy.x, xy.y, CELL_MISS, 0); /* рисуем в GUI */
 					break;
 				case REQ_DESTROYED:
 					/* перерисовать карту противника на хит */
 					coords_itoa(received.params, &xy);
-					EMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
-					FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
-
+					if(YOURMOVE)
+						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
+						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
+					else
+						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
+						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
 					/* вывести в чат уничтожение */
 					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
 					break;
@@ -220,6 +209,8 @@ int main(int argc, char* argv[]){
 
 	}/* this is for }else{ of ONLINE */
 	
+	endgui(WOL);
+	map_deinit();
 	return 0;
 }
 
