@@ -144,7 +144,7 @@ int main(int argc, char* argv[]){
 		perror("thread create");								  from server, no matter what we also do 
 		exit(1);
 	}*/
-while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
+		do{
 		if(YOURMOVE){
 			do
 			{
@@ -217,6 +217,7 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 					break;
 			}
 		} /* for game cycle */
+		while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE);
 
 
 
