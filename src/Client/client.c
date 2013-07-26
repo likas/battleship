@@ -1,4 +1,12 @@
+#include "../mboi.h"
+#include "client.h"
+#include <stdio.h>
 
+/* GLOBALS */
+pthread_t chat_thread;
+/* struct sockaddr_in  */
+
+int main(int argc, char* argv[]){
 	int WOL=-1;
 	message sent;
 	srand(time(NULL));
@@ -135,6 +143,14 @@
 		perror("thread create");								  from server, no matter what we also do 
 		exit(1);
 	}*/
+	if (YOURMOVE)
+	{
+		guiturn(PLAYER,NULL);
+	}
+	else
+	{
+		guiturn(ENEMY,NULL);
+	}
 while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || received.command!=REQ_YOULOSE){
 		if(YOURMOVE){
 			xy=De_Move(EMAP);
@@ -170,9 +186,11 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
 						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
+						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1), /* рисуем в GUI */
+						guiturn(PLAYER,REQ_HIT);
 					else
-						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
+						guiturn(ENEMY,REQ_HIT),
 						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
@@ -181,26 +199,32 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
 						EMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_MISS, 1); /* рисуем в GUI */
+						FINchcell(xy.x, xy.y, CELL_MISS, 1), /* рисуем в GUI */
+						guiturn(PLAYER,REQ_MISS);
 					else
 						SMAP[xy.x][xy.y]= CELL_MISS, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_MISS, 0); /* рисуем в GUI */
+						FINchcell(xy.x, xy.y, CELL_MISS, 0), /* рисуем в GUI */
+						guiturn(ENEMY,REQ_MISS);	
 					break;
 				case REQ_DESTROYED:
 					/* перерисовать карту противника на хит */
 					coords_itoa(received.params, &xy);
 					if(YOURMOVE)
 						EMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
-					else
-						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE, /* записываем локально */
-						FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 0); /* рисуем в GUI */
+						round_ship(EMAP,xy.x,xy.y),
 					/* вывести в чат уничтожение */
-					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
+						guiturn(PLAYER,REQ_DESTROYED);
+					else
+						{
+						SMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+						guiturn(ENEMY,REQ_DESTROYED);
+						}
+					/* вывести в чат уничтожение */
+					render(SMAP,EMAP,1);
+//					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
 					break;
 				default:
 					break;
-		}
 			}
 		} /* for game cycle */
 
