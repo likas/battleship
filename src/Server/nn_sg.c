@@ -140,6 +140,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 				}*/
 				printf("address of: fds = %p, pl = %p", fd, pl);
 				del_fds(fd, ind, pl);
+				del_fds(fd, i + 1, pl);
 			}}
 			if(msg->command == MSG_RL) {
 				req->command = REQ_STARTLIST;

@@ -1,9 +1,9 @@
 #include"server.h"
 
 int count=0;
-struct pollfd fds[16];//fds-массив структур для poll();
+//struct pollfd fds[16];//fds-массив структур для poll();
 
-void close_all(){
+void close_all(struct pollfd *fds){
 	int i;
 	for(i=0;i<count;i++)
 		close(fds[i].fd);
@@ -26,6 +26,7 @@ void del_fds(struct pollfd *fds,int number,Player *_player){
 }
 int main(int argc, char *argv[]){
 	if(argc<2){printf("Not enough arguments"); exit(1);}
+	struct pollfd fds[16];//fds-массив структур для poll();
 	int ret,i,j,id;//count-счётчик количества элементов в структуре fds;
 	struct sockaddr_in servaddr;
     pthread_t thread[MAX_PL];
