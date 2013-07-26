@@ -286,7 +286,7 @@ int show_submenu()
 	set_menu_format( submenu, 3, 1 );
 	set_menu_win( submenu, win_list_menu );
 	
-	mvwprintw( win_bg_menu, 1,bg_submenu_size_x / 2 - 2, "MENU" );
+	mvwprintw( win_bg_menu, 1, bg_submenu_size_x / 2 - 2, "MENU" );
 	wrefresh( win_bg_menu );
 	post_menu( submenu );
 	wrefresh( win_list_menu );
