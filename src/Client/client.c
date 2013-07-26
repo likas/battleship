@@ -183,10 +183,10 @@ int main(int argc, char* argv[]){
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
 					break;
 				case REQ_YOUWIN: /* done */
-					WOL=REQ_YOUWIN;
+					WOL=REQ_YOUWIN; endgui(WOL); return;
 					break;
 				case REQ_YOULOSE: /* done */
-					WOL=REQ_YOULOSE;
+					WOL=REQ_YOULOSE; endgui(WOL); return;
 					break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
@@ -231,6 +231,8 @@ int main(int argc, char* argv[]){
 //					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
 					break;
 				default:
+					endgui(REQ_DISCONNECT);
+					exit(10);
 					break;
 			}
 		} /* for game cycle */
