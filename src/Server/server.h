@@ -34,7 +34,7 @@ typedef struct {
     char name[30];
 }Player;
 
-void * Game(void * arg);
+void *Game(args *arg);
 
 int port;
 int thread_id[thr_max_cnt];

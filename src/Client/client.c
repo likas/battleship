@@ -13,16 +13,15 @@ int main(int argc, char* argv[]){
 	/*here lies gui_init(). it gives control to us when user input his name 
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
-	gui();
-	if(MODEFLAG == QUIT) {
-		endgui(REQ_DISCONNECT);
+	int menu_status = gui();
+	if(menu_status == QUIT) {
 		return 0;
 	}
 	map_init();
-	if(MODEFLAG >> 1) //Game with ai
+	if(menu_status >> 1) //Game with ai
 	{
 		/* possibly init*/
-		WOL=with_ai(MODEFLAG & 1);
+		WOL=with_ai(menu_status & 1);
 		getch();		
 		endgui(WOL);
 	}
@@ -41,7 +40,11 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	addr.sin_family=AF_INET;
-	addr.sin_port=htons(3264);
+	if (argc > 1) {
+		addr.sin_port=htons(atoi(argv[1]));
+	} else {
+		addr.sin_port=htons(1999);
+	}
 /*	inet_aton("127.0.0.1", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
@@ -87,7 +90,7 @@ int main(int argc, char* argv[]){
 				break;
 		}
 
-		if(player_id>0){ /* /отправляем номер, если мы сами его выбрали */
+		if(player_id>=0){ /* /отправляем номер, если мы сами его выбрали */
 			client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
 		/* waiting for response */
 		while(1){
@@ -98,24 +101,35 @@ int main(int argc, char* argv[]){
 		if(received.command==REQ_DECLINE){
 			/* if it's DECLINE answer, we have to start again with that while() staff, */
 			player_id=-1;
+			printf("DECLINE\n");
+//			getch();
 		}else if(received.command==REQ_ACCEPT){
+			printf("accept\n");
+//			getch();
 			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
-		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
+		}else if(received.command == REQ_GAMESTARTED)
+		{
+			break;
+		}else
+		{
+		    printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
 		}
 		}
 	} /* end of 'while(player_id..)'
 	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
-	if(MODEFLAG & 1) { //Manual field or random
+	if(menu_status & 1) { //Manual field or random
 		De_Init(SMAP, EMAP);
         ras(SMAP);
 	} else {
         ai_rand_matr(SMAP);
 		De_Init(SMAP, EMAP);
 	}
-	/* sending a gamefield */
-	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
+	/* sendiing a gamefield */
+	client_send_text(MSG_SF, 0);
+	for(int i = 0; i < SIZE; i++)
+		send(GAME_TUNNEL, SMAP[i], (sizeof(int)*SIZE), 0);
 	/* here we go: have a socket for game; next received message will be about who
 	* plays first */
 	while(1){
@@ -162,32 +176,36 @@ int main(int argc, char* argv[]){
 				case REQ_YOULOSE: /* done */
 					WOL=0;
 					break;
-				case MSG_AT:
-					/*COORDS*/coords_itoa(received.params, &xy);
-					while(1){
-						if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
-							break;
-						}
-					}
-					if(received.command==REQ_MISS){ YOURMOVE=1; }
-					/* перерисовываем свою! ячейку */
-					SMAP[xy.x][xy.y]=received.command; /* записываем локально */
-					FINchcell(xy.x, xy.y, received.command, 0); /* рисуем в GUI */
-					break;
+		//		case MSG_AT:
+		//			/*COORDS*/coords_itoa(received.params, &xy);
+		//			while(1){
+		//				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
+		//					break;
+		//				}
+		//			}
+		//			if(received.command==REQ_MISS){ YOURMOVE=1; }
+		//			/* перерисовываем свою! ячейку */
+		//			SMAP[xy.x][xy.y]=received.command; /* записываем локально */
+		//			FINchcell(xy.x, xy.y, received.command, 0); /* рисуем в GUI */
+		//			break;
 				case REQ_HIT:
 					/* перерисовать карту противника на хит */
-					EMAP[xy.x][xy.y]=received.command; /* записываем локально */
-					FINchcell(xy.x, xy.y, received.command, 1); /* рисуем в GUI */
+					coords_itoa(received.params, &xy);
+					EMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+					FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
 					break;
 				case REQ_MISS:
+					YOURMOVE=1;
 					/* перерисовать карту противника на промах */
-					EMAP[xy.x][xy.y]=received.command; /* записываем локально */
-					FINchcell(xy.x, xy.y, received.command, 1); /* рисуем в GUI */
+					coords_itoa(received.params, &xy);
+					EMAP[xy.x][xy.y]= CELL_MISS; /* записываем локально */
+					FINchcell(xy.x, xy.y, CELL_MISS, 1); /* рисуем в GUI */
 					break;
 				case REQ_DESTROYED:
 					/* перерисовать карту противника на хит */
-					EMAP[xy.x][xy.y]=REQ_HIT; /* записываем локально */
-					FINchcell(xy.x, xy.y, REQ_HIT, 1); /* рисуем в GUI */
+					coords_itoa(received.params, &xy);
+					EMAP[xy.x][xy.y]= CELL_SHIP_FIRE; /* записываем локально */
+					FINchcell(xy.x, xy.y, CELL_SHIP_FIRE, 1); /* рисуем в GUI */
 
 					/* вывести в чат уничтожение */
 					GUICHATLEN=FINchat("server\0", "Ship is fully destroyed!\n\0" , GUICHATLEN);
