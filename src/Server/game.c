@@ -266,6 +266,17 @@ void *Game(args *arg){
                             }
                         }
                     break;
+			/*Clinet disconnected*/
+		case REQ_DISCONNECT:
+			//close(fds[i].fd);
+			for(j=0;j<2;j++)
+                        if(j!=i){
+                            if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
+                                perror("Error send disconnect");
+                                exit(1);
+                            }
+                        }
+		    break;
                     /*Receive attack data*/
                 case MSG_AT:
                     if(i!=shooter) break;

@@ -156,7 +156,7 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 			xy=De_Move(EMAP);
 			if(xy.x == -1 && xy.y == -1)
 			{
-				client_send_text(REQ_DISCONNECT, 0);
+				client_send_text(REQ_DISCONNECT, "disconnected");
 				WOL = REQ_DISCONNECT;
 				break;
 			}
@@ -170,7 +170,7 @@ while(received.command!=REQ_DISCONNECT || received.command!=REQ_YOUWIN || receiv
 			/* и обработка принятого */
 			switch(received.command){
 				case REQ_DISCONNECT: /* done */
-					WOL = REQ_DISCONNECT;
+					WOL = REQ_NDISCONNECT;
 					break;
 				case MSG_TT: /* done */
 					GUICHATLEN=FINchat(opname, received.params, GUICHATLEN);
