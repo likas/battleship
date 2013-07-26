@@ -14,8 +14,10 @@ int main(int argc, char* argv[]){
 	* when the name is placed, we shall send it to server?
 	* with no idea how... */
 	gui();
-	if(MODEFLAG == QUIT)
+	if(MODEFLAG == QUIT){
+		endgui(3);
 		return;
+	}
 	map_init();
 	if(MODEFLAG >> 1) //Game with ai
 	{
