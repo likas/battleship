@@ -39,8 +39,13 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 	addr.sin_family=AF_INET;
-	addr.sin_port=htons(3264);
-/*	inet_aton("127.0.0.1", &addr.sin_addr); */
+	
+	if (argc > 1) {
+		addr.sin_port=htons(atoi(argv[1]));
+	} else {
+		addr.sin_port=htons(1999);
+	}
+/*inet_aton("127.0.0.1", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
 /* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
  	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
@@ -77,6 +82,7 @@ int main(int argc, char* argv[]){
 				exit(1);
 				break;
 			case REQ_GAMESTARTED: /* it's when someone pick our player as an opponent */
+				
 				player_id=-2; /* to exit waiting cycle */
 				break;
 			default:
@@ -85,7 +91,7 @@ int main(int argc, char* argv[]){
 				break;
 		}
 
-		if(player_id>0){ /* /отправляем номер, если мы сами его выбрали */
+		if(player_id>=0){ /* /отправляем номер, если мы сами его выбрали */
 			client_send_text(MSG_SG, &player_id); /* we send choosed player's id */
 		/* waiting for response */
 		while(1){
@@ -96,14 +102,23 @@ int main(int argc, char* argv[]){
 		if(received.command==REQ_DECLINE){
 			/* if it's DECLINE answer, we have to start again with that while() staff, */
 			player_id=-1;
+			printf("DECLINE\n");
+//			getch();
 		}else if(received.command==REQ_ACCEPT){
+			printf("accept\n");
+//			getch();
 			/* if ACCEPT, we can send a map, т.е. out from cycle */
 			break;
-		}else{ printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
+		}else if(received.command == REQ_GAMESTARTED)
+		{
+			break;
+		}else
+		{
+		    printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
 		}
 		}
 	} /* end of 'while(player_id..)'
-	/* здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
+	 здесь мы окажемся, если: 1) пришло GAMESTARTED 2) мы выбрали игрока, с которым хотим играть */
 	/* set ships here */
 	if(MODEFLAG & 1) { //Manual field or random
 		De_Init(SMAP, EMAP);
@@ -112,7 +127,8 @@ int main(int argc, char* argv[]){
         ai_rand_matr(SMAP);
 		De_Init(SMAP, EMAP);
 	}
-	/* sending a gamefield */
+	/* sendiing a gamefield */
+	client_send_text(MSG_SF, 0);
 	send(GAME_TUNNEL, SMAP, (sizeof(int)*100), 0);
 	/* here we go: have a socket for game; next received message will be about who
 	* plays first */

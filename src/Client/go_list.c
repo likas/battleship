@@ -38,7 +38,12 @@ int go_list()
 		ant_player_list(lists,1);
 		return -1;
 	}else{
-		return lists[ant_player_list(lists,i)].command;
+		int flag = ant_player_list(lists, i);
+		if(flag == - 1) {
+			return -1;
+		}
+		return lists[flag].command;
+	
 	}
 	/* return lists[ant_player_list(lists,i)].command; */
 }
