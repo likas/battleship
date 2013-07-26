@@ -267,7 +267,9 @@ void *Game(args *arg){
                         close(fds[0].fd);
                         close(fds[1].fd);
                         thread_id[id]=0;
-                        exit(0);
+						printf("exit(0)");
+						return;
+//                        exit(0);
                     }
                     break;
 					case MSG_RL:
