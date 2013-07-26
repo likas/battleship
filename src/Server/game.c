@@ -253,13 +253,7 @@ void *Game(args *arg){
                         shooter=receiver;
                         receiver=tmp;
                     }
-                    for(j=0;j<2;j++)
-                        if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
-                            perror("Error send");
-                            return;
-                        }
                     if((tmp=gameover(field[receiver]))==1){
-                        //memset(mesg.params,0,128);
                         mesg.command=REQ_YOUWIN;
 						printf("Game over");
                         if(send(fds[shooter].fd,(void *)&mesg,sizeof(message),0)<0){
@@ -276,7 +270,12 @@ void *Game(args *arg){
                         close(fds[1].fd);
                         thread_id[id]=0;
                     	return;
-					}
+					}else
+                    for(j=0;j<2;j++)
+                        if(send(fds[j].fd,(void *)&mesg,sizeof(message),0)<0){
+                            perror("Error send");
+                            return;
+                        }
                     break;
 					case MSG_RL:
 					mesg.command = REQ_GAMESTARTED;
