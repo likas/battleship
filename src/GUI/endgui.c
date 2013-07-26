@@ -16,9 +16,8 @@ void endgui(int fl)
 			break;
 		case REQ_NDISCONNECT:
 			ant_hello("ENEMY'VE LEFT BATTLEFIELD!!!","COWARD, press any key to escape");
-
 			break;
-		ant_hello("GAME ACCIDENTALY FINISHED!","Press any key to escape"); 
+		default: ant_hello("GAME ACCIDENTALY FINISHED!","Press any key to escape"); break;
 	}
 	
 	endwin();
