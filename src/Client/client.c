@@ -41,10 +41,19 @@ int main(int argc, char* argv[]){
 	addr.sin_family=AF_INET;
 	if (argc > 1) {
 		addr.sin_port=htons(atoi(argv[1]));
+		if (argc > 2) {
+			inet_pton(AF_INET, argv[2], &addr.sin_addr);
+		}
 	} else {
 		addr.sin_port=htons(1999);
 	}
- 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+//<<<<<<< HEAD
+/* 	inet_pton(AF_INET, "156.13.2.25", &addr.sin_addr); */
+/* 	inet_pton(AF_INET, "192.168.3.1", &addr.sin_addr); */
+// 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+//=======
+// 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+//>>>>>>> 829be288723f1cbdddd82aeb085b89333817e783
 	if(connect(GAME_TUNNEL, (struct sockaddr *)&addr, sizeof(addr)) < 0){
 		perror("connect");
 		exit(1);
@@ -68,6 +77,7 @@ int main(int argc, char* argv[]){
 				}}
 		switch(received.command){ /* it can be as below: */
 			case REQ_STARTLIST: /* it's for getting/updating player's list */
+		//		sleep(1000);
 				player_id=go_list(); /* callin' ant_player_list(usn, len) inside,
 							* and it returns number of player's structure
 							* which is converted to player's id and returned, OR
