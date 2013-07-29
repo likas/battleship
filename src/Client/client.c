@@ -161,6 +161,7 @@ int main(int argc, char* argv[]){
 	int flag_end_turn = 1;
 		do{
 		if(YOURMOVE){
+//	fflush(;
 			do
 			{
 				flag_end_turn = 1;
