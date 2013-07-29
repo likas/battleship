@@ -20,7 +20,7 @@ int go_list()
 			perror("error receiving list");
 			exit(1);
 		}
-		if (lists[i].command == REQ_STORLIST){
+		if (lists[i].command == REQ_STOPLIST){
 			if(i==0){
 				strcpy(lists[0].params, "No-one else in list. Press here or 'r' to refresh\n");
 				ant_player_list(lists,1);
@@ -35,7 +35,7 @@ int go_list()
 		i++;
 	}
 
-	if(lists[0].command==REQ_STORLIST){
+	if(lists[0].command==REQ_STOPLIST){
 		strcpy(lists[0].params, "No-one else in list. Press here or 'r' to refresh\n");
 		ant_player_list(lists,1);
 		return -1;

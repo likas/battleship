@@ -44,6 +44,8 @@ int main(int argc, char* argv[]){
 		if (argc > 2) {
 			inet_pton(AF_INET, argv[2], &addr.sin_addr);
 		}
+		else
+		 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 	} else {
 		addr.sin_port=htons(1999);
 	}

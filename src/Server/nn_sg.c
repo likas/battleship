@@ -38,7 +38,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 					if(ind - 1 != i)	
 						send(fd[ind].fd, (void *)&pl[i], sizeof(message),0);
 				}
-				req->command = REQ_STORLIST;
+				req->command = REQ_STOPLIST;
 				send(fd[ind].fd, req, sizeof(message), 0);
 			}
 
@@ -91,7 +91,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 					if(i != ind - 1)
 						send(fd[ind].fd, (void*)&pl[i], sizeof(message),0);
 				}
-				req->command = REQ_STORLIST;
+				req->command = REQ_STOPLIST;
 				send(fd[ind].fd, req, sizeof(message), 0);
 			}
 		}

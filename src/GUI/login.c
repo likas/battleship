@@ -1,5 +1,5 @@
 #include "gui.h"
-int ant_login(int len) {
+int ant_login() {
 
     WINDOW *win;
     int maxx, maxy, i, j, strx, stry;
@@ -37,7 +37,7 @@ int ant_login(int len) {
     keypad(win,TRUE);
     FINref(win,2,1);	
 	
-    while ((symb != 10) && (i < len) ) {
+    while ((symb != 10) && (i < MAX_STR_NICK) ) {
 
 	 wmove(stdscr, (maxy-w_maxy)/2+2 ,(maxx-w_maxx)/2+18);
         for(i=0; username[i]!='\0'; i++) addch(username[i]|COLOR_PAIR(2)); FINref(stdscr,2,1);

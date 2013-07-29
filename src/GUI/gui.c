@@ -1,5 +1,6 @@
 #include "gui.h"
 
+
 void sig(int handler)
 {
 	int i,j,SIZEFLAG=0;
@@ -47,7 +48,7 @@ void sig(int handler)
 		else if(LOGINFLAG==0) {
 			FINref(stdscr,1,0);
 		//	RFLAG=0; 
-			if(ant_login(35))
+			if(ant_login())
 				{LOGINFLAG=1; RFLAG=0;} 
 	//		else RFLAG=1;
 	 	}	

@@ -73,7 +73,7 @@ int De_Move(int**, COORDS*, char*);
 int ant_hello(char* , char*);
 //Приветствие
 
-int ant_login(int);
+int ant_login();
 //Присваивание имени игроку
 int ant_player_list(message* , int);
 //листинг списка игроков
