@@ -157,6 +157,7 @@ int main(int argc, char* argv[]){
 	
 		do{
 		if(YOURMOVE){
+//	fflush(;
 			do
 			{
 				xy=De_Move(EMAP);

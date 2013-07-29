@@ -19,7 +19,7 @@ COORDS De_Move(int **op_mas)
 	do
 	{
 		keypad(op_win[i][j], TRUE);
-		key=wgetch(op_win[i][j]);
+		key = wgetch(op_win[i][j]);
 		wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j]));
 		wclear(op_win[i][j]);
 		wborder(op_win[i][j],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
