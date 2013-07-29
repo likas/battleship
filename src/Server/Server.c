@@ -2,12 +2,13 @@
 
 int count=0;
 //struct pollfd fds[16];//fds-массив структур для poll();
+int is_run = 1;
 
 void close_all(struct pollfd *fds){
 	int i;
 	for(i=0;i<count;i++)
 		close(fds[i].fd);
-	exit(0);
+	is_run = 0;
 }
 
 void del_fds(struct pollfd *fds,int number,Player *_player){
@@ -26,6 +27,7 @@ void del_fds(struct pollfd *fds,int number,Player *_player){
 	--count;
 }
 int main(int argc, char *argv[]){
+	is_run = 1;
 	if(argc<2){printf("Not enough arguments"); exit(1);}
 	struct pollfd fds[16];//fds-массив структур для poll();
 	int ret,i,j,id;//count-счётчик количества элементов в структуре fds;
@@ -63,9 +65,9 @@ int main(int argc, char *argv[]){
 	fds[count].events=POLLIN;
 	count++;
 //ждём каких-либо действий
-	while(1){
+	while(is_run){
 		signal(SIGINT,close_all);
-		ret=poll(fds,count,100000);
+		ret=poll(fds,count,1000);
 		if(ret==-1)
 			perror("Error poll!");
 		if(ret==0)
@@ -78,30 +80,26 @@ int main(int argc, char *argv[]){
                     printf("New Client");
 					if( (fds[count].fd=accept(fds[0].fd,0,0)) < 0){
 						perror("Error accept!");
-						exit(1);
 					}
-
-					fds[count].events=POLLIN;
-					player[count-1]._id=count-1;
-					strcpy(player[count-1].name,"");
-					count++;
+					else
+					{
+						fds[count].events=POLLIN;
+						player[count-1]._id=count-1;
+						strcpy(player[count-1].name,"");
+						count++;
+					}
 				}else{
 					printf("Else\n");
-					if( (recv(fds[i].fd,(void *)&msg,sizeof(message),MSG_WAITALL)) <0){
+					if( (recv(fds[i].fd,(void *)&msg,sizeof(message),MSG_WAITALL)) <0)
+					{
 						perror("Error recv!");
-						exit(1);
+						del_fds(fds, i, player);
 					}
-					nn_sg(&msg,player, i, fds);
+					else
+						nn_sg(&msg,player, i, fds);
 				}
 			}
 		}
 	}
 	return 0;
 }
-
-
-
-
-
-
-
