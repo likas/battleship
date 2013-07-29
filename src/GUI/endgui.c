@@ -3,6 +3,7 @@
 void endgui(int fl)
 {
 	FINref(stdscr,1,0);
+	flushinp();
 	switch(fl)
 	{
 		case REQ_YOULOSE: 
