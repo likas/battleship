@@ -147,7 +147,7 @@ void *Game(args *arg){
             continue;
         for(i = 0; i < 2; i++){
             if(fds[i].revents & POLLIN){
-                if( (ret=recv(fds[i].fd,(void *)&mesg,sizeof(message),0)) < 0){
+                if( (ret=recv(fds[i].fd,(void *)&mesg,sizeof(message),MSG_WAITALL)) < 0){
                     perror("Error recv");
                     return;
                 }
@@ -172,7 +172,7 @@ void *Game(args *arg){
                     for(int u = 0; u < SIZE; u++)
 					{
 						field[i][u] = (int *) malloc (sizeof(int) * SIZE);
-						if((ret=recv(fds[i].fd, field[i][u],(sizeof(int)*SIZE),0)) < 0)
+						if((ret=recv(fds[i].fd, field[i][u],(sizeof(int)*SIZE), MSG_WAITALL)) < 0)
 						{
                         	perror("Error recv");
                         	return;

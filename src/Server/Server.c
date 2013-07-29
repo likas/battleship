@@ -87,7 +87,7 @@ int main(int argc, char *argv[]){
 					count++;
 				}else{
 					printf("Else\n");
-					if( (recv(fds[i].fd,(void *)&msg,sizeof(message),0)) <0){
+					if( (recv(fds[i].fd,(void *)&msg,sizeof(message),MSG_WAITALL)) <0){
 						perror("Error recv!");
 						exit(1);
 					}

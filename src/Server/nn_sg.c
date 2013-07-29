@@ -29,7 +29,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 	if(msg->command == MSG_NN) {
 			/*send to player the list of gamers*/
 			strcpy(pl[ind - 1].name, msg->params);
-			recv(fd[ind].fd, req, sizeof(message), 0);
+			recv(fd[ind].fd, req, sizeof(message), MSG_WAITALL);
 			
 			if(req->command == MSG_RL) {
 				req->command = REQ_STARTLIST;
@@ -61,7 +61,7 @@ void nn_sg(message* msg, Player* pl, int ind, struct pollfd *fd) {
 				send(fd[ind].fd, req,sizeof(message),0);
 				/* send second player  */
 
-				recv(fd[i + 1].fd, req, sizeof(message), 0);
+				recv(fd[i + 1].fd, req, sizeof(message), MSG_WAITALL);
 				printf("to player2: %d\n", fd[i + 1].fd);
 				printf("req->command: %d\n", req->command);
 				printf("req->params: %s\n", req->params);
