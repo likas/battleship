@@ -3,7 +3,7 @@
 int De_Move(int **op_mas, COORDS* rt, char *str)
 {        
 	int key=0;
-	char c;
+	int c;
 	static int i=0,j=0;
 	int strcount=0;
 	flushinp();
@@ -22,7 +22,6 @@ int De_Move(int **op_mas, COORDS* rt, char *str)
 		wbkgdset(op_win[i][j],COLOR_PAIR(op_mas[i][j]));
 		wclear(op_win[i][j]);
 		wborder(op_win[i][j],ACS_VLINE,ACS_VLINE,ACS_HLINE,ACS_HLINE,ACS_ULCORNER,ACS_URCORNER,ACS_LLCORNER,ACS_LRCORNER);
-//		wrefresh(op_win[i][j]);
 	        wnoutrefresh(op_win[i][j]);
 		switch(key)
 		{
@@ -47,15 +46,22 @@ int De_Move(int **op_mas, COORDS* rt, char *str)
 					i++;
 				break;
 			case 'c':  
-				keypad(chat,TRUE); 
+				keypad(chat, TRUE); 
 				echo();
 				wmove(chat,GUICHATLEN+1,1);
-	/*			wclrtoeol(chat);
-				FINref(chat,2,1);*/
 				while(1)
 				{
 					c=wgetch(chat);
-					if(c!=10) 
+					if(c == KEY_BACKSPACE){
+						if(strcount > 0)
+						{
+							str[--strcount] = ' ';
+							waddch(chat, ' ');
+							wmove(chat, chat->_cury, chat->_curx - 1);
+							FINref(chat, 2, 1);
+						}
+					}else
+					if(c != 10) 
 						str[strcount++]=c; 
 					else {
 						str[strcount]='\0';
