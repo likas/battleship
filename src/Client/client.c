@@ -74,7 +74,7 @@ int main(int argc, char* argv[]){
 		exit(1);
 	}
 		while(1){ /* receiving answer */
-				if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
+				if(recv(GAME_TUNNEL, &received, sizeof(message), MSG_WAITALL) > 0){
 					break;
 				}}
 		switch(received.command){ /* it can be as below: */
@@ -137,7 +137,7 @@ int main(int argc, char* argv[]){
 	/* here we go: have a socket for game; next received message will be about who
 	* plays first */
 	while(1){
-		if(recv(GAME_TUNNEL, &received, sizeof(message), 0) > 0){
+		if(recv(GAME_TUNNEL, &received, sizeof(message), MSG_WAITALL) > 0){
 			break;
 		}
 	}	
@@ -189,7 +189,7 @@ int main(int argc, char* argv[]){
 			else
 				break;
 		}
-			if(recv(GAME_TUNNEL, &received, sizeof(message), 0) < 0){
+			if(recv(GAME_TUNNEL, &received, sizeof(message), MSG_WAITALL) < 0){
 				WOL = REQ_DISCONNECT;	
 				break;
 				}
