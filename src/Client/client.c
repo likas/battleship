@@ -36,16 +36,21 @@ int main(int argc, char* argv[]){
 	GAME_TUNNEL=socket(AF_INET, SOCK_STREAM, 0);
 	if(GAME_TUNNEL<0){
 		perror("socket");
+		endgui(-1);
 		exit(1);
 	}
 	addr.sin_family=AF_INET;
 	if (argc > 1) {
-		addr.sin_port=htons(atoi(argv[1]));
-		if (argc > 2) {
-			inet_pton(AF_INET, argv[2], &addr.sin_addr);
+		if(argc == 2 && strlen(argv[1]) < 6)
+		{
+			addr.sin_port=htons(atoi(argv[1]));
+		 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 		}
 		else
-		 	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+		{
+			inet_pton(AF_INET, argv[1], &addr.sin_addr);
+			addr.sin_port=htons(atoi(argv[2]));
+		}
 	} else {
 		addr.sin_port=htons(1999);
 	}
@@ -58,6 +63,7 @@ int main(int argc, char* argv[]){
 //>>>>>>> 829be288723f1cbdddd82aeb085b89333817e783
 	if(connect(GAME_TUNNEL, (struct sockaddr *)&addr, sizeof(addr)) < 0){
 		perror("connect");
+		endgui(-1);
 		exit(1);
 	}
 	/*here is something like: */
@@ -66,11 +72,13 @@ int main(int argc, char* argv[]){
 	/*here server shall send us a list of existing games, and we get it like: */
 	if((client_send_text(40, username))>0){
 		printf("Somethin' glitched during process of sending NN\n");
+		endgui(-1);
 		exit(1);
 	}
 	while(player_id==-1){
 	if((client_send_text(MSG_RL, (char*)0))!=0){ /* sending MSG_RL */
 		printf("client_send_text return an error\n");
+		endgui(-1);
 		exit(1);
 	}
 		while(1){ /* receiving answer */
@@ -88,6 +96,7 @@ int main(int argc, char* argv[]){
 			case REQ_DECLINE: /* it's for case of error */
 				printf("An error occured: server return DECLINE\n");
 				exit(1);
+				endgui(-1);
 				break;
 			case REQ_GAMESTARTED: /* it's when someone pick our player as an opponent */
 				player_id=-2; /* to exit waiting cycle */
@@ -95,6 +104,7 @@ int main(int argc, char* argv[]){
 				break;
 			default:
 				printf("An error occurred: Error while receiving player list\n");
+				endgui(-1);
 				exit(1);
 				break;
 		}
@@ -116,7 +126,9 @@ int main(int argc, char* argv[]){
 			break;
 		}else
 		{
-		    printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); exit(1); 
+		    printf("Something unexpected just arrived instead\n of ACCEPT, or DECLINE. Exiting...\n"); 
+			endgui(-1);
+			exit(1); 
 		}
 		}
 	} /* end of 'while(player_id..)'
